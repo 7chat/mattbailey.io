@@ -1,0 +1,869 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+ <title>Matt Bailey</title>
+ <link href="http://mattbailey.io/atom.xml" rel="self"/>
+ <link href="http://mattbailey.io/"/>
+ <updated>2014-09-19T22:20:33+00:00</updated>
+ <id>http://mattbailey.io</id>
+ <author>
+   <name>Matt Bailey</name>
+   <email></email>
+ </author>
+
+ 
+ <entry>
+   <title>Using Sitespeed.io in a Vagrant Virtual Machine</title>
+   <link href="http://mattbailey.io/using-sitespeed-io-in-a-vagrant-virtual-machine"/>
+   <updated>2014-07-18T00:00:00+00:00</updated>
+   <id>http://mattbailey.io/using-sitespeed-io-in-a-vagrant-virtual-machine</id>
+   <content type="html">&lt;p&gt;&lt;img src=&quot;https://dl.dropboxusercontent.com/u/35123605/Assets/sitespeed-logo.png&quot; alt=&quot;sitespeed.io&quot;/&gt;&lt;/p&gt;
+
+&lt;p&gt;Not so long ago I came across a fantastic command line tool called &lt;a href=&quot;http://www.sitespeed.io/&quot;&gt;sitespeed.io&lt;/a&gt;. It enables you to generate a nicely formatted report about the speed and performance of a site. Performance is somthing I&amp;#8217;m really interested in, and this is a perfect tool to add to the arsenal.&lt;/p&gt;
+
+&lt;p&gt;Now, being a glutton for punishment I decided against the easy install option (using &lt;a href=&quot;http://brew.sh/&quot;&gt;Homebrew&lt;/a&gt; on a Mac) and instead decided to try and get it working in a &lt;a href=&quot;http://www.vagrantup.com/&quot;&gt;Vagrant&lt;/a&gt; virtual machine.&lt;/p&gt;
+
+&lt;p&gt;I had already set up a &lt;a href=&quot;https://github.com/gpmd/vagrant-puppet-boilerplate&quot;&gt;Vagrant boilerplate&lt;/a&gt;, so it was a question of modifying this to install the various dependencies required by sitespeed.io.&lt;/p&gt;
+
+&lt;p&gt;It actually took quite a bit of research, reading, and trial and error to finally get it up-and-running. Please bear in mind that I&amp;#8217;m not a backend developer or sys-admin, just a lowly frontend designer trying to refine his workflow, and increase his experience and skill base, so I may not have done things in the most efficient way - Let me know if anything I mention could be done better.&lt;/p&gt;
+
+&lt;p&gt;Anyway, if you&amp;#8217;re still interested here are my experiences.&lt;/p&gt;
+
+&lt;h2&gt;Dependencies Installation on Linux&lt;/h2&gt;
+
+&lt;p&gt;My Vagrant boilerplate creates an Ubuntu Precise box. There are &lt;a href=&quot;http://www.sitespeed.io/documentation/#install-linux&quot;&gt;Linux installation instructions on sitespeed.io&lt;/a&gt;, but they&amp;#8217;re (understandably) a bit vague when it comes to installing the requirements so I&amp;#8217;ll take you through each one in turn.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt; In my examples I&amp;#8217;m just giving you the raw code you can run on the command line in your VM. However, I actually run all this from a shell script that gets called each time I provision the VM. You can see &lt;a href=&quot;https://gist.github.com/matt-bailey/c2db6dbf5385ab1d87a9#file-frontend-tools-sh&quot;&gt;the install script here&lt;/a&gt; if you&amp;#8217;re interested.&lt;/p&gt;
+
+&lt;h3&gt;PhantomJS&lt;/h3&gt;
+
+&lt;p&gt;Initially I went for the easy option to install &lt;a href=&quot;http://phantomjs.org/download.html&quot;&gt;PhantomJS&lt;/a&gt;:&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;$ sudo apt-get install phantomjs&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;&quot;That was straightforward&quot; I thought&amp;#8230; However, it turns out that the apt-get package list for Ubuntu Precise only includes PhantomJS version 1.4, and sitespeed.io requires a newer version (you&amp;#8217;ll get a load of errors when you finally try to run sitespeed.io). In the end I came across &lt;a href=&quot;https://gist.github.com/wbotelhos/6643188#file-phantomjs_intaller-sh&quot;&gt;this gist&lt;/a&gt; and was able to install PhantomJS version 1.9 as a result (obviously you need to &lt;code&gt;sudo apt-get remove phantomjs&lt;/code&gt; first if you already have it installed like I did).&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;$ cd /usr/local/share&lt;/code&gt;
+&lt;br/&gt;&lt;br/&gt;&lt;code&gt;$ sudo wget -q &lt;a href=&quot;https://phantomjs.googlecode.com/files/phantomjs-1.9.0-linux-x86_64.tar.bz2&quot;&gt;https://phantomjs.googlecode.com/files/phantomjs-1.9.0-linux-x86_64.tar.bz2&lt;/a&gt;&lt;/code&gt;
+&lt;br/&gt;&lt;br/&gt;&lt;code&gt;$ tar xjf phantomjs-1.9.0-linux-x86_64.tar.bz2&lt;/code&gt;
+&lt;br/&gt;&lt;br/&gt;&lt;code&gt;$ sudo ln -s /usr/local/share/phantomjs-1.9.0-linux-x86_64/bin/phantomjs /usr/local/share/phantomjs&lt;/code&gt;
+&lt;br/&gt;&lt;br/&gt;&lt;code&gt;$ sudo ln -s /usr/local/share/phantomjs-1.9.0-linux-x86_64/bin/phantomjs /usr/local/bin/phantomjs&lt;/code&gt;
+&lt;br/&gt;&lt;br/&gt;&lt;code&gt;$ sudo ln -s /usr/local/share/phantomjs-1.9.0-linux-x86_64/bin/phantomjs /usr/bin/phantomjs&lt;/code&gt;
+&lt;br/&gt;&lt;/p&gt;
+
+&lt;h3&gt;Java&lt;/h3&gt;
+
+&lt;p&gt;Installing &lt;a href=&quot;http://www.oracle.com/technetwork/java/javase/downloads/jdk7-downloads-1880260.html&quot;&gt;Java&lt;/a&gt; was a bit more straightforward, although it took me a while to figure out that the package name was &lt;code&gt;default-jre&lt;/code&gt; and not simply &lt;code&gt;java&lt;/code&gt;. Go figure?&amp;#8230;&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;$ sudo apt-get update&lt;/code&gt;
+&lt;br/&gt;&lt;code&gt;$ sudo apt-get install default-jre&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt; The reason you run &lt;code&gt;sudo apt-get update&lt;/code&gt; is to make sure your local package list is up-to-date.&lt;/p&gt;
+
+&lt;h3&gt;curl&lt;/h3&gt;
+
+&lt;p&gt;I used a tool called &lt;a href=&quot;https://puphpet.com/&quot;&gt;PuPHPet&lt;/a&gt; to initially create my Vagrant boilerplate, and it generates a &lt;code&gt;config.yaml&lt;/code&gt; file that is very easy to modify and add new features to. As luck would have it I&amp;#8217;d already added &lt;code&gt;curl&lt;/code&gt; for an earlier project. In the &lt;code&gt;config.yaml&lt;/code&gt; file the relevant bit looks like this:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://dl.dropboxusercontent.com/u/35123605/Assets/puphpet-config-curl.png&quot; alt=&quot;PuPHPet config.yaml - curl&quot;/&gt;&lt;/p&gt;
+
+&lt;p&gt;If you haven&amp;#8217;t used PuPHPet then you could install &lt;code&gt;curl&lt;/code&gt; using apt-get.&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;$ sudo apt-get update&lt;/code&gt;
+&lt;br/&gt;&lt;code&gt;$ sudo apt-get install php5-curl&lt;/code&gt;&lt;/p&gt;
+
+&lt;h3&gt;xsltproc&lt;/h3&gt;
+
+&lt;p&gt;&lt;code&gt;xsltproc&lt;/code&gt; was also pretty straightforward.&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;$ sudo apt-get update&lt;/code&gt;
+&lt;br/&gt;&lt;code&gt;$ sudo apt-get install xsltproc&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;If you&amp;#8217;ve already just run &lt;code&gt;sudo apt-get update&lt;/code&gt; you probably don&amp;#8217;t need to run it again here (Linux gurus, is that correct?).&lt;/p&gt;
+
+&lt;h2&gt;sitespeed.io installation and Set-up&lt;/h2&gt;
+
+&lt;h3&gt;Installation&lt;/h3&gt;
+
+&lt;p&gt;Again, the instructions are pretty vague, at least to a frontend designer. It tells you to clone the project from Github, or download and unpack the zip. Well my first question was clone it to &amp;#8220;where&amp;#8221;? After picking the brains of a couple of my dev colleagues I was basically told &amp;#8220;wherever you want to&amp;#8221;. So helpful. I like things neat and tidy and in their proper place, so I did a bit more research it seems like a common place to store tools/scripts is in the &lt;code&gt;/usr/local/share&lt;/code&gt; directory, so that&amp;#8217;s what I settled on.&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;$ cd /usr/local/share&lt;/code&gt;
+&lt;br/&gt;&lt;code&gt;$ git clone &lt;a href=&quot;https://github.com/sitespeedio/sitespeed.io.git&quot;&gt;https://github.com/sitespeedio/sitespeed.io.git&lt;/a&gt;&lt;/code&gt;&lt;/p&gt;
+
+&lt;h3&gt;Set-up&lt;/h3&gt;
+
+&lt;p&gt;I then symlinked the binary so that I could call it on the command line without having to use the whole path.&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;$ sudo ln -s /usr/local/share/sitespeed.io/bin/sitespeed.io /usr/local/bin/sitespeed.io&lt;/code&gt;
+&lt;br/&gt;&lt;br/&gt;&lt;code&gt;$ sudo ln -s /usr/local/share/sitespeed.io/bin/sitespeed.io /usr/bin/sitespeed.io&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;To test that sitespeed.io is now available run the following command.&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;$ sitespeed.io -h&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;You should get some output telling you how to use sitespeed.io.&lt;/p&gt;
+
+&lt;h2&gt;Using sitespeed.io&lt;/h2&gt;
+
+&lt;p&gt;To generate a report run the following command from somewhere in your web project, for example &lt;code&gt;/var/www/[my-project]/site&lt;/code&gt;. You need to run sitespeed.io from a directory that will be accessible through the browser.&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;$ sitespeed.io -u &lt;a href=&quot;http://my-project.dev/&quot;&gt;http://my-project.dev/&lt;/a&gt;&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;Obviously the site you want to run the report on can be anything, but in my case I&amp;#8217;m using Vagrant for local development so I want to test the site I&amp;#8217;m developing locally.&lt;/p&gt;
+
+&lt;p&gt;Let sitespeed.io do it&amp;#8217;s thing, it may take a minute or so. Once it has finished you&amp;#8217;ll be able to access the report in your browser (the URL will obviously depend on your own particular directory structure and the datetime stamp of the particular report).&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;http://[vm-private-ip-address]/[my-project]/site/sitespeed-result/2014-07-16-15-57-55/&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt; You will need to put in the private IP address of your VM in order to access it through the browser. In my case my VM is set up to use &lt;code&gt;192.168.56.101&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h2&gt;Summary&lt;/h2&gt;
+
+&lt;p&gt;And there you have it, a VM with the awesome sitespeed.io set up and ready to go. If you use a Vagrant boilerplate &lt;em&gt;&lt;a href=&quot;https://github.com/gpmd/vagrant-puppet-boilerplate&quot;&gt;(example)&lt;/a&gt;&lt;/em&gt; with setup scripts &lt;em&gt;&lt;a href=&quot;https://gist.github.com/matt-bailey/c2db6dbf5385ab1d87a9#file-frontend-tools-sh&quot;&gt;(example)&lt;/a&gt;&lt;/em&gt; then you can configure this once and not have to worry about it again. It also means that if other members of your team use Vagrant (which is the whole point right?) then only one of you has to do it.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Go forth and optimise!&lt;/strong&gt;&lt;/p&gt;
+
+&lt;h2&gt;Dealing with Errors and Problems&lt;/h2&gt;
+
+&lt;p&gt;sitespeed.io has pretty good &lt;a href=&quot;http://www.sitespeed.io/documentation/&quot;&gt;documentation&lt;/a&gt; and &lt;a href=&quot;http://www.sitespeed.io/faq/&quot;&gt;FAQs&lt;/a&gt;. I encountered a couple of specific issues that I&amp;#8217;ve highlighted below.
+If you find you&amp;#8217;re getting &lt;code&gt;java.net.SocketTimeoutException: Read timed out&lt;/code&gt; errors &lt;a href=&quot;http://www.sitespeed.io/faq/#readtimeout&quot;&gt;read this&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Also kind of related, if it seems to take an age to analyse the site &lt;a href=&quot;http://www.sitespeed.io/faq/#slowness&quot;&gt;read this&lt;/a&gt; (increase the number of allowed processes) and &lt;a href=&quot;http://www.sitespeed.io/faq/#onepage&quot;&gt;this&lt;/a&gt; (how to test one page only).&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Optimising the Critical Rendering Path, and Loading CSS Asynchronously and Conditionally</title>
+   <link href="http://mattbailey.io/optimising-the-critical-rendering-path-and-loading-css"/>
+   <updated>2014-06-20T00:00:00+00:00</updated>
+   <id>http://mattbailey.io/optimising-the-critical-rendering-path-and-loading-css</id>
+   <content type="html">&lt;p&gt;&lt;strong&gt;&lt;a href=&quot;https://gist.github.com/matt-bailey/602b40c77a5d3381ff26&quot; title=&quot;Script by Matt Bailey for loading CSS files asynchronously and conditionally&quot;&gt;Go straight to the asynchronous and conditional CSS loading script →&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;
+&lt;h2&gt;Optimising the Critical Rendering Path&lt;/h2&gt;
+&lt;p&gt;I&amp;#8217;ve recently been looking into frontend optimisation, or as clients like to refer to it, “can you fix our slow site?” - in my defence I mainly work with &lt;a href=&quot;http://magento.com/&quot; title=&quot;Magento&quot;&gt;Magento&lt;/a&gt; sites, so this is not a straightforward task.&lt;/p&gt;
+&lt;p&gt;Ilya Gregorik at Google has done some great work educating others in &lt;a href=&quot;http://youtu.be/YV1nKLWoARQ&quot; title=&quot;Ilya Gregorik - Optimising the critical rendering path&quot;&gt;optimising the critical rendering path&lt;/a&gt;, and one of his recommendations is to inline critical CSS in the head and defer the loading of other CSS files until after the initial paint.&lt;/p&gt;
+
+&lt;h2&gt;So can you load CSS at the bottom of the page?&lt;/h2&gt;
+&lt;p&gt;I did some experimenting by loading additional, non-critical CSS files at the bottom of the page. However, this caused a FOUC, a flash of un-styled content (not including things styled by the inlined critical styles in the head of course). I believe this has something to do with &amp;lt;script&amp;gt; tags blocking parallel downloads, i.e. the CSS files have to wait until the Javascript files have downloaded. So they have to go back up in the head&amp;#8230;&lt;/p&gt;
+&lt;h2&gt;What was Ilya Gregorik&amp;#8217;s advice?&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&quot;https://twitter.com/igrigorik/status/473853215348228098&quot; title=&quot;Ilya Gregorik - advice on loading CSS files&quot;&gt;I tweeted Ilya asking his advice&lt;/a&gt; and his response led me to the &lt;a href=&quot;https://developers.google.com/speed/docs/insights/OptimizeCSSDelivery&quot; title=&quot;Google Developers - Optimising CSS Delivery&quot;&gt;Google Developers page on Optimising CSS Delivery&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;It contains an example script that enables you to load a CSS file asynchronously, after the &lt;em&gt;&quot;initial painting of the page. Its styles are applied to the page once it finishes loading, without blocking the initial render of the critical content.&quot;&lt;/em&gt;&lt;/p&gt;
+&lt;h2&gt;Taking the Google CSS loading script a bit further&lt;/h2&gt;
+&lt;p&gt;This was exactly the kind of thing I was looking for, but I needed to take it a step further. I wanted to be able to detect what page I was on and then load multiple CSS files if necessary - there’s no need to load Product Page styles on the Home Page for example.&lt;/p&gt;
+&lt;p&gt;Part of the optimisation process I&amp;#8217;ve been working on is the modularisation of CSS - creating &amp;#8216;page type&amp;#8217; or function specific stylesheets rather than lumping everything into one big &amp;#8216;main.css’. Case in point - I did a test on one of my sites and discovered that 85% percent of the selectors in my `main.css` file were unused on the homepage. While I’m not surprised by this, it bugged me that there was so much redundancy.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://sass-lang.com/&quot; title=&quot;Sass CSS&quot;&gt;Sass&lt;/a&gt; and &lt;a href=&quot;http://lesscss.org/&quot; title=&quot;Less CSS&quot;&gt;Less&lt;/a&gt; have modularisation covered from a preprocessor point of view - if you follow a modular, component based Sass codebase for your projects (which I do) it&amp;#8217;s pretty easy to create specific CSS files such as critical.css (which I inline in the head), base.css, category-page.css, product-page.css etc. - but what to do with these new CSS files, especially if the pages are built dynamically on a CMS? How do you load them only when needed?&lt;/p&gt;
+&lt;p&gt;In a nutshell I modified the script on the Google Developers page, allowing me to pass in page specific classes (in my case the classes the CMS was adding to the body tag), and then filter the loading of CSS files based on that information.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Get your hands on the &lt;a href=&quot;https://gist.github.com/matt-bailey/602b40c77a5d3381ff26&quot; title=&quot;A simple script by Matt Bailey for loading CSS files asynchronously and conditionally&quot;&gt;asynchronous and conditional CSS loading script here →&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;
+&lt;h2&gt;What about other script loaders?&lt;/h2&gt;
+&lt;p&gt;But can’t you just use an existing script loader for this, something like &lt;a href=&quot;http://yepnopejs.com/&quot; title=&quot;YepNope&quot;&gt;YepNope&lt;/a&gt;? I did think of that and I tried it out. However, I still saw a FOUC. I&amp;#8217;m not sure why - maybe it has to do with me having the YepNope tests at the bottom of the page, which slows the down the processing and hence the loading/rendering of the CSS files?&lt;/p&gt;
+&lt;p&gt;Google’s script (and my modified version) is vanilla Javascript, meaning it doesn’t have any dependencies such as jQuery. It’s inlined in the head, meaning it’s executed right away, and the CSS files are injected in the head so they’re loaded immediately after the first paint but before the rest of the page has rendered.&lt;/p&gt;
+&lt;p&gt;I’m still in the early stages of using and testing this script, but at first glance it seems to be effective. Let me know if you try it and how you get on?&lt;/p&gt;
+&lt;h2&gt;UPDATE&lt;/h2&gt;
+&lt;p&gt;I was also recently pointed to this &lt;a href=&quot;https://github.com/filamentgroup/loadCSS/&quot; title=&quot;Scott Yehl - loadCSS&quot;&gt;CSS loading script by Scot Yehl&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;It is very similar to the Google script (and hence, mine), but it doesn’t seem to have the ability to test for Page Type, or to load multiple files - I may be wrong about that though, I haven’t tried it out.&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Contribution to Report on Mobile Web Design and Development Best Practice</title>
+   <link href="http://mattbailey.io/contribution-to-report-on-mobile-web-design-and"/>
+   <updated>2014-05-27T00:00:00+00:00</updated>
+   <id>http://mattbailey.io/contribution-to-report-on-mobile-web-design-and</id>
+   <content type="html">&lt;p&gt;&lt;img alt=&quot;image&quot; src=&quot;/images/dist/tumblr_inline_n68qa8hAY81qfoiia.jpg&quot;/&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;
+&lt;p&gt;Recently &lt;a href=&quot;https://www.linkedin.com/in/markslocock&quot; title=&quot;Mark Slocock - Managing Director, GPMD&quot;&gt;Mark&lt;/a&gt; and I were both excited, and flattered, to be asked to contribute to an in-depth report on mobile web design and development best practice.&lt;/p&gt;
+
+&lt;p&gt;&lt;span&gt;My task was to write about creating and maintaining a responsive codebase. This was not only a challenge, but a great way for me to put in writing a lot of the learning and development I&amp;#8217;ve been going through over the past couple of years. The specific areas I covered were:&lt;/span&gt;&lt;/p&gt;
+&lt;ul&gt;&lt;li&gt;&lt;span&gt;How does a responsive codebase work?&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;&lt;span&gt;What do developers need to do to create a responsive codebase that is different to non-responsive?&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;&lt;span&gt;How do you maintain a responsive codebase/What is good housekeeping?&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;&lt;span&gt;How do you validate the code?&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;&lt;span&gt;How do you optimise to ensure it&amp;#8217;s efficient for performance/page speed?&lt;/span&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;p&gt;&lt;span&gt;If you have an econsultancy subscription you can &lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;a href=&quot;https://econsultancy.com/reports/mobile-web-design-and-development-best-practice-guide&quot; title=&quot;Mobile Web Design and Development Best Practice Guide&quot;&gt;read the report in full here&lt;/a&gt;&lt;span&gt;.&lt;/span&gt;&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Responsive Images With The picture Element and Picturefill 2</title>
+   <link href="http://mattbailey.io/responsive-images-with-the-picture-element-and"/>
+   <updated>2014-04-24T00:00:00+00:00</updated>
+   <id>http://mattbailey.io/responsive-images-with-the-picture-element-and</id>
+   <content type="html">&lt;p&gt;&lt;strong&gt;Just want the good stuff? &lt;a href=&quot;http://scottjehl.github.io/picturefill/&quot; title=&quot;Picturefill 2 polyfill&quot;&gt;Get straight to the Picturefill 2 polyfill →&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Back in February of this year, at An Event Apart in Atlanta, Mat Marqis confirmed that browser vendors have finally agreed to support the &lt;code class=&quot;prettyprint&quot;&gt;picture&lt;/code&gt; element. You can read &lt;a href=&quot;http://www.lukew.com/ff/entry.asp?1851&quot; title=&quot;An Event Apart: The Future of Responsive Images&quot;&gt;Luke Wroblewski&amp;#8217;s notes on the talk here&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;This is fantastic news as we can finally stop asking what we&amp;#8217;re going to do about the problem of &amp;#8216;responsive images&amp;#8217; and start implementing them!&lt;/p&gt;
+
+&lt;h2&gt;What are my options?&lt;/h2&gt;
+&lt;ol&gt;&lt;li&gt;&lt;span&gt;The &lt;code class=&quot;prettyprint&quot;&gt;img&lt;/code&gt; tag with &lt;code class=&quot;prettyprint&quot;&gt;sizes&lt;/code&gt; and &lt;code class=&quot;prettyprint&quot;&gt;srcset&lt;/code&gt; attributes&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;&lt;span&gt;The &lt;code class=&quot;prettyprint&quot;&gt;picture&lt;/code&gt; element&lt;/span&gt;&lt;/li&gt;
+&lt;/ol&gt;&lt;p&gt;These two options finally give us a huge amount of control over how we can work with images across resolutions, pixel densities and so on.&lt;/p&gt;
+&lt;h2&gt;What about browser support?&lt;/h2&gt;
+&lt;p&gt;Browser vendors are only just starting to implement the new spec, but this shouldn&amp;#8217;t stop you using it. In a &lt;a href=&quot;http://filamentgroup.com/lab/picturefill_2_a/&quot; title=&quot;Picturefill 2.0: Use the picture element today&quot;&gt;recent blog post&lt;/a&gt; Filament Group released an updated version of their &lt;a href=&quot;http://scottjehl.github.io/picturefill/&quot; title=&quot;Picturefill polyfill&quot;&gt;Picturefill&lt;/a&gt; polyfill.&lt;/p&gt;
+&lt;h2&gt;So how do I use the new spec and polyfill?&lt;/h2&gt;
+&lt;p&gt;Details on using the polyfill and the &lt;code class=&quot;prettyprint&quot;&gt;picture&lt;/code&gt; element can be found on Scott Jehl&amp;#8217;s Filament Group &lt;a href=&quot;http://scottjehl.github.io/picturefill/&quot; title=&quot;Picturefill 2 polyfill&quot;&gt;Github page&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;For more information on using the &lt;code class=&quot;prettyprint&quot;&gt;sizes&lt;/code&gt; and &lt;code class=&quot;prettyprint&quot;&gt;srcset&lt;/code&gt; attributes on &lt;code class=&quot;prettyprint&quot;&gt;img&lt;/code&gt; tags checkout this &lt;a href=&quot;http://ericportis.com/posts/2014/srcset-sizes/&quot; title=&quot;Srcset and sizes&quot;&gt;excellent article by Eric Portis&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;&lt;a href=&quot;http://scottjehl.github.io/picturefill/&quot; title=&quot;Picturefill 2 polyfill&quot;&gt;Get the Picturefill 2 polyfill and start using responsive images now →&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>A Simple Vagrant Boilerplate For Frontend Development</title>
+   <link href="http://mattbailey.io/a-simple-vagrant-boilerplate-for-frontend-development"/>
+   <updated>2014-04-20T00:00:00+00:00</updated>
+   <id>http://mattbailey.io/a-simple-vagrant-boilerplate-for-frontend-development</id>
+   <content type="html">&lt;p&gt;&lt;img alt=&quot;image&quot; src=&quot;/images/dist/tumblr_inline_n4bnqdeSgV1qfoiia.png&quot;/&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Feeling impatient? &lt;a href=&quot;https://github.com/gpmd/vagrant-puppet-boilerplate&quot; title=&quot;A simple Vagrant boilerplate setup&quot;&gt;Get straight to the code on Github →&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;As a designer and frontend developer I&amp;#8217;ve been working hard over the past couple of years trying to &amp;#8216;up&amp;#8217; my skill levels. I&amp;#8217;ve been learning how to use development tools, such as &lt;a href=&quot;https://getcomposer.org/&quot; title=&quot;Composer&quot;&gt;Composer&lt;/a&gt;, &lt;a href=&quot;http://nodejs.org/&quot; title=&quot;Node JS&quot;&gt;Node&lt;/a&gt;, &lt;a href=&quot;http://gruntjs.com/&quot; title=&quot;Grunt JS&quot;&gt;Grunt&lt;/a&gt;, &lt;a href=&quot;http://bower.io/&quot; title=&quot;Bower&quot;&gt;Bower&lt;/a&gt; and so on. To that end I always try to pay attention to what other &amp;#8216;backend&amp;#8217; developers are talking about as the tools they use often end up making their way into frontend workflows.&lt;/p&gt;
+&lt;p&gt;Recently I&amp;#8217;ve been hearing the word &lt;a href=&quot;http://www.vagrantup.com/&quot; title=&quot;Vagrant&quot;&gt;Vagrant&lt;/a&gt; bandied about the office, so I decided to find out more - and I like what I&amp;#8217;ve found!&lt;/p&gt;
+
+&lt;h2&gt;What is Vagrant&lt;/h2&gt;
+&lt;p&gt;Basically Vagrant is a &amp;#8216;thingumy&amp;#8217; for setting up virtual machines.&lt;/p&gt;
+&lt;h2&gt;What Are The Benefits&lt;/h2&gt;
+&lt;p&gt;The benefit of using virtual machines for development is that you can have a VM config (per project) that closely matches that of your production environment, which you can share with other developers on your team. This means everyone works in the same environment, making it easier to pin down issues and bugs.&lt;/p&gt;
+&lt;p&gt;It also has the added benefit of keeping your host machine clean, tidy and free of all that command line &amp;#8216;cruft&amp;#8217; - you don&amp;#8217;t have to install any development tools, save your code editor/IDE and your favourite terminal. Everything else is installed &amp;#8216;in&amp;#8217; the virtual machine. This includes things such as Git, Node, Grunt etc., of which you control the versions as well.&lt;/p&gt;
+&lt;p&gt;This is very appealing to me as I often come across software/tool version issues when working on projects on different workstations.&lt;/p&gt;
+&lt;h2&gt;But I Know Nothing About Sys-Admin, Will I Be Able To Use Vagrant?&lt;/h2&gt;
+&lt;p&gt;Of course. I&amp;#8217;m not a sys-admin either I&amp;#8217;m &amp;#8216;only&amp;#8217; a frontend developer and, while it&amp;#8217;s true the underlying &amp;#8216;stuff&amp;#8217; is a bit difficult to understand (for me at any rate), there are tools out there to help you – you really don&amp;#8217;t need to know much to get things up-and-running.&lt;/p&gt;
+&lt;p&gt;I&amp;#8217;ve been using an excellent online tool called &lt;a href=&quot;https://puphpet.com/&quot; title=&quot;PuPHPet&quot;&gt;PuPHPet&lt;/a&gt; to create my server &amp;#8216;manifest&amp;#8217;, the file(s) that set everything up. I&amp;#8217;ve spent a few days familiarising myself with how things work and experimenting with the settings, and I&amp;#8217;ve settled on what I think is a good starting point for the kinds of projects that I work on, specifically &amp;#8216;CMS&amp;#8217; based projects (primarily use &lt;a href=&quot;http://www.silverstripe.org/&quot; title=&quot;SilverStripe CMS&quot;&gt;SilverStripe&lt;/a&gt; and Magento, but it could equally be used for WordPress, Drupal etc.). Here are the specifics:&lt;/p&gt;
+&lt;ul&gt;&lt;li&gt;Ubuntu Precise x64&lt;/li&gt;
+&lt;li&gt;Apache2&lt;/li&gt;
+&lt;li&gt;PHP 5.3&lt;/li&gt;
+&lt;li&gt;Composer&lt;/li&gt;
+&lt;li&gt;XDebug&lt;/li&gt;
+&lt;li&gt;MySQL&lt;/li&gt;
+&lt;li&gt;Node&lt;/li&gt;
+&lt;li&gt;Grunt&lt;/li&gt;
+&lt;li&gt;Bower&lt;/li&gt;
+&lt;li&gt;Compass&lt;/li&gt;
+&lt;/ul&gt;&lt;p&gt;All these settings and tools can be easily changed though if you require a different set-up.&lt;/p&gt;
+&lt;h2&gt;Ok I&amp;#8217;m Convinced, Now What?&lt;/h2&gt;
+&lt;p&gt;I don&amp;#8217;t think anything else remains to be said, save that you can get my &lt;a href=&quot;https://github.com/gpmd/vagrant-puppet-boilerplate&quot; title=&quot;Vagrant boilerplate on Github&quot;&gt;Vagrant boilerplate on Github&lt;/a&gt; and use it to start experimenting with yourself. The &lt;a href=&quot;https://github.com/gpmd/vagrant-puppet-boilerplate/blob/master/README.md&quot; title=&quot;vagrant-puppet-boilerplate README&quot;&gt;README&lt;/a&gt; contains full usage instructions. If you have any questions leave them here or &lt;a href=&quot;https://github.com/gpmd/vagrant-puppet-boilerplate/issues&quot; title=&quot;Vagrant boilerplate issues on Github&quot;&gt;post and issue on Github&lt;/a&gt;. Enjoy!&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;&lt;a href=&quot;https://github.com/gpmd/vagrant-puppet-boilerplate&quot; title=&quot;vagrant-puppet-boilerplate on Github&quot;&gt;My Simple Vagrant boilerplate for frontend development on Github →&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>OS X: Bring Your Dock Back To Your Primary Display</title>
+   <link href="http://mattbailey.io/os-x-bring-your-dock-back-to-your-primary-display"/>
+   <updated>2014-03-06T00:00:00+00:00</updated>
+   <id>http://mattbailey.io/os-x-bring-your-dock-back-to-your-primary-display</id>
+   <content type="html">&lt;p&gt;&lt;img alt=&quot;image&quot; src=&quot;/images/dist/tumblr_inline_mze8s4vJsX1qfoiia.png&quot;/&gt;&lt;/p&gt;
+
+&lt;p&gt;If you have a second display you may have noticed that from time-to-time it seemingly &amp;#8216;takes over&amp;#8217;, i.e. your dock, quick app-switcher, spotlight search and so on move over to the other screen. This is annoying!&lt;/p&gt;
+&lt;p&gt;You can stop this happening by going into &lt;strong&gt;System Preferences&lt;/strong&gt; &amp;gt; &lt;strong&gt;Mission Control&lt;/strong&gt; and deselecting &lt;strong&gt;Displays have separate spaces&lt;/strong&gt;. You can find &lt;a href=&quot;http://support.apple.com/kb/HT5891&quot; title=&quot;Apple OS X Spaces&quot;&gt;more info about Spaces here&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;However, I don&amp;#8217;t like the way this works - I actually prefer my displays to have separate spaces. This means I can quickly switch between Spaces on my main display, but my second monitor stays as it is with open apps that I always want to be able to see (such as my terminal, or &lt;a href=&quot;https://www.flowdock.com/&quot;&gt;Flowdock&lt;/a&gt; or whatever).&lt;/p&gt;
+&lt;p&gt;So what now? Well all is not lost - there&amp;#8217;s a little known method that will quickly bring &amp;#8216;control&amp;#8217; back to your main display.&lt;/p&gt;
+&lt;p&gt;Simply make sure you are &amp;#8216;on&amp;#8217; your main display (click on the desktop for example), then move the mouse cursor from the top, to the bottom of the screen. In doing so you should find that the dock switches back to this display (and the app-switcher, spotlight search etc.).&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Neat!&lt;/strong&gt;&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Speed-Up Your OS X Workflow With a Few Simple Keyboard Shortcuts</title>
+   <link href="http://mattbailey.io/speed-up-your-os-x-workflow-with-a-few-simple-keyboard-s"/>
+   <updated>2014-01-14T00:00:00+00:00</updated>
+   <id>http://mattbailey.io/speed-up-your-os-x-workflow-with-a-few-simple-keyboard-s</id>
+   <content type="html">&lt;p&gt;&lt;img alt=&quot;image&quot; src=&quot;/images/dist/tumblr_inline_mze97mLP0i1qfoiia.jpg&quot;/&gt;&lt;/p&gt;
+
+&lt;p&gt;I’m not one for making New Year resolutions, but I’ve started something that just happens to have coincided with that wonderful time of the year when good intentions rule (and mostly fail).&lt;/p&gt;
+&lt;p&gt;In fact this isn’t really the start, but more the continuation of something that’s been happening to me over the past year or so, and that’s the streamlining and speeding-up of my OS X workflow.&lt;/p&gt;
+&lt;p&gt;I grew up using the mouse, I learned to design using the mouse, so learning to type stuff (largely thanks to the command line and code editors) has been an, at times, painful process. However, I’ve noticed that I’m increasingly ignoring the mouse in favour of keyboard shortcuts.&lt;/p&gt;
+
+&lt;h2&gt;Quick App Opening&lt;/h2&gt;
+&lt;p&gt;To that end I&amp;#8217;ve taken the &amp;#8216;bold&amp;#8217; step to remove all applications from the dock.&lt;/p&gt;
+&lt;p&gt;&lt;img alt=&quot;image&quot; src=&quot;/images/dist/tumblr_inline_mze8s4vJsX1qfoiia.png&quot;/&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;(This is my dock now)&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;To open an app type &lt;code class=&quot;prettyprint&quot;&gt;cmd + space&lt;/code&gt;, which opens Spotlight in the top right of your screen. Start typing the name of the app and, usually after entering a couple of characters, it will appear at the top of the list - open it by hitting &lt;code class=&quot;prettyprint&quot;&gt;enter&lt;/code&gt;. This takes a split second to do and certainly beats grabbing the mouse and hunting around the dock for the app in question.&lt;/p&gt;
+&lt;p&gt;&lt;img alt=&quot;image&quot; src=&quot;/images/dist/tumblr_inline_mze8t9itmh1qfoiia.png&quot;/&gt;&lt;/p&gt;
+
+&lt;p&gt;Below are some of my other favourite OS X ‘speed-up’ techniques:&lt;/p&gt;
+&lt;h2&gt;Speedy App Switching&lt;/h2&gt;
+&lt;p&gt;I&amp;#8217;m sure most of you know this one already, but I&amp;#8217;m going to include it for completeness. To quickly switch between apps simply hit &lt;code class=&quot;prettyprint&quot;&gt;cmd + tab&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;img alt=&quot;image&quot; src=&quot;/images/dist/tumblr_inline_mze9bnJAcL1qfoiia.png&quot;/&gt;&lt;/p&gt;
+
+&lt;h2&gt;Switch Between Spaces Like a Pro&lt;/h2&gt;
+&lt;p&gt;I use &lt;a href=&quot;http://support.apple.com/kb/ht1624&quot; title=&quot;OS X Spaces&quot;&gt;Spaces&lt;/a&gt; a lot now, they&amp;#8217;re super useful. I can have one Space for Gmail, Tweetbot, Harvest app etc., another for Photoshop or Sketch, another for Sublime Text or PHPStorm, and so on.&lt;/p&gt;
+&lt;p&gt;Switching between spaces is fantastically easy and rather satisfying - I like watching each Space zip by! Type &lt;code class=&quot;prettyprint&quot;&gt;ctrl + [left cursor]&lt;/code&gt; or &lt;code class=&quot;prettyprint&quot;&gt;ctrl + [right cursor]&lt;/code&gt; to go left or right.&lt;/p&gt;
+&lt;p&gt;&lt;img alt=&quot;image&quot; src=&quot;/images/dist/tumblr_inline_mze9hx1eV71qfoiia.jpg&quot;/&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;NOTE:&lt;/strong&gt; If the shortcuts above don&amp;#8217;t work then you probably need to turn them on. Go to &lt;strong&gt;System Preferences &amp;gt; Keyboard &amp;gt; Shortcuts &amp;gt; Mission Control&lt;/strong&gt; and make sure &amp;#8220;Move left a space&amp;#8221; and &amp;#8220;Move right a space&amp;#8221; are ticked.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/images/dist/tumblr_inline_mzhjzw1AjP1qfoiia.png&quot;/&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;
+&lt;h2&gt;Fast Tab Switching in Chrome&lt;/h2&gt;
+&lt;p&gt;Most apps use tabs these days and Chrome is no exception. I often have quite a few tabs open, but switching between them is as easy as hitting &lt;code class=&quot;prettyprint&quot;&gt;alt + cmd + [left cursor]&lt;/code&gt; or &lt;code class=&quot;prettyprint&quot;&gt;alt + cmd + [right cursor]&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;img alt=&quot;image&quot; src=&quot;/images/dist/tumblr_inline_mze9ideO9P1qfoiia.png&quot;/&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;I&amp;#8217;m sure there are loads more, but these are the ones I use the most. Let me know if you have any other &amp;#8216;speed-up&amp;#8217; tips you couldn’t live without.&lt;/strong&gt;&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>A Beginner’s Guide to Using Grunt With Magento</title>
+   <link href="http://mattbailey.io/a-beginners-guide-to-using-grunt-with-magento"/>
+   <updated>2014-01-10T00:00:00+00:00</updated>
+   <id>http://mattbailey.io/a-beginners-guide-to-using-grunt-with-magento</id>
+   <content type="html">&lt;p&gt;&lt;img alt=&quot;image&quot; src=&quot;https://dl.dropboxusercontent.com/u/35123605/gpmd/article%20images/A%20Beginners%20Guide%20to%20Using%20Grunt%20With%20Magento/grunt-and-magento-logos.gif&quot;/&gt;&lt;/p&gt;
+&lt;p&gt;Following on from the success of my &lt;a href=&quot;http://blog.mattbailey.co/post/52949597525/front-end-process-flat-builds-and-automation&quot;&gt;Front-end Process, Flat Builds and Automation&lt;/a&gt; article last year I thought I&amp;#8217;d take things a step further and write about how I&amp;#8217;m starting to integrate &lt;a href=&quot;http://gruntjs.com/&quot;&gt;Grunt&lt;/a&gt; into my &lt;a href=&quot;http://magento.com/&quot;&gt;Magento&lt;/a&gt; front-end workflow.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Here&amp;#8217;s the result, I hope you find it informative and useful: &lt;a href=&quot;http://www.gpmd.co.uk/blog/a-beginners-guide-to-using-grunt-with-magento/&quot;&gt;A Beginner’s Guide to Using Grunt With Magento&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Make sure you put aside a few hours though, it&amp;#8217;s a long one!&amp;#8230;&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>generator-bones - A Yeoman Generator for Scaffolding Out a Basic Web Project</title>
+   <link href="http://mattbailey.io/generator-bones-a-yeoman-generator-for-scaffolding"/>
+   <updated>2013-10-28T00:00:00+00:00</updated>
+   <id>http://mattbailey.io/generator-bones-a-yeoman-generator-for-scaffolding</id>
+   <content type="html">&lt;p&gt;&lt;img src=&quot;/images/dist/tumblr_inline_mvdv3cFOm31qfoiia.jpg&quot;/&gt;&lt;/p&gt;
+
+&lt;p&gt;I thought I&amp;#8217;d publish a link to a little project I set up recently as it seems to be garnering some interest on Github - &lt;a href=&quot;https://github.com/matt-bailey/generator-bones&quot; title=&quot;generator-bones&quot;&gt;generator-bones&lt;/a&gt;, a &lt;a href=&quot;http://yeoman.io/&quot; title=&quot;Yeoman&quot;&gt;Yeoman&lt;/a&gt; generator for scaffolding out a basic web projects.&lt;/p&gt;
+&lt;p&gt;Yeoman is absolutely awesome, and if you&amp;#8217;re not using it yet you should check it out. It comes with a &lt;a href=&quot;https://github.com/yeoman/generator-webapp&quot; title=&quot;generator-webapp&quot;&gt;generator&lt;/a&gt; for scaffolding web projects, but it includes a lot of things I don&amp;#8217;t use, so I decided to create my own somewhat simplified version and include some other cool stuff that I do use - &lt;a href=&quot;https://github.com/filamentgroup/grunticon&quot; title=&quot;Grunticon&quot;&gt;Grunticon&lt;/a&gt; for automating your SVG workflow, and &lt;a href=&quot;https://github.com/assemble/assemble&quot; title=&quot;Assemble&quot;&gt;Assemble&lt;/a&gt; for building static HTML files from modular templates and data.&lt;/p&gt;
+&lt;p&gt;Enjoy!&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Graphic Novels You Should Be Reading</title>
+   <link href="http://mattbailey.io/graphic-novels-you-should-be-reading"/>
+   <updated>2013-08-03T00:00:00+00:00</updated>
+   <id>http://mattbailey.io/graphic-novels-you-should-be-reading</id>
+   <content type="html">&lt;p&gt;&lt;img alt=&quot;image&quot; src=&quot;/images/dist/tumblr_inline_mqykeipJuq1qz4rgp.jpg&quot;/&gt;&lt;/p&gt;
+
+&lt;p&gt;One of the loves in my life, other than web design/dev and movies, are graphic novels. The designer in me really gets a kick out of collecting gorgeously illustrated works of art. As with my taste in films I tend to lean towards darker stories and I would like to tell you about some of my recent discoveries. So, in no particular order&amp;#8230;&lt;/p&gt;
+
+&lt;h3&gt;&lt;a href=&quot;http://amzn.to/15CHS1K&quot; title=&quot;Locke &amp;amp; Key&quot; target=&quot;_blank&quot;&gt;Locke &amp;amp; Key&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;em&gt;Written by Joe Hill&lt;/em&gt;&lt;br/&gt;&lt;em&gt;&lt;span&gt;Illustrated by Gabriel Rodriguez&lt;/span&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://amzn.to/15CHS1K&quot; title=&quot;Locke &amp;amp; Key&quot; target=&quot;_blank&quot;&gt;&lt;img alt=&quot;image&quot; src=&quot;/images/dist/tumblr_inline_mqyl5euAqA1qz4rgp.jpg&quot;/&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;I honestly can&amp;#8217;t recommend this series by Joe Hill highly enough. The story is a brilliantly original dark fantasy, with jaw droppingly beautiful artwork. If you check out nothing else, check this one out.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;div&gt;&quot;Locke &amp;amp; Key tells of Keyhouse, an unlikely New England mansion, with fantastic doors that transform all who dare to walk through them&amp;#8230; and home to a hate-filled and relentless creature that will not rest until it forces open the most terrible door of them all&amp;#8230;&quot;&lt;/div&gt;
+&lt;/blockquote&gt;
+&lt;h3&gt;&lt;a href=&quot;http://amzn.to/13Dhz8l&quot; title=&quot;Rachel Rising&quot; target=&quot;_blank&quot;&gt;Rachel Rising&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;em&gt;Written and illustrated by Terry Moore&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://amzn.to/13Dhz8l&quot; title=&quot;Rachel Rising&quot; target=&quot;_blank&quot;&gt;&lt;img alt=&quot;image&quot; src=&quot;/images/dist/tumblr_inline_mqyl5tw9Ud1qz4rgp.jpg&quot;/&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;This is a gorgeously illustrated black and white independently published series, featuring an interesting take on the zombie genre, mixed up with a bit of Wiccan magic and demonic influence.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;div&gt;&quot;Rachel wakes up in a shallow grave. Horrified, she digs her way out and goes looking for her killer in the little town of Manson. What she finds is a trail of death following her and more than one blood-chilling suspect. Rachel Rising will haunt you for life&amp;#8230; and death.&quot;&lt;/div&gt;
+&lt;/blockquote&gt;
+&lt;h3&gt;&lt;a href=&quot;http://amzn.to/14RxOxO&quot; title=&quot;Severed&quot; target=&quot;_blank&quot;&gt;Severed&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;em&gt;Written by Scott Snyder and Scott Tuft&lt;/em&gt;&lt;br/&gt;&lt;em&gt;&lt;span&gt;Illustrated by Attila Futaki&lt;/span&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://amzn.to/14RxOxO&quot; title=&quot;Severed&quot; target=&quot;_blank&quot;&gt;&lt;img alt=&quot;image&quot; src=&quot;/images/dist/tumblr_inline_mqyl62CYQ21qz4rgp.jpg&quot;/&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Another genre bending piece, this one putting a spin on vampire/cannibal mythology. Dark and brooding in its tone, with a style of illustration to match.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;div&gt;&quot;1916. A man haunts the roads. A man with razor-sharp teeth and a hunger for flesh. When twelve year old Jack Garron runs away from home to find his father, a wayward minstrel who he hasn&amp;#8217;t seen since birth, he&amp;#8217;ll discover how quickly the American Dream can become a nightmare.&quot;&lt;/div&gt;
+&lt;/blockquote&gt;
+&lt;h3&gt;&lt;a href=&quot;http://amzn.to/13DhBwQ&quot; title=&quot;Revival&quot; target=&quot;_blank&quot;&gt;Revival&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;em&gt;Written by Tim Seeley&lt;/em&gt;&lt;br/&gt;&lt;em&gt;&lt;span&gt;Illustrated by Mike Norton&lt;/span&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://amzn.to/13DhBwQ&quot; title=&quot;Revival&quot; target=&quot;_blank&quot;&gt;&lt;img alt=&quot;image&quot; src=&quot;/images/dist/tumblr_inline_mqyl6cq9Mg1qz4rgp.jpg&quot;/&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Yet another spin on the zombie genre (we have an innate fascination with resurrection or &amp;#8216;life&amp;#8217; after death it seems), but there&amp;#8217;s also some kind of ghostly spiritual element to it as well. I adore the setting of this one - The cover describes it as a &amp;#8220;Rural Noir&amp;#8221; and in terms of location and atmosphere it reminds me a lot of films like Winter&amp;#8217;s Bone and TV shows like Twin Peaks, or the French series Les Revenants (The Returned).&lt;/p&gt;
+&lt;p&gt;On an aside, &lt;a href=&quot;http://www.imdb.com/title/tt2521668/&quot; title=&quot;Les Revenants (The Returned)&quot; target=&quot;_blank&quot;&gt;Les Revenants&lt;/a&gt; (the TV series, not the film) is a big recommendation - deeply creepy and unsettling!&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;div&gt;&quot;For one day in rural central Wisconsin the dead came back to life. Now it&amp;#8217;s up to Officer Dana Cypress to deal with the media scrutiny, religious zealots, and government quarantine that has come with them. In a town where the living have to learn to deal with those who are supposed to be dead, Officer Cypress must solve a brutal murder, and everyone, alive or undead, is a suspect.&quot;&lt;/div&gt;
+&lt;/blockquote&gt;
+&lt;h3&gt;&lt;a href=&quot;http://amzn.to/14Ry28p&quot; title=&quot;Sweet Tooth&quot; target=&quot;_blank&quot;&gt;Sweet Tooth&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;em&gt;Written and Illustrated by Jeff Lemire&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://amzn.to/14Ry28p&quot; title=&quot;Sweet Tooth&quot; target=&quot;_blank&quot;&gt;&lt;img alt=&quot;image&quot; src=&quot;/images/dist/tumblr_inline_mqyl6kXHCR1qz4rgp.jpg&quot;/&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;What will grab you most about this one is the deeply affecting story. It&amp;#8217;s essentially about a little &amp;#8216;boy&amp;#8217; (he appears to be half boy, half deer), trying to survive after some kind of catastrophic apocalypse (he describes it as &amp;#8220;the accident&amp;#8221;). Raised in isolation and protected by his father he has no concept of what lies outside of the woods where he lives. But when his father sadly passes away he&amp;#8217;s left on his own to fend for himself.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;div&gt;&quot;The world beyond the trees is almost dead. A decade ago the affliction raged like a forrest fire, killing billions, and the only children born since are a new breed of human/animal hybrid. Gus is one of these endangered children, a boy with a sweet soul, a sweeter tooth - and the features of a deer.&quot;&lt;/div&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;strong&gt;And there you have it - I hope you enjoy these as much as I did. Let me know in the comments section below if you have any recommendations in return.&lt;/strong&gt;&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>How To Create An App-Like Desktop Icon For Websites (Single-Window Chrome Instances) On OSX</title>
+   <link href="http://mattbailey.io/how-to-create-an-app-like-desktop-icon-for-websites"/>
+   <updated>2013-06-29T00:00:00+00:00</updated>
+   <id>http://mattbailey.io/how-to-create-an-app-like-desktop-icon-for-websites</id>
+   <content type="html">&lt;p&gt;&lt;span&gt;&lt;img alt=&quot;image&quot; src=&quot;/images/dist/tumblr_inline_mp5f2iNHda1qz4rgp.jpg&quot;/&gt;&lt;/span&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;span&gt;Since Google announced the demise of &lt;/span&gt;&lt;a href=&quot;http://googlereader.blogspot.co.uk/2013/03/powering-down-google-reader.html&quot; title=&quot;Google Reader&quot; target=&quot;_blank&quot;&gt;Reader&lt;/a&gt;&lt;span&gt; I&amp;#8217;ve been looking for an alternative, and I&amp;#8217;ve settled on &lt;/span&gt;&lt;a href=&quot;http://cloud.feedly.com/#welcome&quot; title=&quot;Feedly&quot; target=&quot;_blank&quot;&gt;Feedly&lt;/a&gt;&lt;span&gt; which is rather good. It&amp;#8217;s sad that Reader has been shut down, but I still need my daily dose of front-end news - if you haven&amp;#8217;t done it already, you should check out Paul Irish&amp;#8217;s curated selection of &lt;/span&gt;&lt;a href=&quot;http://www.paulirish.com/2011/web-browser-frontend-and-standards-feeds-to-follow/&quot; title=&quot;Front-end Feeds&quot; target=&quot;_blank&quot;&gt;front-end feeds&lt;/a&gt;&lt;span&gt;.&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;One thing Feedly doesn&amp;#8217;t have though is a desktop app, you have to use your browser, or a smart phone app. Whilst this isn&amp;#8217;t a big deal I like having some things running in separate windows that won&amp;#8217;t be affected if, for example, I accidentally close my browser by mistake.&lt;/p&gt;
+&lt;p&gt;Fortunately this is possible to do using a brilliant little &lt;a href=&quot;https://gist.github.com/demonbane/1065791&quot; title=&quot;makeapp.sh&quot; target=&quot;_blank&quot;&gt;shell script&lt;/a&gt;. Read on, to find out how.&lt;/p&gt;
+
+&lt;ol&gt;&lt;li&gt;&lt;a href=&quot;https://gist.github.com/demonbane/1065791/download&quot; title=&quot;makeapp.sh&quot; target=&quot;_blank&quot;&gt;Download the shell script from here&lt;/a&gt; and put it in a folder somewhere, such as &lt;code class=&quot;prettyprint&quot;&gt;~/Documents/Scripts&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;From the command line navigate into the Scripts folder: &lt;code class=&quot;prettyprint&quot;&gt;cd ~/Documents/Scripts&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Next you need to make the shell script executable from the command line: &lt;code class=&quot;prettyprint&quot;&gt;chmod +x makeapp.sh&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Then you can run the shell script like this: &lt;code class=&quot;prettyprint&quot;&gt;./makeapp.sh&lt;/code&gt;&lt;/li&gt;
+&lt;/ol&gt;&lt;p&gt;When you run the shell script you will be asked three fairly self-explanatory things:&lt;/p&gt;
+&lt;ol&gt;&lt;li&gt;&quot;What should the Application be called (no spaces allowed e.g. GCal)?&quot;&lt;/li&gt;
+&lt;li&gt;&quot;What is the url (e.g. &lt;a href=&quot;https://www.google.com/calendar/render&quot;&gt;https://www.google.com/calendar/render&lt;/a&gt;)?&amp;#8221;&lt;/li&gt;
+&lt;li&gt;&quot;What is the full path to the icon (e.g. /Users/username/Desktop/icon.png)?&quot;&lt;/li&gt;
+&lt;/ol&gt;&lt;p&gt;Type your response to each question and hit Enter. I found that the last step, where you choose your icon, was a little unpredictable and didn&amp;#8217;t always work. But don&amp;#8217;t worry, I found a way round it - more on that later.&lt;/p&gt;
+&lt;p&gt;Once you&amp;#8217;re done you should find a new app icon in your Applications folder. If you double click on this icon the URL you entered should open as a single-window Chrome instance (without the browser bar or any of the other browser chrome), meaning that it will act like a separate app, so if you happen to close your main Chrome windows your new &amp;#8216;app&amp;#8217; won&amp;#8217;t close as well.&lt;/p&gt;
+&lt;p&gt;&lt;img alt=&quot;image&quot; src=&quot;/images/dist/tumblr_inline_mp5fgyLI5Y1qz4rgp.jpg&quot;/&gt;&lt;/p&gt;
+
+&lt;h2&gt;A Note On Icons&lt;/h2&gt;
+&lt;p&gt;It took me a little bit of experimenting to get the app icon working as I wanted. I ended up adding it manually and I&amp;#8217;ll outline my experience here in case it&amp;#8217;s helpful for others, using Feedly as my example.&lt;/p&gt;
+&lt;p&gt;My process does require spending a little money on an app called &lt;a href=&quot;http://www.kodlian.com/apps/icon-slate&quot; title=&quot;IconSlate&quot; target=&quot;_blank&quot;&gt;IconSlate&lt;/a&gt; (£2.99 to be precise, or $4.99 if you&amp;#8217;re in the US), but it&amp;#8217;s a fantastic app and well worth the tiny amount of money. It creates proper .icns or .ico files, with your icon at six different sizes, from 512px down to 16px. You don&amp;#8217;t have to use this app, but you may find your icons are less predictable as a result.&lt;/p&gt;
+&lt;p&gt;First of all you need to find an image to use as an icon. A quick google images search came up with this large PNG with a transparent background - perfect:&lt;/p&gt;
+&lt;p&gt;&lt;img alt=&quot;image&quot; src=&quot;/images/dist/tumblr_inline_mp5cr4kN0R1qz4rgp.png&quot;/&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;
+&lt;p&gt;Before I can use it though I need to do a little tweaking.&lt;/p&gt;
+&lt;p&gt;Opening it in Photoshop shows that it&amp;#8217;s really too big, and it&amp;#8217;s not square either. First I set it to a resolution of 72 DPI and a width of 512 pixels. Then I increased the canvas height so that it was also 512 pixels, and resaved the file.&lt;/p&gt;
+&lt;p&gt;Next, open IconSlate, go to &amp;#8216;File &amp;gt; Open&amp;#8217;, browse to your saved PNG file and open it. You should now see an IconSlate window that looks like this:&lt;/p&gt;
+&lt;p&gt;&lt;img alt=&quot;image&quot; src=&quot;/images/dist/tumblr_inline_mp5d80dUkO1qz4rgp.png&quot;/&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span&gt;All that remains to do now is to click &amp;#8216;Build&amp;#8217; and to save your generated icons to a folder somewhere such as &lt;/span&gt;&lt;code class=&quot;prettyprint&quot;&gt;~/Pictures/App Icons&lt;/code&gt;&lt;span&gt;.&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;Once you&amp;#8217;ve done that, open a Finder window and browse to the &lt;code class=&quot;prettyprint&quot;&gt;Applications&lt;/code&gt; folder. Find the app (which will probably have a generic app icon), click on it once and hit &amp;#8216;cmd + I&amp;#8217; (or go to &amp;#8216;File &amp;gt; Get Info&amp;#8217;).&lt;/p&gt;
+&lt;p&gt;Finally, find your &amp;#8216;.icns&amp;#8217; file and simply &amp;#8216;drag and drop&amp;#8217; it onto the generic app icon at the top left of the Get Info window, which should now look like this:&lt;/p&gt;
+&lt;p&gt;&lt;img alt=&quot;image&quot; src=&quot;/images/dist/tumblr_inline_mp5e5eXImP1qz4rgp.png&quot;/&gt;&lt;/p&gt;
+&lt;p&gt;And there you have it, a beautiful icon for your app which, if you add it to your dock, will look great!&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Front-end Process, Flat Builds and Automation</title>
+   <link href="http://mattbailey.io/front-end-process-flat-builds-and-automation"/>
+   <updated>2013-06-14T00:00:00+00:00</updated>
+   <id>http://mattbailey.io/front-end-process-flat-builds-and-automation</id>
+   <content type="html">&lt;p&gt;I recently published a four part series of articles that document my front-end process at &lt;a href=&quot;http://www.gpmd.co.uk&quot; title=&quot;GPMD&quot; target=&quot;_blank&quot;&gt;GPMD&lt;/a&gt;. They cover using &lt;a href=&quot;http://yeoman.io/&quot; title=&quot;Yeoman&quot; target=&quot;_blank&quot;&gt;Yeoman&lt;/a&gt; to scaffold projects, &lt;a href=&quot;http://gruntjs.com/&quot; title=&quot;Grunt JS&quot; target=&quot;_blank&quot;&gt;Grunt&lt;/a&gt; to automate tasks, and &lt;a href=&quot;https://github.com/csswizardry/inuit.css/&quot; title=&quot;inuit.css&quot; target=&quot;_blank&quot;&gt;inuit.css&lt;/a&gt; as a CSS framework.&lt;/p&gt;
+&lt;p&gt;It took a while to put it all together, but I think it was really useful for my own learning. Hopefully it will help others too:&lt;/p&gt;
+&lt;ul&gt;&lt;li&gt;&lt;a href=&quot;http://www.gpmd.co.uk/blog/front-end-process-flat-builds-and-automation-part-1-introduction/&quot; title=&quot;Front-end Process - Flat Builds and Automation, Part 1: Introduction&quot; target=&quot;_blank&quot;&gt;Front-end Process - Flat Builds and Automation, Part 1: Introduction&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://www.gpmd.co.uk/blog/front-end-process-flat-builds-and-automation-part-2-environment-setup-and-yeoman/&quot; title=&quot;Front-end Process - Flat Builds and Automation, Part 2: Environment Setup &amp;amp; Yeoman&quot; target=&quot;_blank&quot;&gt;Front-end Process - Flat Builds and Automation, Part 2: Environment Setup &amp;amp; Yeoman&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://www.gpmd.co.uk/blog/front-end-process-flat-builds-and-automation-part-3-grunt-tasks/&quot; title=&quot;Front-end Process - Flat Builds and Automation, Part 3: Grunt Tasks&quot; target=&quot;_blank&quot;&gt;Front-end Process - Flat Builds and Automation, Part 3: Grunt Tasks&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://www.gpmd.co.uk/blog/front-end-process-flat-builds-and-automation-part-4-css-framework/&quot; title=&quot;Front-end Process - Flat Builds and Automation, Part 4: CSS Framework&quot; target=&quot;_blank&quot;&gt;Front-end Process - Flat Builds and Automation, Part 4: CSS Framework&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Grunt - Synchronised Testing Between Browsers/Devices</title>
+   <link href="http://mattbailey.io/grunt-synchronised-testing-between-browsers-devices"/>
+   <updated>2013-05-13T00:00:00+00:00</updated>
+   <id>http://mattbailey.io/grunt-synchronised-testing-between-browsers-devices</id>
+   <content type="html">&lt;p&gt;Today I discovered how easy it is to synchronise testing between browsers/devices when using &lt;code class=&quot;prettyprint&quot;&gt;grunt server&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;&lt;strong&gt;UPDATE:&lt;/strong&gt; It has been pointed out to me that I should make it clear that &lt;code class=&quot;prettyprint&quot;&gt;grunt server&lt;/code&gt; is part of Yeoman&amp;#8217;s Gruntfile. If you&amp;#8217;ve set up your project not using Yeoman then this command might be different.&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;When you run &lt;code class=&quot;prettyprint&quot;&gt;grunt server&lt;/code&gt; from the root directory of your project it watches for changes to your site files and refreshes the browser window automatically (using the grunt task &lt;a href=&quot;https://github.com/gruntjs/grunt-contrib-watch&quot; title=&quot;grunt-contrib-watch&quot;&gt;grunt-contrib-watch&lt;/a&gt;).&lt;/p&gt;
+&lt;p&gt;If you used &lt;a href=&quot;http://yeoman.io/&quot; title=&quot;Yeoman&quot;&gt;Yeoman&lt;/a&gt; to scaffold your project (Yeoman installs &lt;a href=&quot;http://bower.io/&quot; title=&quot;Bower&quot;&gt;Bower&lt;/a&gt; and &lt;a href=&quot;http://gruntjs.com/&quot; title=&quot;Grunt&quot;&gt;Grunt&lt;/a&gt; in one neat package, you should definitely check it out) it would have created a &lt;a href=&quot;http://gruntjs.com/sample-gruntfile&quot; title=&quot;Gruntfile&quot;&gt;Gruntfile&lt;/a&gt; for you with all the necessary code to get the live reload task up-and-running. There&amp;#8217;s only one thing you need to change, and that&amp;#8217;s the &lt;code class=&quot;prettyprint&quot;&gt;hostname&lt;/code&gt; option. Find the &lt;code class=&quot;prettyprint&quot;&gt;connect&lt;/code&gt; section and if the &lt;code class=&quot;prettyprint&quot;&gt;hostname&lt;/code&gt; is set to &lt;code class=&quot;prettyprint&quot;&gt;localhost&lt;/code&gt; change it to &lt;code class=&quot;prettyprint&quot;&gt;0.0.0.0&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Next, run &lt;code class=&quot;prettyprint&quot;&gt;grunt server&lt;/code&gt; and a browser window should open showing you your dev site. The url will be something like &lt;code class=&quot;prettyprint&quot;&gt;localhost:9000&lt;/code&gt; (9000 being the port).&lt;/p&gt;
+&lt;p&gt;Then, on your command line run &lt;code class=&quot;prettyprint&quot;&gt;ifconfig&lt;/code&gt; (&lt;strong&gt;Update:&lt;/strong&gt; &lt;a href=&quot;https://twitter.com/SaraSoueidan/status/390157511585570816&quot;&gt;it has been pointed out to me&lt;/a&gt; that `ifconfig` is for OS X - on Windows I believe it should be `ipconfig`) and make a note of your computer&amp;#8217;s internal IP address. It will be something like &lt;code class=&quot;prettyprint&quot;&gt;192.168.100.36&lt;/code&gt; (the last two numbers in the sequence could be anything).&lt;/p&gt;
+&lt;p&gt;Finally, open the device you want to synchronise to (such as your iPhone), and enter the internal IP address of your computer followed by the port number – it should look something like this: &lt;code class=&quot;prettyprint&quot;&gt;192.168.100.36:9000&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;Now when you make changes to your project files you should see both browser windows update together.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;&lt;strong&gt;There is one caveat&lt;/strong&gt; - I think the portable device must be on the same network as the computer, which shouldn&amp;#8217;t be an issue if they&amp;#8217;re both connected to the same WiFi network.&lt;/em&gt;&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>SilverStripe CMS - Adding a TinyMCE Editor to Widgets</title>
+   <link href="http://mattbailey.io/silverstripe-cms-adding-a-tinymce-editor-to-widgets"/>
+   <updated>2013-04-17T00:00:00+00:00</updated>
+   <id>http://mattbailey.io/silverstripe-cms-adding-a-tinymce-editor-to-widgets</id>
+   <content type="html">&lt;p&gt;&lt;img alt=&quot;image&quot; src=&quot;/images/dist/tumblr_inline_mleof6TvYR1qz4rgp.png&quot;/&gt;&lt;/p&gt;
+
+&lt;p&gt;I’m working on a &lt;a href=&quot;http://www.silverstripe.org/&quot; title=&quot;Silverstripe CMS&quot;&gt;Silverstripe&lt;/a&gt; site at the moment, and I’m widgetising a lot of the frontend components to make the site more flexible for the client. Most of the widgets have been fairly simple to set up, but I’m working on one with a &lt;code class=&quot;prettyprint&quot;&gt;textarea&lt;/code&gt; that would benfit from using &lt;a href=&quot;http://www.tinymce.com/&quot; title=&quot;TinyMCE&quot;&gt;TinyMCE&lt;/a&gt; (the built in SilverStripe WYSIWYG editor). The problem is that the widgets module doesn’t support &lt;code class=&quot;prettyprint&quot;&gt;HtmlEditorField&lt;/code&gt; form fields, so I set out to find a way round this.&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;Please bear in mind, I’m a designer who does a bit of coding, so delving deep into the core code of SilverStripe and extending classes, models, decorators or whatever wasn’t really an option.&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;The solution that I came up with is actually quite simple, but it has one disadvantage - it doesn’t integrate with the SilverStripe files library or SiteTree like the editor normally does. In laymans terms this means that if you use the Image or Link buttons you can only manually type/paste in URLs. Personally this serves my purposes; I just wanted a simple editor with very basic style controls, like Bold, Italic, Unordered List and so on. If this suits you too, then read on&amp;#8230;&lt;/p&gt;
+&lt;p&gt;First of all create a file for some javascript in &lt;code class=&quot;prettyprint&quot;&gt;mysite/&lt;/code&gt;. I’ve simply called mine &lt;code class=&quot;prettyprint&quot;&gt;admin.js/&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;In this file we need to add some code to initialise the editor. I’ve put this into a function so I can reuse it, the reason being is that the editor needs to be not only initialised on page load, but also after any ajax events. Here’s the code:&lt;/p&gt;
+&lt;pre class=&quot;prettyprint&quot;&gt;/**
+ * Initialise TinyMCE
+ */
+function initialiseTinyMCE() {
+    tinyMCE.init({
+        mode: &quot;specific_textareas&quot;,
+        editor_selector: &quot;textarea&quot;,
+        width: &quot;356&quot;,
+        theme_advanced_buttons1 : &quot;bold,italic,separator,justifyleft,justifycenter,justifyright,justifyfull&quot;,
+        theme_advanced_buttons2 : &quot;bullist,numlist,separator,link,unlink,image,code&quot;,
+        theme_advanced_buttons3 : &quot;formatselect&quot;,
+        extended_valid_elements: &quot;img[class|id|src|alt|title|onmouseover|onmouseout|name|usemap]&quot;,
+        theme_advanced_blockformats : &quot;p,div,h1,h2,h3,h4,h5,h6,blockquote&quot;
+    });
+}
+
+/**
+ * After document ready calls
+ */
+jQuery(document).ready(function() {
+    initialiseTinyMCE();
+});
+
+/**
+ * After ajaxStop calls
+ */
+jQuery(document).ajaxStop(function() {
+    initialiseTinyMCE();
+});
+&lt;/pre&gt;
+&lt;p&gt;All that remains is to load the javascript. You can do this by adding the following code to &lt;code class=&quot;prettyprint&quot;&gt;mysite/_config.php&lt;/code&gt;:&lt;/p&gt;
+&lt;pre class=&quot;prettyprint&quot;&gt;LeftAndMain::require_javascript('mysite/admin.min.js');&lt;/pre&gt;
+&lt;p&gt;All being well you should see an editor in your widget like this (obviously not on an angle - that&amp;#8217;s just me being arty-farty):&lt;/p&gt;
+&lt;p&gt;&lt;img alt=&quot;image&quot; src=&quot;/images/dist/tumblr_inline_mleogpN84F1qz4rgp.jpg&quot;/&gt;&lt;/p&gt;
+
+&lt;p&gt;So, let’s break the above code down a bit.&lt;/p&gt;
+&lt;pre class=&quot;prettyprint&quot;&gt;mode: &quot;specific_textareas&quot;,
+editor_selector: &quot;textarea&quot;,
+&lt;/pre&gt;
+&lt;p&gt;These two lines tell TinyMCE the elements to turn into editors. In this case Silverstripe only adds the class &lt;span&gt;textarea&lt;/span&gt;&lt;span&gt; to textareas&lt;/span&gt;&lt;span&gt;. It worries me a bit that this is not very specific (it will effect any element on the page with the class &lt;/span&gt;&lt;code class=&quot;prettyprint&quot;&gt;textarea&lt;/code&gt;&lt;span&gt;), but it hasn’t caused a problem so far.&lt;/span&gt;&lt;/p&gt;
+&lt;pre class=&quot;prettyprint&quot;&gt;width: &quot;356&quot;,
+&lt;/pre&gt;
+&lt;p&gt;This sets the width of the editor, obviously ;)&lt;/p&gt;
+&lt;pre class=&quot;prettyprint&quot;&gt;theme_advanced_buttons1 : &quot;bold,italic,separator,justifyleft,justifycenter,justifyright,justifyfull&quot;,
+theme_advanced_buttons2 : &quot;bullist,numlist,separator,link,unlink,image,code&quot;,
+theme_advanced_buttons3 : &quot;formatselect&quot;,
+&lt;/pre&gt;
+&lt;p&gt;&lt;code class=&quot;prettyprint&quot;&gt;theme_advanced_buttons&lt;/code&gt; defines the buttons to use (there are three rows).&lt;/p&gt;
+&lt;pre class=&quot;prettyprint&quot;&gt;extended_valid_elements: &quot;img[class|id|src|alt|title|onmouseover|onmouseout|name|usemap]&quot;,
+&lt;/pre&gt;
+&lt;p&gt;&lt;code class=&quot;prettyprint&quot;&gt;extended_valid_elements&lt;/code&gt; defines the options to show in the image pop-up. The reason I’m using this is because I wanted to remove the width and height attributes - for anyone familiar with responsive web design you’ll know why this is neccessary, but in simple terms it allows images to scale within their containers, rather than remaining a fixed size.&lt;/p&gt;
+&lt;pre class=&quot;prettyprint&quot;&gt;theme_advanced_blockformats : &quot;p,div,h1,h2,h3,h4,h5,h6,blockquote&quot;
+&lt;/pre&gt;
+&lt;p&gt;&lt;code class=&quot;prettyprint&quot;&gt;theme_advanced_blockformats&lt;/code&gt; defines which html tags to show in the &amp;#8216;paragraph&amp;#8217; selectlist.&lt;/p&gt;
+&lt;p&gt;In terms of running the function you’ll see I’m calling it in two places. &lt;code class=&quot;prettyprint&quot;&gt;jQuery(document).ready(function() { ...&lt;/code&gt; you’ll probably already be very familiar with. Any code in here will run when the document is ready. &lt;code class=&quot;prettyprint&quot;&gt;jQuery(document).ajaxStop(function() { ...&lt;/code&gt; is something I learned only recently (halleujah for jQuery). Any code in here runs after every ajax event has finished - perfect!&lt;/p&gt;
+&lt;p&gt;TinyMCE has a multitude of &lt;a href=&quot;http://www.tinymce.com/wiki.php/configuration&quot; title=&quot;TinyMCE configuration options&quot;&gt;configuration options&lt;/a&gt;, which you should check out.&lt;/p&gt;
+&lt;p&gt;I’ve only just set this up, so it’s not been tested much yet. If I come across any issues I’ll update the post. If anyone else notices anything let me know. That aside I hope this post helps someone else out.&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Extending the Boostrap grid system</title>
+   <link href="http://mattbailey.io/extending-the-boostrap-grid-system"/>
+   <updated>2013-04-13T00:00:00+00:00</updated>
+   <id>http://mattbailey.io/extending-the-boostrap-grid-system</id>
+   <content type="html">&lt;p&gt;&lt;img alt=&quot;image&quot; src=&quot;/images/dist/tumblr_inline_ml7do2Wwbr1qz4rgp.jpg&quot;/&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a title=&quot;Bootstrap&quot;&gt;Bootstrap&lt;/a&gt; has a great grid system which is really easy to use. However, I recently encountered an interesting challenge that required me to extend the funstionality a bit.&lt;/p&gt;
+
+&lt;p&gt;&lt;img alt=&quot;image&quot; src=&quot;/images/dist/tumblr_inline_ml7doyVTKr1qz4rgp.png&quot;/&gt;&lt;/p&gt;
+&lt;p&gt;Imagine you have a fairly standard layout comprising of a 9 column main content area and a 3 column side bar. What if you then want to split your main content column by nesting 2, or 4 columns - If you remember any of your Maths from your school days you’ll know that 2 and 4 don’t divide equally into 9, so you can’t use any of the built in &lt;strong&gt;Bootstrap&lt;/strong&gt; &lt;code class=&quot;prettyprint&quot;&gt;.span&lt;/code&gt; classes to set the desired widths.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;div&gt;9 columns ÷ 2 = 4.5 columns ☹&lt;br/&gt;9 columns ÷ 4 = 2.25 columns ☹&lt;/div&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;To do this we can fortunately inherit all the existing &lt;strong&gt;Bootstrap&lt;/strong&gt; &lt;code class=&quot;prettyprint&quot;&gt;span&lt;/code&gt; styling by simply including the word &lt;code class=&quot;prettyprint&quot;&gt;span&lt;/code&gt; in our new classes. All that remains for us to do is define the new widths.&lt;/p&gt;
+&lt;p&gt;In my case I need to set up two new styles: &lt;code class=&quot;prettyprint&quot;&gt;.span-quarter&lt;/code&gt; and &lt;code class=&quot;prettyprint&quot;&gt;.span-half&lt;/code&gt;. Now here comes the tricky bit. Not only do I have to work out the correct percentage widths for each style, but I have to work them out for each break point. Rather than go into detail here on how to work out percentage widths for responsive design, you can &lt;a href=&quot;http://blog.teamtreehouse.com/beginners-guide-to-responsive-web-design&quot; title=&quot;Beginners Guide to Responsive Web Design&quot;&gt;check out this article on the TreeHouse blog&lt;/a&gt;. The numbers you’ll get will be pretty funky, but that’s normal.&lt;/p&gt;
+&lt;p&gt;Now I have my widths I need to set these up with the new classes and media queries. This is where using a &lt;strong&gt;CSS&lt;/strong&gt; preprocessor like &lt;a href=&quot;http://lesscss.org/&quot; title=&quot;LESS CSS&quot;&gt;LESS&lt;/a&gt; is a godsend. I’m a big fan of trying to keep things &lt;a href=&quot;http://en.wikipedia.org/wiki/Don't_repeat_yourself&quot;&gt;DRY&lt;/a&gt;, and this is a prime example. There’s going to be quite a bit of code, so the more I can put into variables and mixins the better.&lt;/p&gt;
+&lt;p&gt;Looking at the &lt;strong&gt;Bootstrap&lt;/strong&gt; &lt;strong&gt;LESS&lt;/strong&gt; files I can extract the relevant media query arguments and put them into variables for later use. As &lt;strong&gt;LESS&lt;/strong&gt; doesn’t recognise the arguments I can put them in escaped strings: &lt;code class=&quot;prettyprint&quot;&gt;~&quot;[string]&quot;&lt;/code&gt;.&lt;/p&gt;
+&lt;pre class=&quot;prettyprint&quot;&gt;/* Media query variables */
+
+// Large desktop and up
+@large-desktop-and-up: ~&quot;(min-width: 1200px)&quot;;
+
+// Tablet to desktop
+@tablet-to-desktop: ~&quot;(min-width: 768px) and (max-width: 979px)&quot;;
+
+// Landscape phone to desktop/tablet
+@landscape-phone-to-tablet: ~&quot;(max-width: 767px)&quot;;
+&lt;/pre&gt;
+&lt;p&gt;Next I create the width mixins. I’m doing them as mixins because I need to repeat the width code in each media query.&lt;/p&gt;
+&lt;pre class=&quot;prettyprint&quot;&gt;/* Width mixins */
+
+.span-quarter (@value) {
+    .span-quarter { width: @value; }
+}
+.span-half (@value) {
+    .span-half { width: @value; }
+}
+&lt;/pre&gt;
+&lt;p&gt;Finally, I can now use my variables and mixins to scaffold out my new column widths. The first width is the default desktop width, followed by the various break points. Notice the crazy percentages! Trust me, they work.&lt;/p&gt;
+&lt;pre class=&quot;prettyprint&quot;&gt;/* .span-quarter */
+
+// Default (desktop)
+.span-quarter (22.22222222222222%);
+
+// Large desktop and up
+@media @large-desktop-and-up {
+    .span-quarter (21.66666666666667%);
+}
+
+// Tablet to desktop
+@media @tablet-to-desktop {
+    .span-quarter (46.415770609319%);
+}
+
+// Landscape phone to desktop/tablet
+@media @landscape-phone-to-tablet {
+    .span-quarter (100%);
+}
+
+/* .span-half */
+
+// Default (desktop)
+.span-half (47.22222222222222%);
+
+// Large desktop and up
+@media @large-desktop-and-up {
+    .span-half (46.66666666666667%);
+}
+
+// Tablet to desktop
+@media @tablet-to-desktop {
+    .span-half (96.415770609319%);
+}
+
+// Landscape phone to desktop/tablet
+@media @landscape-phone-to-tablet {
+    .span-half (100%);
+}
+&lt;/pre&gt;
+&lt;p&gt;The resulting CSS output is below. &lt;em&gt;“But that’s less code than what you have above”&lt;/em&gt; I hear you say. Well true, but should I wish to create more media query blocks in the future I’ve now got my mixins set up.&lt;/p&gt;
+&lt;pre class=&quot;prettyprint&quot;&gt;/* .span-quarter */
+.span-quarter {
+    width: 22.22222222222222%;
+}
+@media (min-width: 1200px) {
+    .span-quarter {
+        width: 21.66666666666667%;
+    }
+}
+@media (min-width: 768px) and (max-width: 979px) {
+    .span-quarter {
+        width: 46.415770609319%;
+    }
+}
+@media (max-width: 767px) {
+    .span-quarter {
+        width: 100%;
+    }
+}
+/* .span-half */
+.span-half {
+    width: 47.22222222222222%;
+}
+@media (min-width: 1200px) {
+    .span-half {
+        width: 46.66666666666667%;
+    }
+}
+@media (min-width: 768px) and (max-width: 979px) {
+    .span-half {
+        width: 96.415770609319%;
+    }
+}
+@media (max-width: 767px) {
+    .span-half {
+        width: 100%;
+    }
+}
+&lt;/pre&gt;
+&lt;p&gt;So that’s it, &lt;strong&gt;Bootstrap&lt;/strong&gt; extended. Responsive widths defined, enabling 2 or 4 column nesting in a 9 column main content area.&lt;/p&gt;
+&lt;p&gt;&lt;img alt=&quot;image&quot; src=&quot;/images/dist/tumblr_inline_ml7dvrPJ8m1qz4rgp.png&quot;/&gt;&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Gettin' sassy with SASS</title>
+   <link href="http://mattbailey.io/gettin-sassy-with-sass"/>
+   <updated>2013-04-10T00:00:00+00:00</updated>
+   <id>http://mattbailey.io/gettin-sassy-with-sass</id>
+   <content type="html">&lt;p&gt;&lt;img alt=&quot;image&quot; src=&quot;/images/dist/tumblr_inline_ml1lk2CJkP1qz4rgp.gif&quot;/&gt;&lt;/p&gt;
+
+&lt;h2&gt;CSS preprocessors rock, fact!&lt;/h2&gt;
+&lt;p&gt;As a long time &lt;a href=&quot;http://lesscss.org/&quot;&gt;LESS&lt;/a&gt; user I don’t need any convincing about the benefits of CSS pre-processors. If you’re not using one already you really should be - my productivity has increased exponentially as a result. I’ve used &lt;strong&gt;LESS&lt;/strong&gt; on all of &lt;a href=&quot;http://www.gpmd.co.uk/&quot;&gt;GPMD&lt;/a&gt;’s projects since I started working here; &lt;a href=&quot;http://www.thewatchgallery.co.uk/&quot;&gt;The Watch Gallery&lt;/a&gt;, &lt;a href=&quot;http://www.barnardlevit.co.uk/&quot;&gt;Barnard Levit&lt;/a&gt; and &lt;a href=&quot;http://www.buddshirts.co.uk/&quot;&gt;Budd Shirts&lt;/a&gt; to name a few.&lt;/p&gt;
+
+&lt;h2&gt;LESS or SASS?&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;LESS&lt;/strong&gt; has played a major part in our front-end design process through the use of fantastic frameworks and tools such as &lt;a href=&quot;http://twitter.github.io/bootstrap/&quot;&gt;Bootstrap&lt;/a&gt; and &lt;a href=&quot;http://semantic.gs/&quot;&gt;The Semantic Grid System&lt;/a&gt;. I’ve been aware of &lt;a href=&quot;http://sass-lang.com/&quot;&gt;SASS&lt;/a&gt; for about as long as &lt;strong&gt;LESS&lt;/strong&gt; (maybe even longer) but for a number of reasons I’ve never gone down that path. The main reason for me is that &lt;strong&gt;LESS&lt;/strong&gt; seemed a bit more approachable - It has a nice, easy-to-follow website, and it doesn’t require any arcane knowledge of &lt;strong&gt;ruby gems&lt;/strong&gt; (say what!?) or command-line-fu.&lt;/p&gt;
+&lt;h2&gt;Command line fears&lt;/h2&gt;
+&lt;p&gt;However, even though I’m a designer first and foremost, as time has gone by I’ve started using the command line more and more. &lt;strong&gt;Git&lt;/strong&gt; is now a staple part of my daily diet, and I’ve started looking more into front-end process automation (see my article on &lt;a href=&quot;http://blog.mattbailey.co/post/45519082789/a-beginners-guide-to-grunt&quot;&gt;Grunt&lt;/a&gt; for beginners). My plan is to build on the front-end process here at &lt;strong&gt;GPMD&lt;/strong&gt;, introducing tools such as &lt;a href=&quot;http://yeoman.io/&quot;&gt;Yeoman&lt;/a&gt; - comprising of &lt;strong&gt;Yo&lt;/strong&gt; for scaffolding, &lt;strong&gt;Bower&lt;/strong&gt; for dependency management, and &lt;strong&gt;Grunt&lt;/strong&gt; for the build process.&lt;/p&gt;
+&lt;p&gt;As a result of all this other command line ‘stuff’ I’m exposing myself to, I’m finding myself not so scared of the command line any more, and honestly, installing and using &lt;strong&gt;SASS&lt;/strong&gt; really isn’t that tricky. In fact, if you don’t want to touch the command line you don’t have to - just download &lt;a href=&quot;http://incident57.com/codekit/&quot;&gt;CodeKit&lt;/a&gt; (if you’re on a Mac - Not sure if there’s an equivalent Win/Linux app?), write your &lt;strong&gt;SASS&lt;/strong&gt;, and let &lt;strong&gt;CodeKit&lt;/strong&gt; do all the hard work!&lt;/p&gt;
+&lt;h2&gt;But even so, why change from LESS to SASS?&lt;/h2&gt;
+&lt;p&gt;Firstly, let me just set the record straight - &lt;strong&gt;LESS&lt;/strong&gt; works for me. It does everything I want it to do, and does it well. If you’re already using &lt;strong&gt;LESS&lt;/strong&gt; and are happy with it then don’t feel pressured to change - not only is it brilliant, but it’s in active development so will be around for the foreseeable future! But just because something works doesn’t mean there isn’t something better you could use - I don’t agree with the old adage &lt;em&gt;“if it ain’t broke, don’t fix it”&lt;/em&gt; - that’s totally counter intuitive to progress people!&lt;/p&gt;
+&lt;p&gt;I’m also not ashamed to admit that I’m easily influenced. In order to stay in touch with the web design world at large I listen to quite a few design/front-end podcasts. Overwhelmingly most of the designers/front-end devs that I admire and respect (I’m talking the &lt;strong&gt;Chris Coyiers&lt;/strong&gt; of this world) are using &lt;strong&gt;SASS&lt;/strong&gt;. I want to see what all the fuss is about, and I don’t want to be left behind - that’s just me.&lt;/p&gt;
+&lt;p&gt;&lt;strike&gt;I’m also aware that &lt;strong&gt;SASS&lt;/strong&gt; is more ‘powerful’ than &lt;strong&gt;LESS&lt;/strong&gt;, with added coolness such as nesting media queries, proper logic and looping capabilities, the ability to @extend styles and so on. Although this hasn’t been an issue for me yet, I can see a time when some of these things will probably prove to be incredibly useful.&lt;/strike&gt;*&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;*Update, 3 Aug 2013:&lt;/strong&gt; As &lt;a href=&quot;https://twitter.com/gorkamolero&quot; title=&quot;Gorka Molero&quot; target=&quot;_blank&quot;&gt;@Gorka&lt;/a&gt; points out in the comments below, as of v1.4.0&amp;#160;&lt;strong&gt;LESS&lt;/strong&gt; now supports nested media queries, looping (of sorts), extends and so on.&lt;/p&gt;
+&lt;h2&gt;Gettin&amp;#8217; sassy with SASS&lt;/h2&gt;
+&lt;p&gt;So the long and short of it is this: &lt;strong&gt;SASS&lt;/strong&gt; is something I’ve been flirting with for ages - &lt;em&gt;a little nudge here and a little wink there&lt;/em&gt; - and I’ve finally drummed up the courage to ask her out on a date! I’m a little apprehensive, but excited, and I have a good feeling about this relationship. Wish me luck, and I&amp;#8217;ll let you know how it goes!&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Film Podcasts You Should Be Listening To</title>
+   <link href="http://mattbailey.io/film-podcasts-you-should-be-listening-to"/>
+   <updated>2013-04-03T00:00:00+00:00</updated>
+   <id>http://mattbailey.io/film-podcasts-you-should-be-listening-to</id>
+   <content type="html">&lt;p&gt;&lt;img src=&quot;/images/dist/tumblr_inline_mkp20v2pKZ1qz4rgp.jpg&quot;/&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;
+&lt;p&gt;I consider myself to have an interest in films (or is that ‘movies’?). Not so much mainstream cinema fare, but more often than not cult movies, horror, world cinema, older stuff from the 70s and 80s and so on.&lt;/p&gt;
+&lt;p&gt;Over the years I’ve found some fantastic podcasts that help me feed my obsession, so I thought I’d share them with you.&lt;/p&gt;
+
+&lt;p&gt;So, without further ado and in no particular order…&lt;/p&gt;
+&lt;h3&gt;Chris and Phil Present&lt;/h3&gt;
+&lt;blockquote&gt;
+&lt;p&gt;“A lighthearted look at the world of movies. Insightful, intelligent film reviews and nonsensical chatter from Brighton‘s finest.”&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;To be honest I listen to Chris and Phil more for the humorous banter than the actual film reviews. They have a great rapport together, with Phil brilliantly coming across as a put-upon, long suffering reviewer, subject to the tyranny and dry wit of Chris. However, far too much cake eating goes on!&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://www.chrisandphilpresent.co.uk/category/podcasts/&quot;&gt;Chris and Phil Present&lt;/a&gt;&lt;/p&gt;
+&lt;h3&gt;The Empire Podcast&lt;/h3&gt;
+&lt;p&gt;Yes this is a bit mainstream, but as a long-time subscriber to the mag it’s been enjoyable getting to know some of the team through the magical medium of audio. I enjoy the format, comprising of listeners questions, news and interviews. I also like the fact that the team rotate, so there are different folks to listen to each week.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://www.empireonline.com/podcast/&quot;&gt;The Empire Podcast&lt;/a&gt;&lt;/p&gt;
+&lt;h3&gt;Horroretc Podcast&lt;/h3&gt;
+&lt;p&gt;Ok, don’t be put off by the name. These guys aren’t just about horror and when they do talk about it, it’s always intelligent and interesting. The subject matter they cover really is broad, from Giallo, to Lovecraft, to Hitchcock and even TV shows, such as Dexter and The Walking Dead. Occasionally they even do a book show, which they should do more often in my humble opinion.&lt;/p&gt;
+&lt;p&gt;Tony and Ted (and sometimes Dug) really are some of the nicest guys you will probably never meet (they’re all the way over the atlantic in Canada - somewhere I would really like to visit one day).&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;denied:denied:denied:hhttp://www.horroretc.com/&quot;&gt;Horroretc Podcast&lt;/a&gt;&lt;/p&gt;
+&lt;h3&gt;Mark Kermode and Simon Mayo’s Film Reviews&lt;/h3&gt;
+&lt;p&gt;Another mainstream one, but you can’t really call yourself a film fan and ignore it. Mark and Simon are the Dons of the film review world as far as I’m concerned. They’re like the Homer and Marge Simpson, the Ross and Rachel, the Clark Kent and Lois Lane (you get the idea) of the podcast world.&lt;/p&gt;
+&lt;p&gt;If you’ve never heard Mark’s infamous Pirates Of The Caribbean 3 rant (it goes on for 10 minutes and I don’t think he actually takes a breath!), track it down now!… Actually I’ll give you a hand - &lt;a href=&quot;http://youtu.be/FYfbc1B-i4I&quot;&gt;here it is on YouTube&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://www.bbc.co.uk/podcasts/series/kermode&quot;&gt;Mark Kermode and Simon Mayo’s Film Reviews&lt;/a&gt;&lt;/p&gt;
+&lt;h3&gt;Mondo Movie&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;Mondo&lt;/strong&gt; - &lt;em&gt;Extreme in degree or nature&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;That definition says it all really. Sadly Ben and Dan are no longer doing the podcast (although apparently it may return), but the back catalogue is still available on iTunes, all 117 episodes! If you have any interest in cult movies, world cinema, horror, exploitation or genre you need to check this out.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://itunes.apple.com/gb/podcast/mondo-movie/id117517270&quot;&gt;Mondo Movie&lt;/a&gt;&lt;/p&gt;
+&lt;h3&gt;Yeah It’s That Bad&lt;/h3&gt;
+&lt;p&gt;These guys arrived on the scene a couple of years ago with a fantastic concept - to re-evaluate movies on Rotten Tomatoes and ask “is it really that bad?”. Most of the movies really are a pile of c**p, but occasionally a gem turns up (Constantine anyone?).&lt;/p&gt;
+&lt;p&gt;However, it’s the brilliant rapport between the hosts, Joel, Kevin, and Martin (other than that their identities remain a mystery…), that makes this worth listening to. Some people (i.e. non-Americans &lt;em&gt;winky face&lt;/em&gt;) may find their constant guffawing a bit grating, but I find it somewhat endearing.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://www.yeahitsthatbad.com/&quot;&gt;Yeah It’s That Bad&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;And there you have it, my current, favourite film podcasts.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;If you want to recommend any that I’m missing out on please let me know. Probably the best place to get my attention is on &lt;a href=&quot;https://twitter.com/_mattbailey&quot;&gt;Twitter&lt;/a&gt;, but you can also leave a comment below.&lt;/p&gt;
+&lt;p&gt;Happy listening!&lt;/p&gt;
+&lt;h3&gt;&lt;em&gt;*Update&lt;/em&gt; - You Total Cult&lt;/h3&gt;
+&lt;p&gt;Deserving of an honourable mention is &lt;a href=&quot;http://www.chrisandphilpresent.co.uk/blogs/youtotalcult/&quot;&gt;You Total Cult&lt;/a&gt;, the ‘bastard love child’ of &lt;a href=&quot;http://www.chrisandphilpresent.co.uk/category/podcasts/&quot;&gt;Chris and Phil Present&lt;/a&gt;.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;“From a dank dark Brighton basement two groan men chat and argue about classic cult favourites, unmade masterpieces and obscure films that they probably had no business watching in the first place.”&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;I‘ve only listened to the first few episodes and haven’t been able to form a proper opinion yet, but so far I like what I’m hearing.&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>CSS speed test: flat, vs gradients, vs sprites</title>
+   <link href="http://mattbailey.io/css-speed-test-flat-vs-gradients-vs-sprites"/>
+   <updated>2013-03-19T00:00:00+00:00</updated>
+   <id>http://mattbailey.io/css-speed-test-flat-vs-gradients-vs-sprites</id>
+   <content type="html">&lt;p&gt;&lt;img alt=&quot;image&quot; src=&quot;/images/dist/tumblr_inline_mjwo78REt71qz4rgp.jpg&quot;/&gt;&lt;/p&gt;
+
+&lt;p&gt;I recently created a simple css speed test page to see what the difference is between using a flat background colour, a css gradient, or a sprite gradient: &lt;a href=&quot;http://playground.mattbailey.co/css-speed-test/&quot; title=&quot;CSS Speed Test&quot; target=&quot;_blank&quot;&gt;http://playground.mattbailey.co/css-speed-test/&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;It&amp;#8217;s not a particularly scientific test as there are many factors involved in perceived page load times, but it seems to give a useful indication.&lt;/p&gt;
+
+&lt;p&gt;It works by using javascript to compare the difference between the &lt;strong&gt;download complete time&lt;/strong&gt; and the &lt;strong&gt;render complete time&lt;/strong&gt;, the result being the &lt;strong&gt;window paint time&lt;/strong&gt;. It then records these results using localStorage and generates an &lt;strong&gt;average window paint time&lt;/strong&gt;. Obviously t&lt;span&gt;he more times you click a test the more accurate the average.&lt;/span&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;span&gt;When I run the tests myself in Chrome the flat background colour has consistently the fastest window paint time, followed closely by sprite gradients, then css gradients, but there&amp;#8217;s really not much in it - less than 10ms between the fastest and slowest. I suppose this isn&amp;#8217;t very surprising, but I&amp;#8217;d be interested to know whether others get similar results.&lt;/span&gt;&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Dropbox: re-sync symlinks that fail to sync a deep folder structure</title>
+   <link href="http://mattbailey.io/dropbox-re-sync-symlinks-that-fail-to-sync-a-deep"/>
+   <updated>2013-03-18T00:00:00+00:00</updated>
+   <id>http://mattbailey.io/dropbox-re-sync-symlinks-that-fail-to-sync-a-deep</id>
+   <content type="html">&lt;p&gt;&lt;img src=&quot;/images/dist/tumblr_inline_mjuozjDrvA1qz4rgp.png&quot;/&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;
+&lt;p&gt;I use dropbox for many things, including keeping sites I&amp;#8217;m working on synced across various machines.&lt;/p&gt;
+&lt;p&gt;If the root folder of the site actually resides in your Dropbox folder and you symlink out of it you generally won&amp;#8217;t have any problems. But if the root folder of the site is outside of your Dropbox folder and you symlink in to it, you may notice that the contents of some of the &amp;#8216;deeper&amp;#8217; folders don&amp;#8217;t get synced.&lt;/p&gt;
+&lt;p&gt;I&amp;#8217;m not sure why this is, but there is a manual workaround - &lt;strong&gt;you can change the modification date of the symlink, thereby causing a re-sync&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;Simply open your terminal, navigate to the location of you symlink(s) and run the following command (replacing &lt;code class=&quot;prettyprint&quot;&gt;symlink-name&lt;/code&gt; with the actual name of your symlink):&lt;/p&gt;
+&lt;pre class=&quot;prettyprint&quot;&gt;touch -h [symlink-name]&lt;/pre&gt;
+&lt;p&gt;It&amp;#8217;s not a perfect solution, but it goes some way to helping.&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>A beginner's guide to Grunt</title>
+   <link href="http://mattbailey.io/a-beginners-guide-to-grunt"/>
+   <updated>2013-03-16T00:00:00+00:00</updated>
+   <id>http://mattbailey.io/a-beginners-guide-to-grunt</id>
+   <content type="html">&lt;p&gt;&lt;img alt=&quot;image&quot; src=&quot;/images/dist/tumblr_inline_mjrobcZQpo1qz4rgp.png&quot;/&gt;&lt;/p&gt;
+
+&lt;p&gt;Having just read David Bushell&amp;#8217;s &lt;a href=&quot;http://dbushell.com/2013/03/12/automation/&quot; title=&quot;Automation&quot; target=&quot;_blank&quot;&gt;article&lt;/a&gt; on [frontend] automation I thought I&amp;#8217;d have a go at installing &lt;a href=&quot;http://gruntjs.com/&quot; title=&quot;Grunt - The JavaScript Task Runner&quot; target=&quot;_blank&quot;&gt;&lt;strong&gt;Grunt&lt;/strong&gt;&lt;/a&gt; myself and setting up a project. However, I found the process and documentation on the &lt;strong&gt;Grunt&lt;/strong&gt; website a bit &amp;#8216;meandering&amp;#8217;. In an effort to keep a record for myself, and to help others, I thought I&amp;#8217;d write a simple step by step guide.&lt;/p&gt;
+
+&lt;p&gt;All the &lt;strong&gt;Grunt&lt;/strong&gt; documentation can be found here: &lt;a href=&quot;http://gruntjs.com/getting-started&quot; title=&quot;Grunt - Getting Started&quot; target=&quot;_blank&quot;&gt;http://gruntjs.com/getting-started&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;At the time of writing the &lt;strong&gt;node.js&lt;/strong&gt; and &lt;strong&gt;Grunt&lt;/strong&gt; versions are as follows:&lt;/p&gt;
+&lt;p&gt;&lt;code class=&quot;prettyprint&quot;&gt;node.js&lt;/code&gt; - v0.10.0&lt;br/&gt;&lt;code class=&quot;prettyprint&quot;&gt;grunt-cli&lt;/code&gt; - v0.1.6&lt;br/&gt;&lt;code class=&quot;prettyprint&quot;&gt;grunt&lt;/code&gt; - v0.4.1&lt;/p&gt;
+&lt;h2&gt;1. Install node.js&lt;/h2&gt;
+&lt;p&gt;Download and follow the install instructions for &lt;strong&gt;node.js&lt;/strong&gt; here: &lt;a href=&quot;http://nodejs.org/&quot; title=&quot;node.js&quot; target=&quot;_blank&quot;&gt;http://nodejs.org/&lt;/a&gt;&lt;/p&gt;
+&lt;h2&gt;2. Install grunt-cli&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;grunt-cli&lt;/strong&gt; docs: &lt;a href=&quot;http://gruntjs.com/getting-started&quot; title=&quot;Grunt - Getting Started&quot; target=&quot;_blank&quot;&gt;http://gruntjs.com/getting-started&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Install &lt;code class=&quot;prettyprint&quot;&gt;grunt-cli&lt;/code&gt; (the Grunt command line interface):&lt;/p&gt;
+&lt;pre class=&quot;prettyprint&quot;&gt;npm install -g grunt-cli&lt;/pre&gt;
+&lt;p&gt;This puts the &lt;code class=&quot;prettyprint&quot;&gt;grunt&lt;/code&gt; command in your system path, allowing it to be run from anywhere.&lt;/p&gt;
+&lt;h2&gt;3. Install grunt-init&lt;/h2&gt;
+&lt;p&gt;&lt;code class=&quot;prettyprint&quot;&gt;grunt-init&lt;/code&gt; docs: &lt;a href=&quot;http://gruntjs.com/project-scaffolding&quot; title=&quot;Grunt - Project Scaffolding&quot; target=&quot;_blank&quot;&gt;http://gruntjs.com/project-scaffolding&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code class=&quot;prettyprint&quot;&gt;grunt-init&lt;/code&gt; is a scaffolding tool used to automate project creation.&lt;/p&gt;
+&lt;p&gt;Install &lt;code class=&quot;prettyprint&quot;&gt;grunt-init&lt;/code&gt;:&lt;/p&gt;
+&lt;pre class=&quot;prettyprint&quot;&gt;npm install -g grunt-init&lt;/pre&gt;
+&lt;h2&gt;4. Install some grunt-init templates&lt;/h2&gt;
+&lt;p&gt;Install some &lt;code class=&quot;prettyprint&quot;&gt;grunt-init&lt;/code&gt; templates to help get you started. For example:&lt;/p&gt;
+&lt;pre class=&quot;prettyprint&quot;&gt;git clone git@github.com:gruntjs/grunt-init-commonjs.git ~/.grunt-init/commonjs&lt;/pre&gt;
+&lt;pre class=&quot;prettyprint&quot;&gt;git clone git@github.com:gruntjs/grunt-init-gruntfile.git ~/.grunt-init/gruntfile&lt;/pre&gt;
+&lt;pre class=&quot;prettyprint&quot;&gt;git clone git@github.com:gruntjs/grunt-init-gruntplugin.git ~/.grunt-init/gruntplugin&lt;/pre&gt;
+&lt;pre class=&quot;prettyprint&quot;&gt;git clone git@github.com:gruntjs/grunt-init-jquery.git ~/.grunt-init/jquery&lt;/pre&gt;
+&lt;pre class=&quot;prettyprint&quot;&gt;git clone git@github.com:gruntjs/grunt-init-node.git ~/.grunt-init/node&lt;/pre&gt;
+&lt;h2&gt;5. Initialise your project&lt;/h2&gt;
+&lt;p&gt;You can use &lt;code class=&quot;prettyprint&quot;&gt;grunt-init&lt;/code&gt; to scaffold a project from one of the templates you just installed, or create your own project from scratch. Full templating instructions can be found here: &lt;a href=&quot;http://gruntjs.com/project-scaffolding&quot; title=&quot;Grunt - Project Scaffolding&quot; target=&quot;_blank&quot;&gt;http://gruntjs.com/project-scaffolding&lt;/a&gt;&lt;/p&gt;
+&lt;h2&gt;5a. Using grunt-init to scaffold a project&lt;/h2&gt;
+&lt;p&gt;Create a project based on one of the templates you just installed.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Example&lt;/strong&gt; - Run the following command in the root directory of your project:&lt;/p&gt;
+&lt;pre class=&quot;prettyprint&quot;&gt;grunt-init jquery&lt;/pre&gt;
+&lt;p&gt;This will scaffold a &lt;strong&gt;jQuery&lt;/strong&gt; plugin project, including &lt;strong&gt;QUnit&lt;/strong&gt; unit tests (at the time of writing trying to install the QUnit Grunt plugin as outlined in section &lt;strong&gt;5b1.&lt;/strong&gt; below will throw up an error - this is a &lt;a href=&quot;https://github.com/gruntjs/grunt-contrib-qunit/issues/23&quot; target=&quot;_blank&quot;&gt;known issue&lt;/a&gt;).&lt;/p&gt;
+&lt;p&gt;In your project directory you should now see a number of folders, including &lt;strong&gt;node_modules&lt;/strong&gt;, plus &lt;strong&gt;package.json&lt;/strong&gt; and &lt;strong&gt;Gruntfile.js&lt;/strong&gt; files.&lt;/p&gt;
+&lt;h2&gt;5b. Or create your own project template&lt;/h2&gt;
+&lt;p&gt;Create a folder for a project. For the purposes of this tutorial let&amp;#8217;s call it &lt;strong&gt;myproject&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;Inside &lt;strong&gt;myproject&lt;/strong&gt; create a folder called &lt;strong&gt;src&lt;/strong&gt;, a folder called &lt;strong&gt;build&lt;/strong&gt;, and a &lt;strong&gt;README.md&lt;/strong&gt; file (or you will get warning messages when you install some of the grunt plugins).&lt;/p&gt;
+&lt;p&gt;Inside the &lt;strong&gt;src&lt;/strong&gt; folder create a file called &lt;strong&gt;myproject.js&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;Below are basic examples of &lt;strong&gt;package.json&lt;/strong&gt; and &lt;strong&gt;Grunfile.js&lt;/strong&gt; files.&lt;/p&gt;
+&lt;h2&gt;5b1. package.json&lt;/h2&gt;
+&lt;p&gt;Create a &lt;strong&gt;package.json&lt;/strong&gt; file in the root of your project:&lt;/p&gt;
+&lt;pre class=&quot;prettyprint&quot;&gt;{
+    &quot;name&quot;: &quot;myproject&quot;,
+    &quot;version&quot;: &quot;0.0.1&quot;
+}&lt;/pre&gt;
+&lt;p&gt;&lt;strong&gt;Grunt&lt;/strong&gt; and any grunt plugins you want to use will need to be installed.&lt;/p&gt;
+&lt;p&gt;You can either install each plugin individually from the command line&amp;#8230; For example:&lt;/p&gt;
+&lt;pre class=&quot;prettyprint&quot;&gt;npm install grunt --save-dev&lt;/pre&gt;
+&lt;pre class=&quot;prettyprint&quot;&gt;npm install grunt-contrib-nodeunit --save-dev&lt;/pre&gt;
+&lt;pre class=&quot;prettyprint&quot;&gt;npm install grunt-contrib-uglify --save-dev&lt;/pre&gt;
+&lt;p&gt;The modules will automatically be added to the &lt;strong&gt;package.json&lt;/strong&gt; file, which should now look something like this:&lt;/p&gt;
+&lt;pre class=&quot;prettyprint&quot;&gt;{
+    &quot;name&quot;: &quot;myproject&quot;,
+    &quot;version&quot;: &quot;0.0.1&quot;,
+    &quot;devDependencies&quot;: {
+        &quot;grunt&quot;: &quot;~0.4.1&quot;,
+        &quot;grunt-contrib-nodeunit&quot;: &quot;~0.1.2&quot;,
+        &quot;grunt-contrib-uglify&quot;: &quot;~0.1.2&quot;
+    }
+}&lt;/pre&gt;
+&lt;p&gt;Or, if you already know the versions of the plugins you want (you can find this out on the github repo of each plugin) you can create the &lt;strong&gt;package.json&lt;/strong&gt; file with the devDependencies pre-filled, and then from the command line simply run:&lt;/p&gt;
+&lt;pre class=&quot;prettyprint&quot;&gt;npm install&lt;/pre&gt;
+&lt;h2&gt;5b2. Gruntfile.js&lt;/h2&gt;
+&lt;p&gt;Create a &lt;strong&gt;Gruntfile.js&lt;/strong&gt; file in the root of your project:&lt;/p&gt;
+&lt;pre class=&quot;prettyprint&quot;&gt;module.exports = function(grunt) {
+
+  // Project configuration.
+  grunt.initConfig({
+    pkg: grunt.file.readJSON('package.json'),
+    uglify: {
+      options: {
+        banner: '/*! &amp;lt;%= pkg.name %&amp;gt; &amp;lt;%= grunt.template.today(&quot;yyyy-mm-dd&quot;) %&amp;gt; */\n'
+      },
+      build: {
+        src: 'src/&amp;lt;%= pkg.name %&amp;gt;.js',
+        dest: 'build/&amp;lt;%= pkg.name %&amp;gt;.min.js'
+      }
+    }
+  });
+
+  // Load the plugin that provides the &quot;uglify&quot; task.
+  grunt.loadNpmTasks('grunt-contrib-uglify');
+
+  // Default task(s).
+  grunt.registerTask('default', ['uglify']);
+
+};&lt;/pre&gt;
+&lt;h2&gt;6. Run grunt&lt;/h2&gt;
+&lt;p&gt;Finally, from the command line and in the root directory of your project run &lt;code class=&quot;prettyprint&quot;&gt;grunt&lt;/code&gt;:&lt;/p&gt;
+&lt;pre class=&quot;prettyprint&quot;&gt;grunt&lt;/pre&gt;
+&lt;p&gt;All being well you should see the following output:&lt;/p&gt;
+&lt;pre class=&quot;prettyprint&quot;&gt;Running &quot;uglify:build&quot; (uglify) task&lt;br/&gt;
+File &quot;build/myproject.min.js&quot; created.&lt;br/&gt;
+Uncompressed size: 10 bytes.&lt;br/&gt;
+Compressed size: 0 bytes gzipped (0 bytes minified).&lt;br/&gt;&lt;br/&gt;
+Done, without errors.&lt;/pre&gt;
+&lt;p&gt;If you now look in the &lt;strong&gt;build&lt;/strong&gt; folder you should find a minified version of your &lt;strong&gt;myproject.js&lt;/strong&gt; file, called &lt;strong&gt;myproject.min.js&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Congratulations, you&amp;#8217;ve set up and run Grunt successfully for the first time!&lt;/strong&gt;&lt;/p&gt;
+&lt;h2&gt;Taking things further&lt;/h2&gt;
+&lt;p&gt;Naturally this introduction only covers the very basics of a &lt;strong&gt;Grunt&lt;/strong&gt; install and project set-up.&lt;/p&gt;
+&lt;p&gt;Using the methods above and, by following some of the other examples on the &lt;a href=&quot;http://gruntjs.com/&quot; title=&quot;Grunt - The Javascript Task Runner&quot; target=&quot;_blank&quot;&gt;&lt;strong&gt;Grunt&lt;/strong&gt;&lt;/a&gt; website, you should be able to introduce new automation features, such as &amp;#8216;linting&amp;#8217; your javascript code, or compiling your .less into minified .css, or setting up a &amp;#8216;watch&amp;#8217; script to automatically run a new build when changes are detected, and so on.&lt;/p&gt;
+&lt;p&gt;To learn more I would highly recommend reading through the &lt;strong&gt;Grunt&lt;/strong&gt; documentation. Hopefully if you&amp;#8217;ve followed the steps above things should make a bit more sense: &lt;a href=&quot;http://gruntjs.com/getting-started&quot; title=&quot;Grunt - Getting Started&quot; target=&quot;_blank&quot;&gt;http://gruntjs.com/getting-started&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;If you have any questions or comments about this article, or if you found it useful, please let me know :)&lt;/p&gt;
+</content>
+ </entry>
+ 
+
+</feed>

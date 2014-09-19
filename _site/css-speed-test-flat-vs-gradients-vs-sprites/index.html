@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+    <head>
+    <link href="http://gmpg.org/xfn/11" rel="profile">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+    <title>
+    
+        CSS speed test: flat, vs gradients, vs sprites &middot; Matt Bailey
+    
+    </title>
+
+    <link rel="stylesheet" href="/css/main.css">
+
+    <script src="//use.typekit.net/vbu2ffi.js"></script>
+    <script>try{Typekit.load();}catch(e){}</script>
+
+    <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/apple-touch-icon-152x152.png">
+    <link rel="icon" type="image/png" href="/favicon-196x196.png" sizes="196x196">
+    <link rel="icon" type="image/png" href="/favicon-160x160.png" sizes="160x160">
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+    <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+    <meta name="msapplication-TileColor" content="#2b5797">
+    <meta name="msapplication-TileImage" content="/mstile-144x144.png">
+
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+    <body class="css-speed-test:-flat,-vs-gradients,-vs-sprites layout-reverse">
+        <input type="checkbox" class="sidebar-checkbox" id="sidebar-checkbox">
+<div class="sidebar" id="sidebar">
+    <div class="sidebar-item sidebar-item--desc">
+        <p>Matt is a frontend designer &amp; developer, based in London.</p>
+    </div>
+    <nav class="sidebar-nav">
+        <a class="sidebar-nav-item" href="/">Home</a>
+        
+        
+        
+        
+        
+        
+        
+        
+        <a class="sidebar-nav-item" href="/about-me.html">About Me</a>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <a class="sidebar-nav-item" href="https://twitter.com/_mattbailey">Twitter</a>
+        <a class="sidebar-nav-item" href="https://dribbble.com/mattbailey">Dribbble</a>
+        <a class="sidebar-nav-item" href="https://plus.google.com/116498189973260879447?rel=author">Google+</a>
+    </nav>
+    <div class="sidebar-item">
+        <p>&copy; 2014, Matt Bailey</p>
+    </div>
+</div>
+
+        <div class="wrap">
+            <div class="masthead">
+    <div class="container">
+        <h3 class="masthead-title"><a href="/" title="Home">Matt Bailey</a><br><span class="masthead-title__tagline">Designer &amp; Developer</span></h3>
+    </div>
+    <a id="js--fade-out" class="content-jump" data-scroll href="#content">Jump To Content</a>
+</div>
+
+            <div id="content" class="container content">
+                <div class="post">
+    <h1 class="post-title">CSS speed test: flat, vs gradients, vs sprites</h1>
+    <p class="post-date">19 March, 2013</p>
+    <p><img alt="image" src="/images/dist/tumblr_inline_mjwo78REt71qz4rgp.jpg"/></p>
+
+<p>I recently created a simple css speed test page to see what the difference is between using a flat background colour, a css gradient, or a sprite gradient: <a href="http://playground.mattbailey.co/css-speed-test/" title="CSS Speed Test" target="_blank">http://playground.mattbailey.co/css-speed-test/</a></p>
+
+<p>It&#8217;s not a particularly scientific test as there are many factors involved in perceived page load times, but it seems to give a useful indication.</p>
+
+<p>It works by using javascript to compare the difference between the <strong>download complete time</strong> and the <strong>render complete time</strong>, the result being the <strong>window paint time</strong>. It then records these results using localStorage and generates an <strong>average window paint time</strong>. Obviously t<span>he more times you click a test the more accurate the average.</span></p>
+
+<p><span>When I run the tests myself in Chrome the flat background colour has consistently the fastest window paint time, followed closely by sprite gradients, then css gradients, but there&#8217;s really not much in it - less than 10ms between the fastest and slowest. I suppose this isn&#8217;t very surprising, but I&#8217;d be interested to know whether others get similar results.</span></p>
+
+</div>
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+var disqus_shortname = 'mpkb';
+(function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();
+</script>
+
+
+            </div>
+        </div>
+        <label for="sidebar-checkbox" class="sidebar-toggle"></label>
+        <script src="/scripts/main.min.js" async></script>
+<script src="/scripts/vendor/bind-polyfill.min.js" async></script>
+<script src="/scripts/vendor/smooth-scroll.min.js"></script>
+<script>
+window.smoothScroll.init({
+    speed: 1000,
+    easing: 'easeInOutQuad',
+    updateURL: false,
+    offset: 60
+});
+</script>
+<script src="/scripts/vendor/viewport-units-buggyfill.min.js"></script>
+<script>window.viewportUnitsBuggyfill.init();</script>
+
+    </body>
+</html>

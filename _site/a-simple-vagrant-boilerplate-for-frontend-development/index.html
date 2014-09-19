@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+    <head>
+    <link href="http://gmpg.org/xfn/11" rel="profile">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+    <title>
+    
+        A Simple Vagrant Boilerplate For Frontend Development &middot; Matt Bailey
+    
+    </title>
+
+    <link rel="stylesheet" href="/css/main.css">
+
+    <script src="//use.typekit.net/vbu2ffi.js"></script>
+    <script>try{Typekit.load();}catch(e){}</script>
+
+    <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/apple-touch-icon-152x152.png">
+    <link rel="icon" type="image/png" href="/favicon-196x196.png" sizes="196x196">
+    <link rel="icon" type="image/png" href="/favicon-160x160.png" sizes="160x160">
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+    <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+    <meta name="msapplication-TileColor" content="#2b5797">
+    <meta name="msapplication-TileImage" content="/mstile-144x144.png">
+
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+    <body class="a-simple-vagrant-boilerplate-for-frontend-development layout-reverse">
+        <input type="checkbox" class="sidebar-checkbox" id="sidebar-checkbox">
+<div class="sidebar" id="sidebar">
+    <div class="sidebar-item sidebar-item--desc">
+        <p>Matt is a frontend designer &amp; developer, based in London.</p>
+    </div>
+    <nav class="sidebar-nav">
+        <a class="sidebar-nav-item" href="/">Home</a>
+        
+        
+        
+        
+        
+        
+        
+        
+        <a class="sidebar-nav-item" href="/about-me.html">About Me</a>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <a class="sidebar-nav-item" href="https://twitter.com/_mattbailey">Twitter</a>
+        <a class="sidebar-nav-item" href="https://dribbble.com/mattbailey">Dribbble</a>
+        <a class="sidebar-nav-item" href="https://plus.google.com/116498189973260879447?rel=author">Google+</a>
+    </nav>
+    <div class="sidebar-item">
+        <p>&copy; 2014, Matt Bailey</p>
+    </div>
+</div>
+
+        <div class="wrap">
+            <div class="masthead">
+    <div class="container">
+        <h3 class="masthead-title"><a href="/" title="Home">Matt Bailey</a><br><span class="masthead-title__tagline">Designer &amp; Developer</span></h3>
+    </div>
+    <a id="js--fade-out" class="content-jump" data-scroll href="#content">Jump To Content</a>
+</div>
+
+            <div id="content" class="container content">
+                <div class="post">
+    <h1 class="post-title">A Simple Vagrant Boilerplate For Frontend Development</h1>
+    <p class="post-date">20 April, 2014</p>
+    <p><img alt="image" src="/images/dist/tumblr_inline_n4bnqdeSgV1qfoiia.png"/></p>
+
+<p><strong>Feeling impatient? <a href="https://github.com/gpmd/vagrant-puppet-boilerplate" title="A simple Vagrant boilerplate setup">Get straight to the code on Github →</a></strong></p>
+<p>As a designer and frontend developer I&#8217;ve been working hard over the past couple of years trying to &#8216;up&#8217; my skill levels. I&#8217;ve been learning how to use development tools, such as <a href="https://getcomposer.org/" title="Composer">Composer</a>, <a href="http://nodejs.org/" title="Node JS">Node</a>, <a href="http://gruntjs.com/" title="Grunt JS">Grunt</a>, <a href="http://bower.io/" title="Bower">Bower</a> and so on. To that end I always try to pay attention to what other &#8216;backend&#8217; developers are talking about as the tools they use often end up making their way into frontend workflows.</p>
+<p>Recently I&#8217;ve been hearing the word <a href="http://www.vagrantup.com/" title="Vagrant">Vagrant</a> bandied about the office, so I decided to find out more - and I like what I&#8217;ve found!</p>
+
+<h2>What is Vagrant</h2>
+<p>Basically Vagrant is a &#8216;thingumy&#8217; for setting up virtual machines.</p>
+<h2>What Are The Benefits</h2>
+<p>The benefit of using virtual machines for development is that you can have a VM config (per project) that closely matches that of your production environment, which you can share with other developers on your team. This means everyone works in the same environment, making it easier to pin down issues and bugs.</p>
+<p>It also has the added benefit of keeping your host machine clean, tidy and free of all that command line &#8216;cruft&#8217; - you don&#8217;t have to install any development tools, save your code editor/IDE and your favourite terminal. Everything else is installed &#8216;in&#8217; the virtual machine. This includes things such as Git, Node, Grunt etc., of which you control the versions as well.</p>
+<p>This is very appealing to me as I often come across software/tool version issues when working on projects on different workstations.</p>
+<h2>But I Know Nothing About Sys-Admin, Will I Be Able To Use Vagrant?</h2>
+<p>Of course. I&#8217;m not a sys-admin either I&#8217;m &#8216;only&#8217; a frontend developer and, while it&#8217;s true the underlying &#8216;stuff&#8217; is a bit difficult to understand (for me at any rate), there are tools out there to help you – you really don&#8217;t need to know much to get things up-and-running.</p>
+<p>I&#8217;ve been using an excellent online tool called <a href="https://puphpet.com/" title="PuPHPet">PuPHPet</a> to create my server &#8216;manifest&#8217;, the file(s) that set everything up. I&#8217;ve spent a few days familiarising myself with how things work and experimenting with the settings, and I&#8217;ve settled on what I think is a good starting point for the kinds of projects that I work on, specifically &#8216;CMS&#8217; based projects (primarily use <a href="http://www.silverstripe.org/" title="SilverStripe CMS">SilverStripe</a> and Magento, but it could equally be used for WordPress, Drupal etc.). Here are the specifics:</p>
+<ul><li>Ubuntu Precise x64</li>
+<li>Apache2</li>
+<li>PHP 5.3</li>
+<li>Composer</li>
+<li>XDebug</li>
+<li>MySQL</li>
+<li>Node</li>
+<li>Grunt</li>
+<li>Bower</li>
+<li>Compass</li>
+</ul><p>All these settings and tools can be easily changed though if you require a different set-up.</p>
+<h2>Ok I&#8217;m Convinced, Now What?</h2>
+<p>I don&#8217;t think anything else remains to be said, save that you can get my <a href="https://github.com/gpmd/vagrant-puppet-boilerplate" title="Vagrant boilerplate on Github">Vagrant boilerplate on Github</a> and use it to start experimenting with yourself. The <a href="https://github.com/gpmd/vagrant-puppet-boilerplate/blob/master/README.md" title="vagrant-puppet-boilerplate README">README</a> contains full usage instructions. If you have any questions leave them here or <a href="https://github.com/gpmd/vagrant-puppet-boilerplate/issues" title="Vagrant boilerplate issues on Github">post and issue on Github</a>. Enjoy!</p>
+<p><strong><a href="https://github.com/gpmd/vagrant-puppet-boilerplate" title="vagrant-puppet-boilerplate on Github">My Simple Vagrant boilerplate for frontend development on Github →</a></strong></p>
+
+</div>
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+var disqus_shortname = 'mpkb';
+(function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();
+</script>
+
+
+            </div>
+        </div>
+        <label for="sidebar-checkbox" class="sidebar-toggle"></label>
+        <script src="/scripts/main.min.js" async></script>
+<script src="/scripts/vendor/bind-polyfill.min.js" async></script>
+<script src="/scripts/vendor/smooth-scroll.min.js"></script>
+<script>
+window.smoothScroll.init({
+    speed: 1000,
+    easing: 'easeInOutQuad',
+    updateURL: false,
+    offset: 60
+});
+</script>
+<script src="/scripts/vendor/viewport-units-buggyfill.min.js"></script>
+<script>window.viewportUnitsBuggyfill.init();</script>
+
+    </body>
+</html>

@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+    <head>
+    <link href="http://gmpg.org/xfn/11" rel="profile">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+    <title>
+    
+        Grunt - Synchronised Testing Between Browsers/Devices &middot; Matt Bailey
+    
+    </title>
+
+    <link rel="stylesheet" href="/css/main.css">
+
+    <script src="//use.typekit.net/vbu2ffi.js"></script>
+    <script>try{Typekit.load();}catch(e){}</script>
+
+    <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/apple-touch-icon-152x152.png">
+    <link rel="icon" type="image/png" href="/favicon-196x196.png" sizes="196x196">
+    <link rel="icon" type="image/png" href="/favicon-160x160.png" sizes="160x160">
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+    <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+    <meta name="msapplication-TileColor" content="#2b5797">
+    <meta name="msapplication-TileImage" content="/mstile-144x144.png">
+
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+    <body class="grunt---synchronised-testing-between-browsers/devices layout-reverse">
+        <input type="checkbox" class="sidebar-checkbox" id="sidebar-checkbox">
+<div class="sidebar" id="sidebar">
+    <div class="sidebar-item sidebar-item--desc">
+        <p>Matt is a frontend designer &amp; developer, based in London.</p>
+    </div>
+    <nav class="sidebar-nav">
+        <a class="sidebar-nav-item" href="/">Home</a>
+        
+        
+        
+        
+        
+        
+        
+        
+        <a class="sidebar-nav-item" href="/about-me.html">About Me</a>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <a class="sidebar-nav-item" href="https://twitter.com/_mattbailey">Twitter</a>
+        <a class="sidebar-nav-item" href="https://dribbble.com/mattbailey">Dribbble</a>
+        <a class="sidebar-nav-item" href="https://plus.google.com/116498189973260879447?rel=author">Google+</a>
+    </nav>
+    <div class="sidebar-item">
+        <p>&copy; 2014, Matt Bailey</p>
+    </div>
+</div>
+
+        <div class="wrap">
+            <div class="masthead">
+    <div class="container">
+        <h3 class="masthead-title"><a href="/" title="Home">Matt Bailey</a><br><span class="masthead-title__tagline">Designer &amp; Developer</span></h3>
+    </div>
+    <a id="js--fade-out" class="content-jump" data-scroll href="#content">Jump To Content</a>
+</div>
+
+            <div id="content" class="container content">
+                <div class="post">
+    <h1 class="post-title">Grunt - Synchronised Testing Between Browsers/Devices</h1>
+    <p class="post-date">13 May, 2013</p>
+    <p>Today I discovered how easy it is to synchronise testing between browsers/devices when using <code class="prettyprint">grunt server</code>.</p>
+<p><em><strong>UPDATE:</strong> It has been pointed out to me that I should make it clear that <code class="prettyprint">grunt server</code> is part of Yeoman&#8217;s Gruntfile. If you&#8217;ve set up your project not using Yeoman then this command might be different.</em></p>
+
+<p>When you run <code class="prettyprint">grunt server</code> from the root directory of your project it watches for changes to your site files and refreshes the browser window automatically (using the grunt task <a href="https://github.com/gruntjs/grunt-contrib-watch" title="grunt-contrib-watch">grunt-contrib-watch</a>).</p>
+<p>If you used <a href="http://yeoman.io/" title="Yeoman">Yeoman</a> to scaffold your project (Yeoman installs <a href="http://bower.io/" title="Bower">Bower</a> and <a href="http://gruntjs.com/" title="Grunt">Grunt</a> in one neat package, you should definitely check it out) it would have created a <a href="http://gruntjs.com/sample-gruntfile" title="Gruntfile">Gruntfile</a> for you with all the necessary code to get the live reload task up-and-running. There&#8217;s only one thing you need to change, and that&#8217;s the <code class="prettyprint">hostname</code> option. Find the <code class="prettyprint">connect</code> section and if the <code class="prettyprint">hostname</code> is set to <code class="prettyprint">localhost</code> change it to <code class="prettyprint">0.0.0.0</code>.</p>
+<p>Next, run <code class="prettyprint">grunt server</code> and a browser window should open showing you your dev site. The url will be something like <code class="prettyprint">localhost:9000</code> (9000 being the port).</p>
+<p>Then, on your command line run <code class="prettyprint">ifconfig</code> (<strong>Update:</strong> <a href="https://twitter.com/SaraSoueidan/status/390157511585570816">it has been pointed out to me</a> that `ifconfig` is for OS X - on Windows I believe it should be `ipconfig`) and make a note of your computer&#8217;s internal IP address. It will be something like <code class="prettyprint">192.168.100.36</code> (the last two numbers in the sequence could be anything).</p>
+<p>Finally, open the device you want to synchronise to (such as your iPhone), and enter the internal IP address of your computer followed by the port number – it should look something like this: <code class="prettyprint">192.168.100.36:9000</code></p>
+<p>Now when you make changes to your project files you should see both browser windows update together.</p>
+<p><em><strong>There is one caveat</strong> - I think the portable device must be on the same network as the computer, which shouldn&#8217;t be an issue if they&#8217;re both connected to the same WiFi network.</em></p>
+
+</div>
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+var disqus_shortname = 'mpkb';
+(function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();
+</script>
+
+
+            </div>
+        </div>
+        <label for="sidebar-checkbox" class="sidebar-toggle"></label>
+        <script src="/scripts/main.min.js" async></script>
+<script src="/scripts/vendor/bind-polyfill.min.js" async></script>
+<script src="/scripts/vendor/smooth-scroll.min.js"></script>
+<script>
+window.smoothScroll.init({
+    speed: 1000,
+    easing: 'easeInOutQuad',
+    updateURL: false,
+    offset: 60
+});
+</script>
+<script src="/scripts/vendor/viewport-units-buggyfill.min.js"></script>
+<script>window.viewportUnitsBuggyfill.init();</script>
+
+    </body>
+</html>
