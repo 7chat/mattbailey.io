@@ -1,8 +1,0 @@
-      <!DOCTYPE html>
-      <meta charset=utf-8>
-      <title>Redirecting...</title>
-      <link rel=canonical href="/gettin-sassy-with-sass">
-      <meta http-equiv=refresh content="0; url=/gettin-sassy-with-sass">
-      <h1>Redirecting...</h1>
-      <a href="/gettin-sassy-with-sass">Click here if you are not redirected.</a>
-      <script>location='/gettin-sassy-with-sass'</script>

@@ -42,7 +42,3 @@ exclude: [
   'puphpet',
   'Vagrantfile'
 ]
-
-# Redirects
-gems:
-  - jekyll-redirect-from
