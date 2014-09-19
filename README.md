@@ -1,5 +1,5 @@
 # mattbailey.io
 
-The main repo for my site, built on Jekyll.
+All the stuff for my site.
 
 [http://mattbailey.io](http://mattbailey.io)
