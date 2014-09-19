@@ -1,0 +1,20 @@
+{
+  "name": "matt-bailey",
+  "version": "1.0.0",
+  "homepage": "https://github.com/matt-bailey/matt-bailey.github.io",
+  "authors": [
+    "Matt Bailey <me@mattbailey.co>"
+  ],
+  "description": "The blog of Matt Bailey, a frontend designer and developer working in London",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "devDependencies": {
+    "smooth-scroll": "https://github.com/cferdinandi/smooth-scroll.git",
+    "viewport-units-buggyfill": "~0.4.1"
+  }
+}

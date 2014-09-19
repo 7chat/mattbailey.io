@@ -1,0 +1,49 @@
+/**
+ * Wrapper
+ *
+ * The wrapper is used to position site content when the sidebar is toggled. We
+ * use an outter wrap to position the sidebar without interferring with the
+ * regular page content.
+ */
+
+.wrap {
+    position: relative;
+    width: 100%;
+}
+
+.home {
+    .wrap { text-align: center; }
+}
+
+/**
+ * Container
+ *
+ * Center the page content.
+ */
+
+.container {
+    padding-left:  1rem;
+    padding-right: 1rem;
+    margin-left:  auto;
+    margin-right: auto;
+}
+@media (min-width: 38em) {
+    .container { max-width: 32rem; }
+}
+@media (min-width: 56em) {
+    .container { max-width: 38rem; }
+}
+
+.home {
+    .container { display: inline-block; }
+}
+
+/**
+ * Content
+ */
+
+.content { margin-bottom: 2em; }
+
+.home {
+    .content { width: 90%; }
+}

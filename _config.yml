@@ -1,0 +1,49 @@
+# Dependencies
+markdown: redcarpet
+highlighter: pygments
+
+# Permalinks
+permalink: /:title
+
+# Setup
+title: Matt Bailey
+tagline: 'Designer &amp; Developer'
+description: 'Matt is a frontend designer &amp; developer, based in London.'
+url: http://mattbailey.io
+baseurl: '/'
+paginate: 5
+
+author:
+  name: 'Matt Bailey'
+  url: https://twitter.com/_mattbailey
+
+# Custom vars
+version: 1.0.0
+
+# Repo
+github:
+  repo: https://github.com/matt-bailey/matt-bailey.github.io
+
+# CSS preprocessing
+sass:
+  sass_dir: _sass
+  style: :compressed
+
+# Excludes
+exclude: [
+  'bower.json',
+  'bower_components',
+  'CNAME',
+  'grunt',
+  'Gruntfile.js',
+  'images/src',
+  'node_modules',
+  'package.json',
+  'puphpet',
+  'README',
+  'Vagrantfile'
+]
+
+# Redirects
+gems:
+  - jekyll-redirect-from

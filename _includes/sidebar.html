@@ -1,0 +1,23 @@
+<input type="checkbox" class="sidebar-checkbox" id="sidebar-checkbox">
+<div class="sidebar" id="sidebar">
+    <div class="sidebar-item sidebar-item--desc">
+        <p>{{ site.description }}</p>
+    </div>
+    <nav class="sidebar-nav">
+        <a class="sidebar-nav-item{% if page.url == site.baseurl %} active{% endif %}" href="/">Home</a>
+        {% assign pages_list = site.pages %}
+        {% for node in pages_list %}
+        {% if node.title != null %}
+        {% if node.layout == "page" %}
+        <a class="sidebar-nav-item{% if page.url == node.url %} active{% endif %}" href="{{ node.url }}">{{ node.title }}</a>
+        {% endif %}
+        {% endif %}
+        {% endfor %}
+        <a class="sidebar-nav-item" href="https://twitter.com/_mattbailey">Twitter</a>
+        <a class="sidebar-nav-item" href="https://dribbble.com/mattbailey">Dribbble</a>
+        <a class="sidebar-nav-item" href="https://plus.google.com/116498189973260879447?rel=author">Google+</a>
+    </nav>
+    <div class="sidebar-item">
+        <p>&copy; {{ site.time | date: '%Y' }}, {{ site.title }}</p>
+    </div>
+</div>

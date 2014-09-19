@@ -1,0 +1,14 @@
+---
+layout: post
+title: "CSS speed test: flat, vs gradients, vs sprites"
+redirect_from: /post/45749584009/css-speed-test-flat-vs-gradients-vs-sprites
+---
+<p><img alt="image" src="/images/dist/tumblr_inline_mjwo78REt71qz4rgp.jpg"/></p>
+
+<p>I recently created a simple css speed test page to see what the difference is between using a flat background colour, a css gradient, or a sprite gradient: <a href="http://playground.mattbailey.co/css-speed-test/" title="CSS Speed Test" target="_blank">http://playground.mattbailey.co/css-speed-test/</a></p>
+
+<p>It&#8217;s not a particularly scientific test as there are many factors involved in perceived page load times, but it seems to give a useful indication.</p>
+
+<p>It works by using javascript to compare the difference between the <strong>download complete time</strong> and the <strong>render complete time</strong>, the result being the <strong>window paint time</strong>. It then records these results using localStorage and generates an <strong>average window paint time</strong>. Obviously t<span>he more times you click a test the more accurate the average.</span></p>
+
+<p><span>When I run the tests myself in Chrome the flat background colour has consistently the fastest window paint time, followed closely by sprite gradients, then css gradients, but there&#8217;s really not much in it - less than 10ms between the fastest and slowest. I suppose this isn&#8217;t very surprising, but I&#8217;d be interested to know whether others get similar results.</span></p>

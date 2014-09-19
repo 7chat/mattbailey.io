@@ -1,0 +1,15 @@
+---
+layout: post
+title: Grunt - Synchronised Testing Between Browsers/Devices
+redirect_from: /post/50337824984/grunt-synchronised-testing-between-browsers-devices
+---
+<p>Today I discovered how easy it is to synchronise testing between browsers/devices when using <code class="prettyprint">grunt server</code>.</p>
+<p><em><strong>UPDATE:</strong> It has been pointed out to me that I should make it clear that <code class="prettyprint">grunt server</code> is part of Yeoman&#8217;s Gruntfile. If you&#8217;ve set up your project not using Yeoman then this command might be different.</em></p>
+
+<p>When you run <code class="prettyprint">grunt server</code> from the root directory of your project it watches for changes to your site files and refreshes the browser window automatically (using the grunt task <a href="https://github.com/gruntjs/grunt-contrib-watch" title="grunt-contrib-watch">grunt-contrib-watch</a>).</p>
+<p>If you used <a href="http://yeoman.io/" title="Yeoman">Yeoman</a> to scaffold your project (Yeoman installs <a href="http://bower.io/" title="Bower">Bower</a> and <a href="http://gruntjs.com/" title="Grunt">Grunt</a> in one neat package, you should definitely check it out) it would have created a <a href="http://gruntjs.com/sample-gruntfile" title="Gruntfile">Gruntfile</a> for you with all the necessary code to get the live reload task up-and-running. There&#8217;s only one thing you need to change, and that&#8217;s the <code class="prettyprint">hostname</code> option. Find the <code class="prettyprint">connect</code> section and if the <code class="prettyprint">hostname</code> is set to <code class="prettyprint">localhost</code> change it to <code class="prettyprint">0.0.0.0</code>.</p>
+<p>Next, run <code class="prettyprint">grunt server</code> and a browser window should open showing you your dev site. The url will be something like <code class="prettyprint">localhost:9000</code> (9000 being the port).</p>
+<p>Then, on your command line run <code class="prettyprint">ifconfig</code> (<strong>Update:</strong> <a href="https://twitter.com/SaraSoueidan/status/390157511585570816">it has been pointed out to me</a> that `ifconfig` is for OS X - on Windows I believe it should be `ipconfig`) and make a note of your computer&#8217;s internal IP address. It will be something like <code class="prettyprint">192.168.100.36</code> (the last two numbers in the sequence could be anything).</p>
+<p>Finally, open the device you want to synchronise to (such as your iPhone), and enter the internal IP address of your computer followed by the port number – it should look something like this: <code class="prettyprint">192.168.100.36:9000</code></p>
+<p>Now when you make changes to your project files you should see both browser windows update together.</p>
+<p><em><strong>There is one caveat</strong> - I think the portable device must be on the same network as the computer, which shouldn&#8217;t be an issue if they&#8217;re both connected to the same WiFi network.</em></p>

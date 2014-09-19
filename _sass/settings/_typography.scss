@@ -1,0 +1,46 @@
+/**
+ * _typography.scss
+ */
+
+/* ==========================================================================
+   Settings
+   ========================================================================== */
+
+/* Font families
+   ========================================================================== */
+
+/* Base font family */
+
+// $base-font-family: "freight-display-pro", Georgia, Times, "Times New Roman", serif !default;
+$base-font-family: "jubilat", Georgia, Times, "Times New Roman", serif !default;
+
+/* Serif and Sans Serif */
+
+$serif-font-family: $base-font-family !default;
+$sans-serif-font-family: "brandon-grotesque", "Helvetica Neue", Helvetica, Arial, sans-serif !default;
+
+/* Heading font family */
+
+$heading-font-family: $sans-serif-font-family !default;
+
+/* Font sizes
+   ========================================================================== */
+
+$base-font-size: 20px !default;
+
+/* Font weights
+   ========================================================================== */
+
+/* Base font weight */
+
+$base-font-weight: 200 !default;
+
+/* Light and bold */
+
+$extra-light-font-weight: 100 !default;
+$light-font-weight: $base-font-weight !default;
+$bold-font-weight: 500 !default;
+
+/* Heading font weights */
+
+$heading-font-weight: 900 !default;

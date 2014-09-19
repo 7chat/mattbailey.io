@@ -1,0 +1,48 @@
+/**
+ * _colour.scss
+ */
+
+/* ==========================================================================
+   Settings
+   ========================================================================== */
+
+/* Core colours
+   ========================================================================== */
+
+$white: #fff !default;
+$black: rgb(81,81,81) !default;
+
+$dark-grey: #202020 !default;
+$mid-grey: #505050 !default;
+$light-grey: #9a9a9a !default;
+$very-light-grey: #eee !default;
+
+/* Colour palette
+   ========================================================================== */
+
+$picton-blue: rgb(89,171,227) !default;
+
+/* Base font colours
+   ========================================================================== */
+
+$base-font-color: rgb(81,81,81) !default;
+
+/* Heading font colours
+   ========================================================================== */
+
+$heading-color: $base-font-color !default;
+
+/* Link colours
+   ========================================================================== */
+
+/* Default */
+
+$link-color: $picton-blue !default;
+$link-hover-color--inactive: rgba(89,171,227,0) !default;
+$link-hover-color--active: rgba(89,171,227,0.05) !default;
+
+/* Headings */
+
+$heading-link-color: $base-font-color !default;
+$heading-link-hover-color--inactive: rgba(81,81,81,0) !default;
+$heading-link-hover-color--active: rgba(81,81,81,0.05) !default;

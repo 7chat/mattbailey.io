@@ -1,0 +1,14 @@
+---
+layout: post
+title: "Dropbox: re-sync symlinks that fail to sync a deep folder structure"
+redirect_from: /post/45664310283/dropbox-re-sync-symlinks-that-fail-to-sync-a-deep
+---
+<p><img src="/images/dist/tumblr_inline_mjuozjDrvA1qz4rgp.png"/></p>
+
+<p></p>
+<p>I use dropbox for many things, including keeping sites I&#8217;m working on synced across various machines.</p>
+<p>If the root folder of the site actually resides in your Dropbox folder and you symlink out of it you generally won&#8217;t have any problems. But if the root folder of the site is outside of your Dropbox folder and you symlink in to it, you may notice that the contents of some of the &#8216;deeper&#8217; folders don&#8217;t get synced.</p>
+<p>I&#8217;m not sure why this is, but there is a manual workaround - <strong>you can change the modification date of the symlink, thereby causing a re-sync</strong>.</p>
+<p>Simply open your terminal, navigate to the location of you symlink(s) and run the following command (replacing <code class="prettyprint">symlink-name</code> with the actual name of your symlink):</p>
+<pre class="prettyprint">touch -h [symlink-name]</pre>
+<p>It&#8217;s not a perfect solution, but it goes some way to helping.</p>

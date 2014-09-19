@@ -1,0 +1,21 @@
+/**
+ * Custom type
+ *
+ * Extend paragraphs with `.lead` for larger introductory text.
+ */
+
+/* Links */
+
+a {
+  -webkit-transition: background-color 0.25s ease-out, color 0.25s ease-out;
+  -moz-transition: background-color 0.25s ease-out, color 0.25s ease-out;
+  -o-transition: background-color 0.25s ease-out, color 0.25s ease-out;
+  transition: background-color 0.25s ease-out, color 0.25s ease-out;
+}
+
+/* Lead paragraph */
+
+.lead {
+  font-size: 1.25rem;
+  font-weight: 300;
+}

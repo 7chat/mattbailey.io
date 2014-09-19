@@ -1,0 +1,28 @@
+---
+layout: post
+title: Optimising the Critical Rendering Path, and Loading CSS Asynchronously and Conditionally
+redirect_from: /post/89356239237/optimising-the-critical-rendering-path-and-loading-css
+---
+<p><strong><a href="https://gist.github.com/matt-bailey/602b40c77a5d3381ff26" title="Script by Matt Bailey for loading CSS files asynchronously and conditionally">Go straight to the asynchronous and conditional CSS loading script →</a></strong></p>
+<h2>Optimising the Critical Rendering Path</h2>
+<p>I&#8217;ve recently been looking into frontend optimisation, or as clients like to refer to it, “can you fix our slow site?” - in my defence I mainly work with <a href="http://magento.com/" title="Magento">Magento</a> sites, so this is not a straightforward task.</p>
+<p>Ilya Gregorik at Google has done some great work educating others in <a href="http://youtu.be/YV1nKLWoARQ" title="Ilya Gregorik - Optimising the critical rendering path">optimising the critical rendering path</a>, and one of his recommendations is to inline critical CSS in the head and defer the loading of other CSS files until after the initial paint.</p>
+
+<h2>So can you load CSS at the bottom of the page?</h2>
+<p>I did some experimenting by loading additional, non-critical CSS files at the bottom of the page. However, this caused a FOUC, a flash of un-styled content (not including things styled by the inlined critical styles in the head of course). I believe this has something to do with &lt;script&gt; tags blocking parallel downloads, i.e. the CSS files have to wait until the Javascript files have downloaded. So they have to go back up in the head&#8230;</p>
+<h2>What was Ilya Gregorik&#8217;s advice?</h2>
+<p><a href="https://twitter.com/igrigorik/status/473853215348228098" title="Ilya Gregorik - advice on loading CSS files">I tweeted Ilya asking his advice</a> and his response led me to the <a href="https://developers.google.com/speed/docs/insights/OptimizeCSSDelivery" title="Google Developers - Optimising CSS Delivery">Google Developers page on Optimising CSS Delivery</a>.</p>
+<p>It contains an example script that enables you to load a CSS file asynchronously, after the <em>"initial painting of the page. Its styles are applied to the page once it finishes loading, without blocking the initial render of the critical content."</em></p>
+<h2>Taking the Google CSS loading script a bit further</h2>
+<p>This was exactly the kind of thing I was looking for, but I needed to take it a step further. I wanted to be able to detect what page I was on and then load multiple CSS files if necessary - there’s no need to load Product Page styles on the Home Page for example.</p>
+<p>Part of the optimisation process I&#8217;ve been working on is the modularisation of CSS - creating &#8216;page type&#8217; or function specific stylesheets rather than lumping everything into one big &#8216;main.css’. Case in point - I did a test on one of my sites and discovered that 85% percent of the selectors in my `main.css` file were unused on the homepage. While I’m not surprised by this, it bugged me that there was so much redundancy.</p>
+<p><a href="http://sass-lang.com/" title="Sass CSS">Sass</a> and <a href="http://lesscss.org/" title="Less CSS">Less</a> have modularisation covered from a preprocessor point of view - if you follow a modular, component based Sass codebase for your projects (which I do) it&#8217;s pretty easy to create specific CSS files such as critical.css (which I inline in the head), base.css, category-page.css, product-page.css etc. - but what to do with these new CSS files, especially if the pages are built dynamically on a CMS? How do you load them only when needed?</p>
+<p>In a nutshell I modified the script on the Google Developers page, allowing me to pass in page specific classes (in my case the classes the CMS was adding to the body tag), and then filter the loading of CSS files based on that information.</p>
+<p><strong>Get your hands on the <a href="https://gist.github.com/matt-bailey/602b40c77a5d3381ff26" title="A simple script by Matt Bailey for loading CSS files asynchronously and conditionally">asynchronous and conditional CSS loading script here →</a></strong></p>
+<h2>What about other script loaders?</h2>
+<p>But can’t you just use an existing script loader for this, something like <a href="http://yepnopejs.com/" title="YepNope">YepNope</a>? I did think of that and I tried it out. However, I still saw a FOUC. I&#8217;m not sure why - maybe it has to do with me having the YepNope tests at the bottom of the page, which slows the down the processing and hence the loading/rendering of the CSS files?</p>
+<p>Google’s script (and my modified version) is vanilla Javascript, meaning it doesn’t have any dependencies such as jQuery. It’s inlined in the head, meaning it’s executed right away, and the CSS files are injected in the head so they’re loaded immediately after the first paint but before the rest of the page has rendered.</p>
+<p>I’m still in the early stages of using and testing this script, but at first glance it seems to be effective. Let me know if you try it and how you get on?</p>
+<h2>UPDATE</h2>
+<p>I was also recently pointed to this <a href="https://github.com/filamentgroup/loadCSS/" title="Scott Yehl - loadCSS">CSS loading script by Scot Yehl</a>.</p>
+<p>It is very similar to the Google script (and hence, mine), but it doesn’t seem to have the ability to test for Page Type, or to load multiple files - I may be wrong about that though, I haven’t tried it out.</p>
