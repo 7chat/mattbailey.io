@@ -4,7 +4,7 @@
  <title>Matt Bailey</title>
  <link href="http://mattbailey.io/atom.xml" rel="self"/>
  <link href="http://mattbailey.io/"/>
- <updated>2014-09-21T19:19:50+00:00</updated>
+ <updated>2014-09-21T20:50:19+00:00</updated>
  <id>http://mattbailey.io</id>
  <author>
    <name>Matt Bailey</name>
@@ -19,7 +19,7 @@
    <id>http://mattbailey.io/using-sitespeed-io-in-a-vagrant-virtual-machine</id>
    <content type="html">&lt;p&gt;&lt;img src=&quot;https://dl.dropboxusercontent.com/u/35123605/Assets/sitespeed-logo.png&quot; alt=&quot;sitespeed.io&quot;/&gt;&lt;/p&gt;
 
-&lt;p&gt;Not so long ago I came across a fantastic command line tool called &lt;a href=&quot;http://www.sitespeed.io/&quot;&gt;sitespeed.io&lt;/a&gt;. It enables you to generate a nicely formatted report about the speed and performance of a site. Performance is somthing I&amp;#8217;m really interested in, and this is a perfect tool to add to the arsenal.&lt;/p&gt;
+&lt;p&gt;Not so long ago I came across a fantastic command line tool called &lt;a href=&quot;http://www.sitespeed.io/&quot;&gt;sitespeed.io&lt;/a&gt;. It enables you to generate a nicely formatted report about the speed and performance of a site. Performance is something I&amp;#8217;m really interested in, and this is a perfect tool to add to the arsenal.&lt;/p&gt;
 
 &lt;p&gt;Now, being a glutton for punishment I decided against the easy install option (using &lt;a href=&quot;http://brew.sh/&quot;&gt;Homebrew&lt;/a&gt; on a Mac) and instead decided to try and get it working in a &lt;a href=&quot;http://www.vagrantup.com/&quot;&gt;Vagrant&lt;/a&gt; virtual machine.&lt;/p&gt;
 
