@@ -20,7 +20,7 @@ $very-light-grey: #eee !default;
 /* Colour palette
    ========================================================================== */
 
-$picton-blue: rgb(89,171,227) !default;
+$primary-colour: rgb(89,171,227) !default;
 
 /* Base font colours
    ========================================================================== */
@@ -37,7 +37,7 @@ $heading-color: $base-font-color !default;
 
 /* Default */
 
-$link-color: $picton-blue !default;
+$link-color: $primary-colour !default;
 $link-hover-color--inactive: rgba(89,171,227,0) !default;
 $link-hover-color--active: rgba(89,171,227,0.05) !default;
 
