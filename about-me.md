@@ -27,4 +27,4 @@ Here are some technical bits of information for those who are interested:
 
 ---
 
-If you'd like to start up a conversion you can [tweet me on Twitter](https://twitter.com/_mattbailey), or email *matt [at] mattbailey [dot] io*.
+If you'd like to start up a conversion you can [tweet me on Twitter](https://twitter.com/_mattbailey), or email *hello [at] mattbailey [dot] io*.
