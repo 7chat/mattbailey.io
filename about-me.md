@@ -15,13 +15,13 @@ Outside of work I love scary movies, graphic novels, and I'm a proud Dad.
 
 From time-to-time I enjoy writing about things that interest me. This site is where I do that.
 
-Here are some technical bits of information for those who are interested:
+Here are some technical bits of information about my dev set-up and the site for those who are interested:
 
-- It was created on my trusty MacBook Pro
+- It was created on my late 2011, souped-up (maxed out RAM, 500GB SDD) trusty MacBook Pro
 - I code in [Sublime Text](http://www.sublimetext.com/)
 - The terminal I use is [iTerm2](http://iterm2.com/)
-- My development environment is a [Vagrant](https://www.vagrantup.com/) virtual machine
-- It was built on [Jekyll](http://jekyllrb.com/)
+- I develop in [Vagrant](https://www.vagrantup.com/) virtual machines
+- The site is powered by [Jekyll](http://jekyllrb.com/)
 - It's hosted by [Site5](http://www.site5.com/in.php?id=107430) (who are super awesome by the way)
 - The fonts I'm using are [Brandon Grotesque](https://typekit.com/fonts/brandon-grotesque) and [Jubilat](https://typekit.com/fonts/jubilat), served up by [Typekit](https://typekit.com/)
 

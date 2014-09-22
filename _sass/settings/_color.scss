@@ -38,11 +38,11 @@ $heading-color: $base-font-color !default;
 /* Default */
 
 $link-color: $primary-colour !default;
-$link-hover-color--inactive: rgba(89,171,227,0) !default;
-$link-hover-color--active: rgba(89,171,227,0.05) !default;
+$link-hover-color--inactive: rgba($primary-colour, 0) !default;
+$link-hover-color--active: rgba($primary-colour, 0.1) !default;
 
 /* Headings */
 
 $heading-link-color: $base-font-color !default;
-$heading-link-hover-color--inactive: rgba(81,81,81,0) !default;
-$heading-link-hover-color--active: rgba(81,81,81,0.05) !default;
+$heading-link-hover-color--inactive: rgba($black, 0) !default;
+$heading-link-hover-color--active: rgba($black, 0.1) !default;
