@@ -4,13 +4,26 @@
  <title>Matt Bailey</title>
  <link href="http://mattbailey.io/atom.xml" rel="self"/>
  <link href="http://mattbailey.io/"/>
- <updated>2014-09-22T12:57:18+00:00</updated>
+ <updated>2014-09-22T13:28:44+00:00</updated>
  <id>http://mattbailey.io</id>
  <author>
    <name>Matt Bailey</name>
    <email></email>
  </author>
 
+ 
+ <entry>
+   <title>Say Hello To My Shiny New Site</title>
+   <link href="http://mattbailey.io/welcome-to-my-shiny-new-site"/>
+   <updated>2014-09-22T00:00:00+00:00</updated>
+   <id>http://mattbailey.io/welcome-to-my-shiny-new-site</id>
+   <content type="html">&lt;p&gt;My old Tumblr blog served me well, but I&amp;rsquo;ve been wanting a bit more control for a long time. Say hello to my shiny new, &lt;a href=&quot;http://jekyllrb.com/&quot;&gt;Jekyll&lt;/a&gt; powered site!&lt;/p&gt;
+
+&lt;p&gt;It&amp;rsquo;s nice to finally have complete control over the code and style, and it&amp;rsquo;s &amp;lsquo;self-hosted&amp;rsquo; by those wonderful folks over at &lt;a href=&quot;http://www.site5.com/in.php?id=107430&quot;&gt;Site5&lt;/a&gt;. It&amp;rsquo;s still a work-in-progress, so expect to see things change from time-to-time.&lt;/p&gt;
+
+&lt;p&gt;If you want to find out more about the tech specs of the site check out the &lt;a href=&quot;/about-me&quot;&gt;About Me&lt;/a&gt; page. If you have any comments, questions or feedback use the form below.&lt;/p&gt;
+</content>
+ </entry>
  
  <entry>
    <title>Using Sitespeed.io in a Vagrant Virtual Machine</title>
@@ -867,3 +880,4 @@ Done, without errors.&lt;/pre&gt;
  
 
 </feed>
+

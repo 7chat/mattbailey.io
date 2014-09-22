@@ -1,6 +1,7 @@
 ---
 layout: page
 title: About Me
+permalink: about-me/
 ---
 
 <p class="lead">My name is Matt and I'm a frontend designer and developer. I'm currently Creative Director at <a href="http://www.gpmd.co.uk">GPMD</a>.</p>
@@ -22,6 +23,7 @@ Here are some technical bits of information about my dev set-up and the site for
 - The terminal I use is [iTerm2](http://iterm2.com/)
 - I develop in [Vagrant](https://www.vagrantup.com/) virtual machines
 - The site is powered by [Jekyll](http://jekyllrb.com/)
+- The 'theme' is loosely based on [Lanyon](http://lanyon.getpoole.com/) by [mdo](https://twitter.com/mdo)
 - It's hosted by [Site5](http://www.site5.com/in.php?id=107430) (who are super awesome by the way)
 - The fonts I'm using are [Brandon Grotesque](https://typekit.com/fonts/brandon-grotesque) and [Jubilat](https://typekit.com/fonts/jubilat), served up by [Typekit](https://typekit.com/)
 
