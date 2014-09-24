@@ -28,6 +28,7 @@ Here are some technical bits of information about my dev set-up and the site for
 - I am, of course, using [Github](https://github.com/)
 - [Site5](http://www.site5.com/in.php?id=107430) take care of the hosting
 - The fonts I'm using are [Brandon Grotesque](https://typekit.com/fonts/brandon-grotesque) and [Jubilat](https://typekit.com/fonts/jubilat), served up by [Typekit](https://typekit.com/)
+- New posts are written in [Markdown](http://daringfireball.net/projects/markdown/)
 
 ---
 

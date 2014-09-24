@@ -4,7 +4,7 @@
  <title>Matt Bailey</title>
  <link href="http://mattbailey.io/atom.xml" rel="self"/>
  <link href="http://mattbailey.io/"/>
- <updated>2014-09-23T11:53:06+00:00</updated>
+ <updated>2014-09-24T20:35:45+00:00</updated>
  <id>http://mattbailey.io</id>
  <author>
    <name>Matt Bailey</name>
@@ -20,6 +20,8 @@
    <content type="html">&lt;p&gt;My old Tumblr blog served me well, but I&amp;rsquo;ve been wanting a bit more control for a long time. Say hello to my shiny new, &lt;a href=&quot;http://jekyllrb.com/&quot;&gt;Jekyll&lt;/a&gt; powered site!&lt;/p&gt;
 
 &lt;p&gt;It&amp;rsquo;s nice to finally have complete control over the code and style, and it&amp;rsquo;s &amp;lsquo;self-hosted&amp;rsquo; by those wonderful folks over at &lt;a href=&quot;http://www.site5.com/in.php?id=107430&quot;&gt;Site5&lt;/a&gt;. It&amp;rsquo;s still a work-in-progress, so expect to see things change from time-to-time.&lt;/p&gt;
+
+&lt;p&gt;My main aim was to simply create a nice reading environment, which I think I&amp;rsquo;ve achieved - I particularly love &lt;a href=&quot;https://typekit.com/fonts/jubilat&quot;&gt;Jubilat&lt;/a&gt; as a body font.&lt;/p&gt;
 
 &lt;p&gt;If you want to find out more about the tech specs of the site check out the &lt;a href=&quot;/about-me&quot;&gt;About Me&lt;/a&gt; page. If you have any comments, questions or feedback use the form below.&lt;/p&gt;
 </content>
