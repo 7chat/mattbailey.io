@@ -13,7 +13,7 @@ tagline: 'Designer &amp; Developer'
 description: 'Matt is a frontend designer &amp; developer, based in London.'
 url: http://mattbailey.io
 baseurl: '/'
-paginate: 5
+paginate: 9
 
 author:
   name: 'Matt Bailey'
