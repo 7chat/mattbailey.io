@@ -4,7 +4,7 @@
  <title>Matt Bailey</title>
  <link href="http://mattbailey.io/atom.xml" rel="self"/>
  <link href="http://mattbailey.io/"/>
- <updated>2014-11-22T16:01:38+00:00</updated>
+ <updated>2014-11-22T16:04:03+00:00</updated>
  <id>http://mattbailey.io</id>
  <author>
    <name>Matt Bailey</name>
@@ -15,7 +15,7 @@
  <entry>
    <title>A Beginner's Guide To Grunt: Redux</title>
    <link href="http://mattbailey.io/a-beginners-guide-to-grunt-redux"/>
-   <updated>2014-09-27T00:00:00+00:00</updated>
+   <updated>2014-11-22T00:00:00+00:00</updated>
    <id>http://mattbailey.io/a-beginners-guide-to-grunt-redux</id>
    <content type="html">&lt;p&gt;&lt;img alt=&quot;image&quot; src=&quot;/images/dist/tumblr_inline_mjrobcZQpo1qz4rgp.png&quot;/&gt;&lt;/p&gt;
 
