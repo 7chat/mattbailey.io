@@ -4,7 +4,7 @@
  <title>Matt Bailey</title>
  <link href="http://mattbailey.io/atom.xml" rel="self"/>
  <link href="http://mattbailey.io/"/>
- <updated>2014-11-22T15:41:08+00:00</updated>
+ <updated>2014-11-22T15:58:44+00:00</updated>
  <id>http://mattbailey.io</id>
  <author>
    <name>Matt Bailey</name>
@@ -1057,6 +1057,8 @@ theme_advanced_buttons3 : &quot;formatselect&quot;,
    <updated>2013-03-16T00:00:00+00:00</updated>
    <id>http://mattbailey.io/a-beginners-guide-to-grunt</id>
    <content type="html">&lt;p&gt;&lt;img alt=&quot;image&quot; src=&quot;/images/dist/tumblr_inline_mjrobcZQpo1qz4rgp.png&quot;/&gt;&lt;/p&gt;
+
+**UPDATE 22 November, 2014: I've just published a brand new article on how I now set up and use Grunt. [Check it out](http://mattbailey.io/a-beginners-guide-to-grunt-redux/).**
 
 &lt;p&gt;Having just read David Bushell&amp;#8217;s &lt;a href=&quot;http://dbushell.com/2013/03/12/automation/&quot; title=&quot;Automation&quot; target=&quot;_blank&quot;&gt;article&lt;/a&gt; on [frontend] automation I thought I&amp;#8217;d have a go at installing &lt;a href=&quot;http://gruntjs.com/&quot; title=&quot;Grunt - The JavaScript Task Runner&quot; target=&quot;_blank&quot;&gt;&lt;strong&gt;Grunt&lt;/strong&gt;&lt;/a&gt; myself and setting up a project. However, I found the process and documentation on the &lt;strong&gt;Grunt&lt;/strong&gt; website a bit &amp;#8216;meandering&amp;#8217;. In an effort to keep a record for myself, and to help others, I thought I&amp;#8217;d write a simple step by step guide.&lt;/p&gt;
 
