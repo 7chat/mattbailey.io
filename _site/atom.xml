@@ -4,7 +4,7 @@
  <title>Matt Bailey</title>
  <link href="http://mattbailey.io/atom.xml" rel="self"/>
  <link href="http://mattbailey.io/"/>
- <updated>2014-11-22T16:04:03+00:00</updated>
+ <updated>2014-11-24T10:03:02+00:00</updated>
  <id>http://mattbailey.io</id>
  <author>
    <name>Matt Bailey</name>
@@ -35,8 +35,9 @@
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;h2&gt;Install Ruby and Sass&lt;/h2&gt;
 
-&lt;p&gt;I use Sass as my CSS preprocessor. In order to use the Sass Grunt task you will need to install &lt;a href=&quot;http://www.ruby-lang.org/en/downloads/&quot;&gt;Ruby&lt;/a&gt; and the &lt;a href=&quot;http://sass-lang.com/download.html&quot;&gt;Sass&lt;/a&gt; gem.&lt;/p&gt;
-
+&lt;p&gt;I use Sass as my CSS preprocessor. In order to use the Sass Grunt task you will need to install Ruby (&lt;a href=&quot;https://www.ruby-lang.org/en/installation/&quot;&gt;full installation instructions can be found here&lt;/a&gt;) and, once you&amp;rsquo;ve done that, the &lt;a href=&quot;http://sass-lang.com/download.html&quot;&gt;Sass&lt;/a&gt; gem:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;gem install sass
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;h2&gt;Create the project directories&lt;/h2&gt;
 
 &lt;p&gt;Our project requires a couple of directories to be set up. Mirror the structure below:&lt;/p&gt;
@@ -64,7 +65,9 @@ src/styles/
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;Believe it or not, that&amp;rsquo;s it as far as our Gruntfile is concerned!&lt;/p&gt;
 
-&lt;h2&gt;Create an package file&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;time-grunt&lt;/code&gt; tells you how much time each task and the total build has taken, and &lt;code&gt;jitGrunt: true&lt;/code&gt; tells &lt;code&gt;load-grunt-config&lt;/code&gt; to use the faster &lt;a href=&quot;https://github.com/shootaroo/jit-grunt&quot;&gt;jit-grunt&lt;/a&gt; (Just In Time) task loader (this is optional, but speed is good right?).&lt;/p&gt;
+
+&lt;h2&gt;Create a package file&lt;/h2&gt;
 
 &lt;p&gt;Let&amp;rsquo;s move on and also create our basic &lt;code&gt;package.json&lt;/code&gt; file. This file will shortly contain our project&amp;rsquo;s dependencies. Add the following (obviously change references to &amp;lsquo;my project&amp;rsquo; to the actual name of your project):&lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
@@ -87,9 +90,9 @@ npm install grunt-contrib-uglify --save-dev
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;If you look in &lt;code&gt;package.json&lt;/code&gt; you should now see something like this:&lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-  &lt;span class=&quot;s2&quot;&gt;&amp;quot;name&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;[my-project]&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;s2&quot;&gt;&amp;quot;name&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;my-project&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
   &lt;span class=&quot;s2&quot;&gt;&amp;quot;version&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;0.0.1&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-  &lt;span class=&quot;s2&quot;&gt;&amp;quot;description&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;[My project]&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;s2&quot;&gt;&amp;quot;description&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;My project&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
   &lt;span class=&quot;s2&quot;&gt;&amp;quot;devDependencies&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
     &lt;span class=&quot;s2&quot;&gt;&amp;quot;grunt&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;^0.4.5&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
     &lt;span class=&quot;s2&quot;&gt;&amp;quot;grunt-concurrent&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;^1.0.0&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
@@ -281,7 +284,7 @@ grunt/uglify.js
 
 &lt;p&gt;&lt;img src=&quot;/images/dist/grunt-frontend-boilerplate-1.png&quot; alt=&quot;Grunt Production Build Output&quot;&gt;&lt;/p&gt;
 
-&lt;p&gt;I love the little summary that &lt;code&gt;time-grunt&lt;/code&gt; provides. I can see how long each concurrent task set took to run, plus how long the whole build process took - neat!&lt;/p&gt;
+&lt;p&gt;I love the little summary that &lt;code&gt;time-grunt&lt;/code&gt; provides. I can see how long each concurrent task-set took to run, plus how long the whole build process took - neat!&lt;/p&gt;
 
 &lt;p&gt;Depending on your requirements you could also choose to run &lt;code&gt;grunt dev&lt;/code&gt;, &lt;code&gt;grunt devimg&lt;/code&gt;, or &lt;code&gt;grunt img&lt;/code&gt;.&lt;/p&gt;
 

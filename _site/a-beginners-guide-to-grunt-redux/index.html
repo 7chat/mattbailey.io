@@ -114,8 +114,9 @@
 </code></pre></div>
 <h2>Install Ruby and Sass</h2>
 
-<p>I use Sass as my CSS preprocessor. In order to use the Sass Grunt task you will need to install <a href="http://www.ruby-lang.org/en/downloads/">Ruby</a> and the <a href="http://sass-lang.com/download.html">Sass</a> gem.</p>
-
+<p>I use Sass as my CSS preprocessor. In order to use the Sass Grunt task you will need to install Ruby (<a href="https://www.ruby-lang.org/en/installation/">full installation instructions can be found here</a>) and, once you&rsquo;ve done that, the <a href="http://sass-lang.com/download.html">Sass</a> gem:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">gem install sass
+</code></pre></div>
 <h2>Create the project directories</h2>
 
 <p>Our project requires a couple of directories to be set up. Mirror the structure below:</p>
@@ -143,7 +144,9 @@ src/styles/
 </code></pre></div>
 <p>Believe it or not, that&rsquo;s it as far as our Gruntfile is concerned!</p>
 
-<h2>Create an package file</h2>
+<p><code>time-grunt</code> tells you how much time each task and the total build has taken, and <code>jitGrunt: true</code> tells <code>load-grunt-config</code> to use the faster <a href="https://github.com/shootaroo/jit-grunt">jit-grunt</a> (Just In Time) task loader (this is optional, but speed is good right?).</p>
+
+<h2>Create a package file</h2>
 
 <p>Let&rsquo;s move on and also create our basic <code>package.json</code> file. This file will shortly contain our project&rsquo;s dependencies. Add the following (obviously change references to &lsquo;my project&rsquo; to the actual name of your project):</p>
 <div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="p">{</span>
@@ -166,9 +169,9 @@ npm install grunt-contrib-uglify --save-dev
 </code></pre></div>
 <p>If you look in <code>package.json</code> you should now see something like this:</p>
 <div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="p">{</span>
-  <span class="s2">&quot;name&quot;</span><span class="o">:</span> <span class="s2">&quot;[my-project]&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;name&quot;</span><span class="o">:</span> <span class="s2">&quot;my-project&quot;</span><span class="p">,</span>
   <span class="s2">&quot;version&quot;</span><span class="o">:</span> <span class="s2">&quot;0.0.1&quot;</span><span class="p">,</span>
-  <span class="s2">&quot;description&quot;</span><span class="o">:</span> <span class="s2">&quot;[My project]&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;description&quot;</span><span class="o">:</span> <span class="s2">&quot;My project&quot;</span><span class="p">,</span>
   <span class="s2">&quot;devDependencies&quot;</span><span class="o">:</span> <span class="p">{</span>
     <span class="s2">&quot;grunt&quot;</span><span class="o">:</span> <span class="s2">&quot;^0.4.5&quot;</span><span class="p">,</span>
     <span class="s2">&quot;grunt-concurrent&quot;</span><span class="o">:</span> <span class="s2">&quot;^1.0.0&quot;</span><span class="p">,</span>
@@ -360,7 +363,7 @@ grunt/uglify.js
 
 <p><img src="/images/dist/grunt-frontend-boilerplate-1.png" alt="Grunt Production Build Output"></p>
 
-<p>I love the little summary that <code>time-grunt</code> provides. I can see how long each concurrent task set took to run, plus how long the whole build process took - neat!</p>
+<p>I love the little summary that <code>time-grunt</code> provides. I can see how long each concurrent task-set took to run, plus how long the whole build process took - neat!</p>
 
 <p>Depending on your requirements you could also choose to run <code>grunt dev</code>, <code>grunt devimg</code>, or <code>grunt img</code>.</p>
 

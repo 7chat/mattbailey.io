@@ -22,7 +22,11 @@ npm install -g grunt-cli
 
 ## Install Ruby and Sass
 
-I use Sass as my CSS preprocessor. In order to use the Sass Grunt task you will need to install [Ruby](http://www.ruby-lang.org/en/downloads/) and the [Sass](http://sass-lang.com/download.html) gem.
+I use Sass as my CSS preprocessor. In order to use the Sass Grunt task you will need to install Ruby ([full installation instructions can be found here](https://www.ruby-lang.org/en/installation/)) and, once you've done that, the [Sass](http://sass-lang.com/download.html) gem:
+
+```bash
+gem install sass
+```
 
 ## Create the project directories
 
@@ -57,7 +61,9 @@ module.exports = function(grunt) {
 
 Believe it or not, that's it as far as our Gruntfile is concerned!
 
-## Create an package file
+`time-grunt` tells you how much time each task and the total build has taken, and `jitGrunt: true` tells `load-grunt-config` to use the faster [jit-grunt](https://github.com/shootaroo/jit-grunt) (Just In Time) task loader (this is optional, but speed is good right?).
+
+## Create a package file
 
 Let's move on and also create our basic `package.json` file. This file will shortly contain our project's dependencies. Add the following (obviously change references to 'my project' to the actual name of your project):
 
@@ -89,9 +95,9 @@ If you look in `package.json` you should now see something like this:
 
 ```javascript
 {
-  "name": "[my-project]",
+  "name": "my-project",
   "version": "0.0.1",
-  "description": "[My project]",
+  "description": "My project",
   "devDependencies": {
     "grunt": "^0.4.5",
     "grunt-concurrent": "^1.0.0",
@@ -301,7 +307,7 @@ All being well you should see a load of text scroll up the screen and then finis
 
 ![Grunt Production Build Output](/images/dist/grunt-frontend-boilerplate-1.png)
 
-I love the little summary that `time-grunt` provides. I can see how long each concurrent task set took to run, plus how long the whole build process took - neat!
+I love the little summary that `time-grunt` provides. I can see how long each concurrent task-set took to run, plus how long the whole build process took - neat!
 
 Depending on your requirements you could also choose to run `grunt dev`, `grunt devimg`, or `grunt img`.
 
