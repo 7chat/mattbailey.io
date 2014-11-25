@@ -19,7 +19,7 @@ From time-to-time I enjoy writing about things that interest me. This site is wh
 Here are some technical bits of information about my dev set-up and the site for those who are interested:
 
 - It was created on my trusty, late 2011, souped-up (maxed out RAM, 500GB SDD) MacBook Pro
-- I code in [Sublime Text](http://www.sublimetext.com/)
+- I code in [Sublime Text](http://www.sublimetext.com/) (but I'm also dabbling with [Atom](https://atom.io/))
 - I use [iTerm2](http://iterm2.com/)
 - And [Vagrant](https://www.vagrantup.com/)
 - The site is powered by [Jekyll](http://jekyllrb.com/)
