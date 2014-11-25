@@ -4,7 +4,7 @@
  <title>Matt Bailey</title>
  <link href="http://mattbailey.io/atom.xml" rel="self"/>
  <link href="http://mattbailey.io/"/>
- <updated>2014-11-25T09:33:41+00:00</updated>
+ <updated>2014-11-25T09:37:41+00:00</updated>
  <id>http://mattbailey.io</id>
  <author>
    <name>Matt Bailey</name>
@@ -37,7 +37,7 @@
 
 &lt;p&gt;&lt;strong&gt;Update:&lt;/strong&gt; I&amp;rsquo;ve recently switched from using &lt;code&gt;grunt-contrib-sass&lt;/code&gt; to &lt;code&gt;grunt-sass&lt;/code&gt; which uses the faster, but experimental &lt;a href=&quot;http://libsass.org/&quot;&gt;libsass&lt;/a&gt; C++ compiler. As such, it doesn&amp;rsquo;t require Ruby or the Sass gem. However, if you experience issues when compiling with &lt;code&gt;grunt-sass&lt;/code&gt; you should probably use &lt;code&gt;grunt-contrib-sass&lt;/code&gt;, but in that case you will need to install Ruby and the Sass gem.&lt;/p&gt;
 
-&lt;p&gt;~~I use Sass as my CSS preprocessor. In order to use the Sass Grunt task you will need to install Ruby (&lt;a href=&quot;https://www.ruby-lang.org/en/installation/&quot;&gt;full installation instructions can be found here&lt;/a&gt;) and, once you&amp;rsquo;ve done that, the &lt;a href=&quot;http://sass-lang.com/download.html&quot;&gt;Sass&lt;/a&gt; gem:~~&lt;/p&gt;
+&lt;p&gt;&lt;del&gt;I use Sass as my CSS preprocessor. In order to use the Sass Grunt task you will need to install Ruby (&lt;a href=&quot;https://www.ruby-lang.org/en/installation/&quot;&gt;full installation instructions can be found here&lt;/a&gt;) and, once you&amp;rsquo;ve done that, the &lt;a href=&quot;http://sass-lang.com/download.html&quot;&gt;Sass&lt;/a&gt; gem:&lt;/del&gt;&lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;gem install sass
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;h2&gt;Create the project directories&lt;/h2&gt;
