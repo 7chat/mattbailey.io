@@ -283,7 +283,7 @@ module.exports = {
 
 I've split the Sass task into development and production workflows. The config is very similar, but for development purposes I've set the output style to `nested` and activated source maps.
 
-**[Click here](https://github.com/gruntjs/grunt-contrib-sass) for more information on configuring `grunt-contrib-sass`.**
+**[Click here](https://github.com/sindresorhus/grunt-sass) for more information on configuring `grunt-sass`.**
 
 ### uglify.js
 

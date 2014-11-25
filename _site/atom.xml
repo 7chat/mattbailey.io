@@ -4,7 +4,7 @@
  <title>Matt Bailey</title>
  <link href="http://mattbailey.io/atom.xml" rel="self"/>
  <link href="http://mattbailey.io/"/>
- <updated>2014-11-25T09:37:41+00:00</updated>
+ <updated>2014-11-25T21:37:53+00:00</updated>
  <id>http://mattbailey.io</id>
  <author>
    <name>Matt Bailey</name>
@@ -263,7 +263,7 @@ grunt/uglify.js
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;I&amp;rsquo;ve split the Sass task into development and production workflows. The config is very similar, but for development purposes I&amp;rsquo;ve set the output style to &lt;code&gt;nested&lt;/code&gt; and activated source maps.&lt;/p&gt;
 
-&lt;p&gt;&lt;strong&gt;&lt;a href=&quot;https://github.com/gruntjs/grunt-contrib-sass&quot;&gt;Click here&lt;/a&gt; for more information on configuring &lt;code&gt;grunt-contrib-sass&lt;/code&gt;.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;&lt;a href=&quot;https://github.com/sindresorhus/grunt-sass&quot;&gt;Click here&lt;/a&gt; for more information on configuring &lt;code&gt;grunt-sass&lt;/code&gt;.&lt;/strong&gt;&lt;/p&gt;
 
 &lt;h3&gt;uglify.js&lt;/h3&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;nx&quot;&gt;module&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;exports&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
