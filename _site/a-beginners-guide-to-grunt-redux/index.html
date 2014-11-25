@@ -114,7 +114,9 @@
 </code></pre></div>
 <h2>Install Ruby and Sass</h2>
 
-<p>I use Sass as my CSS preprocessor. In order to use the Sass Grunt task you will need to install Ruby (<a href="https://www.ruby-lang.org/en/installation/">full installation instructions can be found here</a>) and, once you&rsquo;ve done that, the <a href="http://sass-lang.com/download.html">Sass</a> gem:</p>
+<p><strong>Update:</strong> I&rsquo;ve recently switched from using <code>grunt-contrib-sass</code> to <code>grunt-sass</code> which uses the faster, but experimental <a href="http://libsass.org/">libsass</a> C++ compiler. As such, it doesn&rsquo;t require Ruby or the Sass gem. However, if you experience issues when compiling with <code>grunt-sass</code> you should probably use <code>grunt-contrib-sass</code>, but in that case you will need to install Ruby and the Sass gem.</p>
+
+<p>~~I use Sass as my CSS preprocessor. In order to use the Sass Grunt task you will need to install Ruby (<a href="https://www.ruby-lang.org/en/installation/">full installation instructions can be found here</a>) and, once you&rsquo;ve done that, the <a href="http://sass-lang.com/download.html">Sass</a> gem:~~</p>
 <div class="highlight"><pre><code class="language-bash" data-lang="bash">gem install sass
 </code></pre></div>
 <h2>Create the project directories</h2>

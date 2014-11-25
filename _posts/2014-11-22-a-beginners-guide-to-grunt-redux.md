@@ -22,7 +22,9 @@ npm install -g grunt-cli
 
 ## Install Ruby and Sass
 
-I use Sass as my CSS preprocessor. In order to use the Sass Grunt task you will need to install Ruby ([full installation instructions can be found here](https://www.ruby-lang.org/en/installation/)) and, once you've done that, the [Sass](http://sass-lang.com/download.html) gem:
+**Update:** I've recently switched from using `grunt-contrib-sass` to `grunt-sass` which uses the faster, but experimental [libsass](http://libsass.org/) C++ compiler. As such, it doesn't require Ruby or the Sass gem. However, if you experience issues when compiling with `grunt-sass` you should probably use `grunt-contrib-sass`, but in that case you will need to install Ruby and the Sass gem.
+
+~~I use Sass as my CSS preprocessor. In order to use the Sass Grunt task you will need to install Ruby ([full installation instructions can be found here](https://www.ruby-lang.org/en/installation/)) and, once you've done that, the [Sass](http://sass-lang.com/download.html) gem:~~
 
 ```bash
 gem install sass
