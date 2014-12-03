@@ -100,7 +100,9 @@
 
 <p class="lead">Back in March 2013 I wrote <a href="http://mattbailey.io/a-beginners-guide-to-grunt/" title="Matt Bailey: A Beginner's Guide To Grunt">A Beginner&rsquo;s Guide To Grunt</a>, and it&rsquo;s become the most visited article on my site. I wrote it at a time when I was just starting out with <a href="http://gruntjs.com/" title="Grunt">Grunt</a>, and it was as much a guide for myself as anyone else. Now, 18 months later, I felt it was time to revisit how I use Grunt because I&rsquo;ve learned a lot more in that time.</p>
 
-<p><strong>If you&rsquo;re itching to just see the code it&rsquo;s all <a href="https://github.com/matt-bailey/grunt-frontend-boilerplate">here on Github</a>.</strong></p>
+<p><strong>If you&rsquo;re itching to just get the code it&rsquo;s all <a href="https://github.com/matt-bailey/grunt-frontend-boilerplate">here on Github</a>.</strong></p>
+
+<p><strong>Update: 3 December, 2014 - I&rsquo;ve added <code>jshint</code> and <code>watch</code> tasks to the article and git repo.</strong></p>
 
 <h2>Install Node and Grunt globally</h2>
 
@@ -168,22 +170,28 @@ npm install grunt-contrib-clean --save-dev
 npm install grunt-contrib-imagemin --save-dev
 npm install grunt-sass --save-dev
 npm install grunt-contrib-uglify --save-dev
+npm install grunt-contrib-jshint --save-dev
+npm install jshint-stylish --save
+npm install grunt-contrib-watch --save-dev
 </code></pre></div>
 <p>If you look in <code>package.json</code> you should now see something like this:</p>
 <div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="p">{</span>
   <span class="s2">&quot;name&quot;</span><span class="o">:</span> <span class="s2">&quot;my-project&quot;</span><span class="p">,</span>
   <span class="s2">&quot;version&quot;</span><span class="o">:</span> <span class="s2">&quot;0.0.1&quot;</span><span class="p">,</span>
-  <span class="s2">&quot;description&quot;</span><span class="o">:</span> <span class="s2">&quot;My project&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;description&quot;</span><span class="o">:</span> <span class="s2">&quot;My Project&quot;</span><span class="p">,</span>
   <span class="s2">&quot;devDependencies&quot;</span><span class="o">:</span> <span class="p">{</span>
     <span class="s2">&quot;grunt&quot;</span><span class="o">:</span> <span class="s2">&quot;^0.4.5&quot;</span><span class="p">,</span>
     <span class="s2">&quot;grunt-concurrent&quot;</span><span class="o">:</span> <span class="s2">&quot;^1.0.0&quot;</span><span class="p">,</span>
     <span class="s2">&quot;grunt-contrib-clean&quot;</span><span class="o">:</span> <span class="s2">&quot;^0.6.0&quot;</span><span class="p">,</span>
     <span class="s2">&quot;grunt-contrib-imagemin&quot;</span><span class="o">:</span> <span class="s2">&quot;^0.8.1&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;grunt-contrib-jshint&quot;</span><span class="o">:</span> <span class="s2">&quot;^0.10.0&quot;</span><span class="p">,</span>
     <span class="s2">&quot;grunt-contrib-uglify&quot;</span><span class="o">:</span> <span class="s2">&quot;^0.6.0&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;grunt-contrib-watch&quot;</span><span class="o">:</span> <span class="s2">&quot;^0.6.1&quot;</span><span class="p">,</span>
     <span class="s2">&quot;grunt-sass&quot;</span><span class="o">:</span> <span class="s2">&quot;^0.16.1&quot;</span><span class="p">,</span>
     <span class="s2">&quot;load-grunt-config&quot;</span><span class="o">:</span> <span class="s2">&quot;^0.13.1&quot;</span>
   <span class="p">},</span>
   <span class="s2">&quot;dependencies&quot;</span><span class="o">:</span> <span class="p">{</span>
+    <span class="s2">&quot;jshint-stylish&quot;</span><span class="o">:</span> <span class="s2">&quot;^1.0.0&quot;</span><span class="p">,</span>
     <span class="s2">&quot;time-grunt&quot;</span><span class="o">:</span> <span class="s2">&quot;^1.0.0&quot;</span>
   <span class="p">}</span>
 <span class="p">}</span>
@@ -199,6 +207,9 @@ npm install grunt-contrib-uglify --save-dev
 <li><code>grunt-contrib-imagemin</code>: Indispensible for all your image optimisation needs.</li>
 <li><code>grunt-sass</code>: Compiles your SASS/SCSS files into CSS. <strong>Please note:</strong> This Sass task uses the faster, but more experimental <a href="http://libsass.org/">libsass</a> compiler. If you experience problems you should probably use the more stable, but slower <a href="https://github.com/gruntjs/grunt-contrib-sass">grunt-contrib-sass</a> task instead.</li>
 <li><code>grunt-contrib-uglify</code>: Makes your Javascript nice and ugly.</li>
+<li><code>grunt-contrig-jshint</code>: Validates your Javascript files.</li>
+<li><code>jshint-stylish</code>: Totally optional, but it makes the <code>grunt-contrig-jshint</code> output look pretty.</li>
+<li><code>grunt-contrib-watch</code>: Run tasks whenever watched files are changed.</li>
 </ul>
 
 <h2>Configure the tasks</h2>
@@ -210,8 +221,10 @@ npm install grunt-contrib-uglify --save-dev
 grunt/concurrent.js
 grunt/clean.js
 grunt/imagemin.js
+grunt/jshint.js
 grunt/sass.js
 grunt/uglify.js
+grunt/watch.js
 </code></pre></div>
 <p><strong>Note: The names of these files must match the names of the tasks.</strong></p>
 
@@ -219,19 +232,29 @@ grunt/uglify.js
 
 <h3>aliases.yaml</h3>
 <div class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="l-Scalar-Plain">default</span><span class="p-Indicator">:</span>
-  <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">prod</span>
+  <span class="l-Scalar-Plain">description</span><span class="p-Indicator">:</span> <span class="s">&#39;Default</span><span class="nv"> </span><span class="s">(production)</span><span class="nv"> </span><span class="s">build&#39;</span>
+  <span class="l-Scalar-Plain">tasks</span><span class="p-Indicator">:</span>
+    <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">prod</span>
 <span class="l-Scalar-Plain">dev</span><span class="p-Indicator">:</span>
-  <span class="p-Indicator">-</span> <span class="s">&#39;concurrent:devFirst&#39;</span>
-  <span class="p-Indicator">-</span> <span class="s">&#39;concurrent:devSecond&#39;</span>
+  <span class="l-Scalar-Plain">description</span><span class="p-Indicator">:</span> <span class="s">&#39;Development</span><span class="nv"> </span><span class="s">build&#39;</span>
+  <span class="l-Scalar-Plain">tasks</span><span class="p-Indicator">:</span>
+    <span class="p-Indicator">-</span> <span class="s">&#39;concurrent:devFirst&#39;</span>
+    <span class="p-Indicator">-</span> <span class="s">&#39;concurrent:devSecond&#39;</span>
 <span class="l-Scalar-Plain">img</span><span class="p-Indicator">:</span>
-  <span class="p-Indicator">-</span> <span class="s">&#39;concurrent:imgFirst&#39;</span>
+  <span class="l-Scalar-Plain">description</span><span class="p-Indicator">:</span> <span class="s">&#39;Image</span><span class="nv"> </span><span class="s">tasks&#39;</span>
+  <span class="l-Scalar-Plain">tasks</span><span class="p-Indicator">:</span>
+    <span class="p-Indicator">-</span> <span class="s">&#39;concurrent:imgFirst&#39;</span>
 <span class="l-Scalar-Plain">devimg</span><span class="p-Indicator">:</span>
-  <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">dev</span>
-  <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">img</span>
+  <span class="l-Scalar-Plain">description</span><span class="p-Indicator">:</span> <span class="s">&#39;Development</span><span class="nv"> </span><span class="s">build</span><span class="nv"> </span><span class="s">and</span><span class="nv"> </span><span class="s">image</span><span class="nv"> </span><span class="s">tasks&#39;</span>
+  <span class="l-Scalar-Plain">tasks</span><span class="p-Indicator">:</span>
+    <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">dev</span>
+    <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">img</span>
 <span class="l-Scalar-Plain">prod</span><span class="p-Indicator">:</span>
-  <span class="p-Indicator">-</span> <span class="s">&#39;concurrent:prodFirst&#39;</span>
-  <span class="p-Indicator">-</span> <span class="s">&#39;concurrent:prodSecond&#39;</span>
-  <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">img</span>
+  <span class="l-Scalar-Plain">description</span><span class="p-Indicator">:</span> <span class="s">&#39;Production</span><span class="nv"> </span><span class="s">build&#39;</span>
+  <span class="l-Scalar-Plain">tasks</span><span class="p-Indicator">:</span>
+    <span class="p-Indicator">-</span> <span class="s">&#39;concurrent:prodFirst&#39;</span>
+    <span class="p-Indicator">-</span> <span class="s">&#39;concurrent:prodSecond&#39;</span>
+    <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">img</span>
 </code></pre></div>
 <p>What we&rsquo;re doing here is defining various aliases for our tasks:</p>
 
@@ -250,12 +273,13 @@ grunt/uglify.js
 
     <span class="c1">// Task options</span>
     <span class="nx">options</span><span class="o">:</span> <span class="p">{</span>
-        <span class="nx">limit</span><span class="o">:</span> <span class="mi">4</span>
+        <span class="nx">limit</span><span class="o">:</span> <span class="mi">3</span>
     <span class="p">},</span>
 
     <span class="c1">// Dev tasks</span>
     <span class="nx">devFirst</span><span class="o">:</span> <span class="p">[</span>
-        <span class="s1">&#39;clean&#39;</span>
+        <span class="s1">&#39;clean&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;jshint&#39;</span>
     <span class="p">],</span>
     <span class="nx">devSecond</span><span class="o">:</span> <span class="p">[</span>
         <span class="s1">&#39;sass:dev&#39;</span><span class="p">,</span>
@@ -264,7 +288,8 @@ grunt/uglify.js
 
     <span class="c1">// Production tasks</span>
     <span class="nx">prodFirst</span><span class="o">:</span> <span class="p">[</span>
-        <span class="s1">&#39;clean&#39;</span>
+        <span class="s1">&#39;clean&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;jshint&#39;</span>
     <span class="p">],</span>
     <span class="nx">prodSecond</span><span class="o">:</span> <span class="p">[</span>
         <span class="s1">&#39;sass:prod&#39;</span><span class="p">,</span>
@@ -344,18 +369,72 @@ grunt/uglify.js
 
 <p><strong><a href="https://github.com/sindresorhus/grunt-sass">Click here</a> for more information on configuring <code>grunt-sass</code>.</strong></p>
 
+<h3>jshint.js</h3>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="p">{</span>
+
+    <span class="nx">options</span><span class="o">:</span> <span class="p">{</span>
+        <span class="nx">reporter</span><span class="o">:</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;jshint-stylish&#39;</span><span class="p">)</span>
+    <span class="p">},</span>
+
+    <span class="nx">main</span><span class="o">:</span> <span class="p">[</span>
+        <span class="s1">&#39;src/scripts/*.js&#39;</span>
+    <span class="p">]</span>
+<span class="p">};</span>
+</code></pre></div>
+<p>The jshint task validates your Javascript and makes sure everything is hunky-dory.</p>
+
+<p><strong><a href="https://github.com/gruntjs/grunt-contrib-jshint">Click here</a> for more information on configuring <code>grunt-contrib-jshint</code>.</strong></p>
+
 <h3>uglify.js</h3>
 <div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="p">{</span>
     <span class="nx">all</span><span class="o">:</span> <span class="p">{</span>
-        <span class="nx">files</span><span class="o">:</span> <span class="p">{</span>
-            <span class="s1">&#39;dist/scripts/main.min.js&#39;</span><span class="o">:</span> <span class="p">[</span><span class="s1">&#39;src/scripts/main.js&#39;</span><span class="p">]</span>
-        <span class="p">}</span>
+        <span class="nx">files</span><span class="o">:</span> <span class="p">[{</span>
+            <span class="nx">expand</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+            <span class="nx">cwd</span><span class="o">:</span> <span class="s1">&#39;src/scripts&#39;</span><span class="p">,</span>
+            <span class="nx">src</span><span class="o">:</span> <span class="s1">&#39;**/*.js&#39;</span><span class="p">,</span>
+            <span class="nx">dest</span><span class="o">:</span> <span class="s1">&#39;dist/scripts&#39;</span><span class="p">,</span>
+            <span class="nx">ext</span><span class="o">:</span> <span class="s1">&#39;.min.js&#39;</span>
+        <span class="p">}]</span>
     <span class="p">}</span>
 <span class="p">};</span>
 </code></pre></div>
 <p>The uglify task simply takes Javascript files and minifies them - simples!</p>
 
 <p><strong><a href="https://github.com/gruntjs/grunt-contrib-uglify">Click here</a> for more information on configuring <code>grunt-contrib-uglify</code>.</strong></p>
+
+<h3>watch.js</h3>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="p">{</span>
+
+    <span class="nx">options</span><span class="o">:</span> <span class="p">{</span>
+        <span class="nx">spawn</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span>
+        <span class="nx">livereload</span><span class="o">:</span> <span class="kc">true</span>
+    <span class="p">},</span>
+
+    <span class="nx">scripts</span><span class="o">:</span> <span class="p">{</span>
+        <span class="nx">files</span><span class="o">:</span> <span class="p">[</span>
+            <span class="s1">&#39;src/scripts/*.js&#39;</span>
+        <span class="p">],</span>
+        <span class="nx">tasks</span><span class="o">:</span> <span class="p">[</span>
+            <span class="s1">&#39;jshint&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;uglify&#39;</span>
+        <span class="p">]</span>
+    <span class="p">},</span>
+
+    <span class="nx">styles</span><span class="o">:</span> <span class="p">{</span>
+        <span class="nx">files</span><span class="o">:</span> <span class="p">[</span>
+            <span class="s1">&#39;src/styles/*.scss&#39;</span>
+        <span class="p">],</span>
+        <span class="nx">tasks</span><span class="o">:</span> <span class="p">[</span>
+            <span class="s1">&#39;sass:dev&#39;</span>
+        <span class="p">]</span>
+    <span class="p">},</span>
+<span class="p">};</span>
+</code></pre></div>
+<p>Watch runs specified tasks whenever your watched files are changed in any way - added, edited, deleted.</p>
+
+<p><strong>Note: The easiest way to get Livereload working is to install the <a href="http://feedback.livereload.com/knowledgebase/articles/86242">browser extension</a>.</strong></p>
+
+<p><strong><a href="https://github.com/gruntjs/grunt-contrib-watch">Click here</a> for more information on configuring <code>grunt-contrib-watch</code> and Livereload.</strong></p>
 
 <h2>Run the tasks</h2>
 
@@ -368,6 +447,8 @@ grunt/uglify.js
 <p>I love the little summary that <code>time-grunt</code> provides. I can see how long each concurrent task-set took to run, plus how long the whole build process took - neat!</p>
 
 <p>Depending on your requirements you could also choose to run <code>grunt dev</code>, <code>grunt devimg</code>, or <code>grunt img</code>.</p>
+
+<p>You can also run <code>grunt watch</code> if you&rsquo;d like grunt to watch for changes to your <code>.scss</code> and <code>.js</code> files and automatically run the <code>sass</code>, or <code>jshint</code> and <code>uglify</code> tasks.</p>
 
 <h2>Summary</h2>
 

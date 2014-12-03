@@ -7,7 +7,9 @@ title: "A Beginner's Guide To Grunt: Redux"
 
 <p class="lead">Back in March 2013 I wrote <a href="http://mattbailey.io/a-beginners-guide-to-grunt/" title="Matt Bailey: A Beginner's Guide To Grunt">A Beginner's Guide To Grunt</a>, and it's become the most visited article on my site. I wrote it at a time when I was just starting out with <a href="http://gruntjs.com/" title="Grunt">Grunt</a>, and it was as much a guide for myself as anyone else. Now, 18 months later, I felt it was time to revisit how I use Grunt because I've learned a lot more in that time.</p>
 
-**If you're itching to just see the code it's all [here on Github](https://github.com/matt-bailey/grunt-frontend-boilerplate).**
+**If you're itching to just get the code it's all [here on Github](https://github.com/matt-bailey/grunt-frontend-boilerplate).**
+
+**Update: 3 December, 2014 - I've added `jshint` and `watch` tasks to the article and git repo.**
 
 ## Install Node and Grunt globally
 
@@ -91,6 +93,9 @@ npm install grunt-contrib-clean --save-dev
 npm install grunt-contrib-imagemin --save-dev
 npm install grunt-sass --save-dev
 npm install grunt-contrib-uglify --save-dev
+npm install grunt-contrib-jshint --save-dev
+npm install jshint-stylish --save
+npm install grunt-contrib-watch --save-dev
 ```
 
 If you look in `package.json` you should now see something like this:
@@ -99,17 +104,20 @@ If you look in `package.json` you should now see something like this:
 {
   "name": "my-project",
   "version": "0.0.1",
-  "description": "My project",
+  "description": "My Project",
   "devDependencies": {
     "grunt": "^0.4.5",
     "grunt-concurrent": "^1.0.0",
     "grunt-contrib-clean": "^0.6.0",
     "grunt-contrib-imagemin": "^0.8.1",
+    "grunt-contrib-jshint": "^0.10.0",
     "grunt-contrib-uglify": "^0.6.0",
+    "grunt-contrib-watch": "^0.6.1",
     "grunt-sass": "^0.16.1",
     "load-grunt-config": "^0.13.1"
   },
   "dependencies": {
+    "jshint-stylish": "^1.0.0",
     "time-grunt": "^1.0.0"
   }
 }
@@ -125,6 +133,9 @@ Here is a summary of what we've just installed:
 - `grunt-contrib-imagemin`: Indispensible for all your image optimisation needs.
 - `grunt-sass`: Compiles your SASS/SCSS files into CSS. **Please note:** This Sass task uses the faster, but more experimental [libsass](http://libsass.org/) compiler. If you experience problems you should probably use the more stable, but slower [grunt-contrib-sass](https://github.com/gruntjs/grunt-contrib-sass) task instead.
 - `grunt-contrib-uglify`: Makes your Javascript nice and ugly.
+- `grunt-contrig-jshint`: Validates your Javascript files.
+- `jshint-stylish`: Totally optional, but it makes the `grunt-contrig-jshint` output look pretty.
+- `grunt-contrib-watch`: Run tasks whenever watched files are changed.
 
 ## Configure the tasks
 
@@ -137,8 +148,10 @@ grunt/aliases.yaml
 grunt/concurrent.js
 grunt/clean.js
 grunt/imagemin.js
+grunt/jshint.js
 grunt/sass.js
 grunt/uglify.js
+grunt/watch.js
 ```
 
 **Note: The names of these files must match the names of the tasks.**
@@ -149,19 +162,29 @@ Copy and paste the config for each task below into the relelvant file.
 
 ```yaml
 default:
-  - prod
+  description: 'Default (production) build'
+  tasks:
+    - prod
 dev:
-  - 'concurrent:devFirst'
-  - 'concurrent:devSecond'
+  description: 'Development build'
+  tasks:
+    - 'concurrent:devFirst'
+    - 'concurrent:devSecond'
 img:
-  - 'concurrent:imgFirst'
+  description: 'Image tasks'
+  tasks:
+    - 'concurrent:imgFirst'
 devimg:
-  - dev
-  - img
+  description: 'Development build and image tasks'
+  tasks:
+    - dev
+    - img
 prod:
-  - 'concurrent:prodFirst'
-  - 'concurrent:prodSecond'
-  - img
+  description: 'Production build'
+  tasks:
+    - 'concurrent:prodFirst'
+    - 'concurrent:prodSecond'
+    - img
 ```
 
 What we're doing here is defining various aliases for our tasks:
@@ -181,12 +204,13 @@ module.exports = {
 
     // Task options
     options: {
-        limit: 4
+        limit: 3
     },
 
     // Dev tasks
     devFirst: [
-        'clean'
+        'clean',
+        'jshint'
     ],
     devSecond: [
         'sass:dev',
@@ -195,7 +219,8 @@ module.exports = {
 
     // Production tasks
     prodFirst: [
-        'clean'
+        'clean',
+        'jshint'
     ],
     prodSecond: [
         'sass:prod',
@@ -285,14 +310,37 @@ I've split the Sass task into development and production workflows. The config i
 
 **[Click here](https://github.com/sindresorhus/grunt-sass) for more information on configuring `grunt-sass`.**
 
+### jshint.js
+
+```javascript
+module.exports = {
+
+    options: {
+        reporter: require('jshint-stylish')
+    },
+
+    main: [
+        'src/scripts/*.js'
+    ]
+};
+```
+
+The jshint task validates your Javascript and makes sure everything is hunky-dory.
+
+**[Click here](https://github.com/gruntjs/grunt-contrib-jshint) for more information on configuring `grunt-contrib-jshint`.**
+
 ### uglify.js
 
 ```javascript
 module.exports = {
     all: {
-        files: {
-            'dist/scripts/main.min.js': ['src/scripts/main.js']
-        }
+        files: [{
+            expand: true,
+            cwd: 'src/scripts',
+            src: '**/*.js',
+            dest: 'dist/scripts',
+            ext: '.min.js'
+        }]
     }
 };
 ```
@@ -300,6 +348,43 @@ module.exports = {
 The uglify task simply takes Javascript files and minifies them - simples!
 
 **[Click here](https://github.com/gruntjs/grunt-contrib-uglify) for more information on configuring `grunt-contrib-uglify`.**
+
+### watch.js
+
+```javascript
+module.exports = {
+
+    options: {
+        spawn: false,
+        livereload: true
+    },
+
+    scripts: {
+        files: [
+            'src/scripts/*.js'
+        ],
+        tasks: [
+            'jshint',
+            'uglify'
+        ]
+    },
+
+    styles: {
+        files: [
+            'src/styles/*.scss'
+        ],
+        tasks: [
+            'sass:dev'
+        ]
+    },
+};
+```
+
+Watch runs specified tasks whenever your watched files are changed in any way - added, edited, deleted.
+
+**Note: The easiest way to get Livereload working is to install the [browser extension](http://feedback.livereload.com/knowledgebase/articles/86242).**
+
+**[Click here](https://github.com/gruntjs/grunt-contrib-watch) for more information on configuring `grunt-contrib-watch` and Livereload.**
 
 ## Run the tasks
 
@@ -312,6 +397,8 @@ All being well you should see a load of text scroll up the screen and then finis
 I love the little summary that `time-grunt` provides. I can see how long each concurrent task-set took to run, plus how long the whole build process took - neat!
 
 Depending on your requirements you could also choose to run `grunt dev`, `grunt devimg`, or `grunt img`.
+
+You can also run `grunt watch` if you'd like grunt to watch for changes to your `.scss` and `.js` files and automatically run the `sass`, or `jshint` and `uglify` tasks.
 
 ## Summary
 
