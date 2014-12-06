@@ -4,7 +4,7 @@
  <title>Matt Bailey</title>
  <link href="http://mattbailey.io/atom.xml" rel="self"/>
  <link href="http://mattbailey.io/"/>
- <updated>2014-12-03T17:22:34+00:00</updated>
+ <updated>2014-12-06T19:56:41+00:00</updated>
  <id>http://mattbailey.io</id>
  <author>
    <name>Matt Bailey</name>
@@ -119,7 +119,7 @@ npm install grunt-contrib-watch --save-dev
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;Here is a summary of what we&amp;rsquo;ve just installed:&lt;/p&gt;
 
-&lt;ul&gt;
+&lt;ol&gt;
 &lt;li&gt;&lt;code&gt;grunt&lt;/code&gt;: The task runner itself.&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;time-grunt&lt;/code&gt;: This isn&amp;rsquo;t required, but it&amp;rsquo;s a neat addition - it tells you how much time each task and the total build has taken.&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;load-grunt-config&lt;/code&gt;: Allows you to keep our main Gruntfile short and succinct. More on that in a bit.&lt;/li&gt;
@@ -131,7 +131,7 @@ npm install grunt-contrib-watch --save-dev
 &lt;li&gt;&lt;code&gt;grunt-contrig-jshint&lt;/code&gt;: Validates your Javascript files.&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;jshint-stylish&lt;/code&gt;: Totally optional, but it makes the &lt;code&gt;grunt-contrig-jshint&lt;/code&gt; output look pretty.&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;grunt-contrib-watch&lt;/code&gt;: Run tasks whenever watched files are changed.&lt;/li&gt;
-&lt;/ul&gt;
+&lt;/ol&gt;
 
 &lt;h2&gt;Configure the tasks&lt;/h2&gt;
 
@@ -377,7 +377,7 @@ grunt/watch.js
 
 &lt;p&gt;&lt;strong&gt;Once again, the code accompanying this article can also be found &lt;a href=&quot;https://github.com/matt-bailey/grunt-frontend-boilerplate&quot;&gt;on Github&lt;/a&gt;.&lt;/strong&gt;&lt;/p&gt;
 
-&lt;p&gt;Leave any questions you have in the comments below, or file issues on &lt;a href=&quot;https://github.com/matt-bailey/grunt-frontend-boilerplate/issues&quot;&gt;github&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Leave any questions you have in the comments below, or post issues on &lt;a href=&quot;https://github.com/matt-bailey/grunt-frontend-boilerplate/issues&quot;&gt;github&lt;/a&gt;.&lt;/p&gt;
 </content>
  </entry>
  

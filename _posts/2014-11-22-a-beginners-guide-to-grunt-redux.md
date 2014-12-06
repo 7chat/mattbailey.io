@@ -125,7 +125,7 @@ If you look in `package.json` you should now see something like this:
 
 Here is a summary of what we've just installed:
 
-- `grunt`: The task runner itself.
+1. `grunt`: The task runner itself.
 - `time-grunt`: This isn't required, but it's a neat addition - it tells you how much time each task and the total build has taken.
 - `load-grunt-config`: Allows you to keep our main Gruntfile short and succinct. More on that in a bit.
 - `grunt-concurrent`: Run tasks concurrently - Out-of-the-box Grunt will run each task one after the other, which can take a while depending on the amount and type of tasks you need to run. However, there are often tasks that are not dependent on other tasks which can be run at the same time.
@@ -406,4 +406,4 @@ And that's about all there is to it really. If you experiment with the above you
 
 **Once again, the code accompanying this article can also be found [on Github](https://github.com/matt-bailey/grunt-frontend-boilerplate).**
 
-Leave any questions you have in the comments below, or file issues on [github](https://github.com/matt-bailey/grunt-frontend-boilerplate/issues).
+Leave any questions you have in the comments below, or post issues on [github](https://github.com/matt-bailey/grunt-frontend-boilerplate/issues).
