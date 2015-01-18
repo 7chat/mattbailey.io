@@ -16,27 +16,6 @@
     background-color: $primary-colour;
 }
 
-/* 100% height on home page */
-
-.home {
-    .masthead {
-        display: table;
-        width: 100%;
-        height: 74vh;
-        min-height: 74vh;
-        // text-align: center;
-    }
-
-    // Ghost element for vertical centering
-    .masthead:before {
-        content: '';
-        display: inline-block;
-        height: 100%;
-        vertical-align: middle;
-        margin-right: -0.25em;
-    }
-}
-
 /* ==========================================================================
    Title and tagline
    ========================================================================== */
@@ -48,24 +27,11 @@
       margin-top: 0;
       margin-bottom: 0;
       line-height: 1;
-      text-align: center;
+      // text-align: center;
       color: $white;
 }
 
 .masthead-title a { color: $white; }
-
-// @media (max-width: 48em) {
-//     .masthead-title { text-align: center; }
-// }
-
-/* Big masthead on home page */
-
-.home {
-    .masthead-title { font-size: 3rem; }
-    @media (max-width: 48em) {
-        .masthead-title { font-size: 2rem; }
-    }
-}
 
 /* Tagline
    ========================================================================== */
@@ -76,51 +42,3 @@
     font-style: italic;
     text-transform: none;
 }
-
-.home {
-    .masthead-title__tagline { font-size: 2.5rem; }
-    @media (max-width: 48em) {
-        .masthead-title__tagline { font-size: 1.5rem; }
-    }
-}
-
-/* ==========================================================================
-   Jump to content
-   ========================================================================== */
-
-.content-jump { display: none; }
-
-.home {
-    .content-jump {
-        position: absolute;
-        left: 50%;
-        display: block;
-        margin-left: -10px;
-        text-indent: -999em; // Yes, I'm being lazy...
-        color: $white;
-
-        // Arrrow icon
-        &:before {
-            position: absolute;
-            bottom: 60px;
-            display: block;
-            width: 0;
-            height: 0;
-            border-left: 10px solid transparent;
-            border-right: 10px solid transparent;
-            border-top: 10px solid rgba(255,255,255,1);
-            border-top-color: rgba(255,255,255,1);
-            content: "";
-            -webkit-transition: border-top-color 0.25s ease-out;
-            -moz-transition: border-top-color 0.25s ease-out;
-            -o-transition: border-top-color 0.25s ease-out;
-            transition: border-top-color 0.25s ease-out;
-        }
-
-        // Hover
-        &:hover {
-            &:before { border-top-color: rgba(255,255,255,0.25); }
-        }
-    }
-}
-
