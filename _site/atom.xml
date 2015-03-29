@@ -4,7 +4,7 @@
  <title>Matt Bailey</title>
  <link href="http://mattbailey.io/atom.xml" rel="self"/>
  <link href="http://mattbailey.io/"/>
- <updated>2015-01-18T19:31:05+00:00</updated>
+ <updated>2015-03-29T22:55:56+01:00</updated>
  <id>http://mattbailey.io</id>
  <author>
    <name>Matt Bailey</name>
@@ -19,7 +19,7 @@
    <id>http://mattbailey.io/a-beginners-guide-to-grunt-redux</id>
    <content type="html">&lt;p&gt;&lt;img alt=&quot;image&quot; src=&quot;/images/dist/tumblr_inline_mjrobcZQpo1qz4rgp.png&quot;/&gt;&lt;/p&gt;
 
-&lt;p class=&quot;lead&quot;&gt;Back in March 2013 I wrote &lt;a href=&quot;http://mattbailey.io/a-beginners-guide-to-grunt/&quot; title=&quot;Matt Bailey: A Beginner's Guide To Grunt&quot;&gt;A Beginner&amp;rsquo;s Guide To Grunt&lt;/a&gt;, and it&amp;rsquo;s become the most visited article on my site. I wrote it at a time when I was just starting out with &lt;a href=&quot;http://gruntjs.com/&quot; title=&quot;Grunt&quot;&gt;Grunt&lt;/a&gt;, and it was as much a guide for myself as anyone else. Now, 18 months later, I felt it was time to revisit how I use Grunt because I&amp;rsquo;ve learned a lot more in that time.&lt;/p&gt;
+&lt;p class=&quot;lead&quot;&gt;Back in March 2013 I wrote &lt;a href=&quot;http://mattbailey.io/a-beginners-guide-to-grunt/&quot; title=&quot;Matt Bailey: A Beginner&#39;s Guide To Grunt&quot;&gt;A Beginner&amp;rsquo;s Guide To Grunt&lt;/a&gt;, and it&amp;rsquo;s become the most visited article on my site. I wrote it at a time when I was just starting out with &lt;a href=&quot;http://gruntjs.com/&quot; title=&quot;Grunt&quot;&gt;Grunt&lt;/a&gt;, and it was as much a guide for myself as anyone else. Now, 18 months later, I felt it was time to revisit how I use Grunt because I&amp;rsquo;ve learned a lot more in that time.&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;If you&amp;rsquo;re itching to just get the code it&amp;rsquo;s all &lt;a href=&quot;https://github.com/matt-bailey/grunt-frontend-boilerplate&quot;&gt;here on Github&lt;/a&gt;.&lt;/strong&gt;&lt;/p&gt;
 
@@ -384,7 +384,7 @@ grunt/watch.js
  <entry>
    <title>Say Hello To My Shiny New Site</title>
    <link href="http://mattbailey.io/welcome-to-my-shiny-new-site"/>
-   <updated>2014-09-22T00:00:00+00:00</updated>
+   <updated>2014-09-22T00:00:00+01:00</updated>
    <id>http://mattbailey.io/welcome-to-my-shiny-new-site</id>
    <content type="html">&lt;p&gt;My old Tumblr blog served me well, but I&amp;rsquo;ve been wanting a bit more control for a long time. Say hello to my shiny new, &lt;a href=&quot;http://jekyllrb.com/&quot;&gt;Jekyll&lt;/a&gt; powered site!&lt;/p&gt;
 
@@ -399,7 +399,7 @@ grunt/watch.js
  <entry>
    <title>Using Sitespeed.io in a Vagrant Virtual Machine</title>
    <link href="http://mattbailey.io/using-sitespeed-io-in-a-vagrant-virtual-machine"/>
-   <updated>2014-07-18T00:00:00+00:00</updated>
+   <updated>2014-07-18T00:00:00+01:00</updated>
    <id>http://mattbailey.io/using-sitespeed-io-in-a-vagrant-virtual-machine</id>
    <content type="html">&lt;p&gt;&lt;img src=&quot;https://dl.dropboxusercontent.com/u/35123605/Assets/sitespeed-logo.png&quot; alt=&quot;sitespeed.io&quot;/&gt;&lt;/p&gt;
 
@@ -518,7 +518,7 @@ If you find you&amp;#8217;re getting &lt;code&gt;java.net.SocketTimeoutException
  <entry>
    <title>Optimising the Critical Rendering Path, and Loading CSS Asynchronously and Conditionally</title>
    <link href="http://mattbailey.io/optimising-the-critical-rendering-path-and-loading-css"/>
-   <updated>2014-06-20T00:00:00+00:00</updated>
+   <updated>2014-06-20T00:00:00+01:00</updated>
    <id>http://mattbailey.io/optimising-the-critical-rendering-path-and-loading-css</id>
    <content type="html">&lt;p&gt;&lt;strong&gt;&lt;a href=&quot;https://gist.github.com/matt-bailey/602b40c77a5d3381ff26&quot; title=&quot;Script by Matt Bailey for loading CSS files asynchronously and conditionally&quot;&gt;Go straight to the asynchronous and conditional CSS loading script →&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;
 &lt;h2&gt;Optimising the Critical Rendering Path&lt;/h2&gt;
@@ -549,7 +549,7 @@ If you find you&amp;#8217;re getting &lt;code&gt;java.net.SocketTimeoutException
  <entry>
    <title>Contribution to Report on Mobile Web Design and Development Best Practice</title>
    <link href="http://mattbailey.io/contribution-to-report-on-mobile-web-design-and"/>
-   <updated>2014-05-27T00:00:00+00:00</updated>
+   <updated>2014-05-27T00:00:00+01:00</updated>
    <id>http://mattbailey.io/contribution-to-report-on-mobile-web-design-and</id>
    <content type="html">&lt;p&gt;&lt;img alt=&quot;image&quot; src=&quot;/images/dist/tumblr_inline_n68qa8hAY81qfoiia.jpg&quot;/&gt;&lt;/p&gt;
 
@@ -569,7 +569,7 @@ If you find you&amp;#8217;re getting &lt;code&gt;java.net.SocketTimeoutException
  <entry>
    <title>Responsive Images With The picture Element and Picturefill 2</title>
    <link href="http://mattbailey.io/responsive-images-with-the-picture-element-and"/>
-   <updated>2014-04-24T00:00:00+00:00</updated>
+   <updated>2014-04-24T00:00:00+01:00</updated>
    <id>http://mattbailey.io/responsive-images-with-the-picture-element-and</id>
    <content type="html">&lt;p&gt;&lt;strong&gt;Just want the good stuff? &lt;a href=&quot;http://scottjehl.github.io/picturefill/&quot; title=&quot;Picturefill 2 polyfill&quot;&gt;Get straight to the Picturefill 2 polyfill →&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;Back in February of this year, at An Event Apart in Atlanta, Mat Marqis confirmed that browser vendors have finally agreed to support the &lt;code class=&quot;prettyprint&quot;&gt;picture&lt;/code&gt; element. You can read &lt;a href=&quot;http://www.lukew.com/ff/entry.asp?1851&quot; title=&quot;An Event Apart: The Future of Responsive Images&quot;&gt;Luke Wroblewski&amp;#8217;s notes on the talk here&lt;/a&gt;.&lt;/p&gt;
@@ -591,7 +591,7 @@ If you find you&amp;#8217;re getting &lt;code&gt;java.net.SocketTimeoutException
  <entry>
    <title>A Simple Vagrant Boilerplate For Frontend Development</title>
    <link href="http://mattbailey.io/a-simple-vagrant-boilerplate-for-frontend-development"/>
-   <updated>2014-04-20T00:00:00+00:00</updated>
+   <updated>2014-04-20T00:00:00+01:00</updated>
    <id>http://mattbailey.io/a-simple-vagrant-boilerplate-for-frontend-development</id>
    <content type="html">&lt;p&gt;&lt;img alt=&quot;image&quot; src=&quot;/images/dist/tumblr_inline_n4bnqdeSgV1qfoiia.png&quot;/&gt;&lt;/p&gt;
 
@@ -710,7 +710,7 @@ If you find you&amp;#8217;re getting &lt;code&gt;java.net.SocketTimeoutException
  <entry>
    <title>Graphic Novels You Should Be Reading</title>
    <link href="http://mattbailey.io/graphic-novels-you-should-be-reading"/>
-   <updated>2013-08-03T00:00:00+00:00</updated>
+   <updated>2013-08-03T00:00:00+01:00</updated>
    <id>http://mattbailey.io/graphic-novels-you-should-be-reading</id>
    <content type="html">&lt;p&gt;&lt;img alt=&quot;image&quot; src=&quot;/images/dist/tumblr_inline_mqykeipJuq1qz4rgp.jpg&quot;/&gt;&lt;/p&gt;
 
@@ -759,7 +759,7 @@ If you find you&amp;#8217;re getting &lt;code&gt;java.net.SocketTimeoutException
  <entry>
    <title>How To Create An App-Like Desktop Icon For Websites (Single-Window Chrome Instances) On OSX</title>
    <link href="http://mattbailey.io/how-to-create-an-app-like-desktop-icon-for-websites"/>
-   <updated>2013-06-29T00:00:00+00:00</updated>
+   <updated>2013-06-29T00:00:00+01:00</updated>
    <id>http://mattbailey.io/how-to-create-an-app-like-desktop-icon-for-websites</id>
    <content type="html">&lt;p&gt;&lt;span&gt;&lt;img alt=&quot;image&quot; src=&quot;/images/dist/tumblr_inline_mp5f2iNHda1qz4rgp.jpg&quot;/&gt;&lt;/span&gt;&lt;/p&gt;
 
@@ -801,7 +801,7 @@ If you find you&amp;#8217;re getting &lt;code&gt;java.net.SocketTimeoutException
  <entry>
    <title>Front-end Process, Flat Builds and Automation</title>
    <link href="http://mattbailey.io/front-end-process-flat-builds-and-automation"/>
-   <updated>2013-06-14T00:00:00+00:00</updated>
+   <updated>2013-06-14T00:00:00+01:00</updated>
    <id>http://mattbailey.io/front-end-process-flat-builds-and-automation</id>
    <content type="html">&lt;p&gt;I recently published a four part series of articles that document my front-end process at &lt;a href=&quot;http://www.gpmd.co.uk&quot; title=&quot;GPMD&quot; target=&quot;_blank&quot;&gt;GPMD&lt;/a&gt;. They cover using &lt;a href=&quot;http://yeoman.io/&quot; title=&quot;Yeoman&quot; target=&quot;_blank&quot;&gt;Yeoman&lt;/a&gt; to scaffold projects, &lt;a href=&quot;http://gruntjs.com/&quot; title=&quot;Grunt JS&quot; target=&quot;_blank&quot;&gt;Grunt&lt;/a&gt; to automate tasks, and &lt;a href=&quot;https://github.com/csswizardry/inuit.css/&quot; title=&quot;inuit.css&quot; target=&quot;_blank&quot;&gt;inuit.css&lt;/a&gt; as a CSS framework.&lt;/p&gt;
 &lt;p&gt;It took a while to put it all together, but I think it was really useful for my own learning. Hopefully it will help others too:&lt;/p&gt;
@@ -816,7 +816,7 @@ If you find you&amp;#8217;re getting &lt;code&gt;java.net.SocketTimeoutException
  <entry>
    <title>Grunt - Synchronised Testing Between Browsers/Devices</title>
    <link href="http://mattbailey.io/grunt-synchronised-testing-between-browsers-devices"/>
-   <updated>2013-05-13T00:00:00+00:00</updated>
+   <updated>2013-05-13T00:00:00+01:00</updated>
    <id>http://mattbailey.io/grunt-synchronised-testing-between-browsers-devices</id>
    <content type="html">&lt;p&gt;Today I discovered how easy it is to synchronise testing between browsers/devices when using &lt;code class=&quot;prettyprint&quot;&gt;grunt server&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;&lt;em&gt;&lt;strong&gt;UPDATE:&lt;/strong&gt; It has been pointed out to me that I should make it clear that &lt;code class=&quot;prettyprint&quot;&gt;grunt server&lt;/code&gt; is part of Yeoman&amp;#8217;s Gruntfile. If you&amp;#8217;ve set up your project not using Yeoman then this command might be different.&lt;/em&gt;&lt;/p&gt;
@@ -834,7 +834,7 @@ If you find you&amp;#8217;re getting &lt;code&gt;java.net.SocketTimeoutException
  <entry>
    <title>SilverStripe CMS - Adding a TinyMCE Editor to Widgets</title>
    <link href="http://mattbailey.io/silverstripe-cms-adding-a-tinymce-editor-to-widgets"/>
-   <updated>2013-04-17T00:00:00+00:00</updated>
+   <updated>2013-04-17T00:00:00+01:00</updated>
    <id>http://mattbailey.io/silverstripe-cms-adding-a-tinymce-editor-to-widgets</id>
    <content type="html">&lt;p&gt;&lt;img alt=&quot;image&quot; src=&quot;/images/dist/tumblr_inline_mleof6TvYR1qz4rgp.png&quot;/&gt;&lt;/p&gt;
 
@@ -875,7 +875,7 @@ jQuery(document).ajaxStop(function() {
 });
 &lt;/pre&gt;
 &lt;p&gt;All that remains is to load the javascript. You can do this by adding the following code to &lt;code class=&quot;prettyprint&quot;&gt;mysite/_config.php&lt;/code&gt;:&lt;/p&gt;
-&lt;pre class=&quot;prettyprint&quot;&gt;LeftAndMain::require_javascript('mysite/admin.min.js');&lt;/pre&gt;
+&lt;pre class=&quot;prettyprint&quot;&gt;LeftAndMain::require_javascript(&#39;mysite/admin.min.js&#39;);&lt;/pre&gt;
 &lt;p&gt;All being well you should see an editor in your widget like this (obviously not on an angle - that&amp;#8217;s just me being arty-farty):&lt;/p&gt;
 &lt;p&gt;&lt;img alt=&quot;image&quot; src=&quot;/images/dist/tumblr_inline_mleogpN84F1qz4rgp.jpg&quot;/&gt;&lt;/p&gt;
 
@@ -907,7 +907,7 @@ theme_advanced_buttons3 : &quot;formatselect&quot;,
  <entry>
    <title>Extending the Boostrap grid system</title>
    <link href="http://mattbailey.io/extending-the-boostrap-grid-system"/>
-   <updated>2013-04-13T00:00:00+00:00</updated>
+   <updated>2013-04-13T00:00:00+01:00</updated>
    <id>http://mattbailey.io/extending-the-boostrap-grid-system</id>
    <content type="html">&lt;p&gt;&lt;img alt=&quot;image&quot; src=&quot;/images/dist/tumblr_inline_ml7do2Wwbr1qz4rgp.jpg&quot;/&gt;&lt;/p&gt;
 
@@ -920,7 +920,7 @@ theme_advanced_buttons3 : &quot;formatselect&quot;,
 &lt;/blockquote&gt;
 &lt;p&gt;To do this we can fortunately inherit all the existing &lt;strong&gt;Bootstrap&lt;/strong&gt; &lt;code class=&quot;prettyprint&quot;&gt;span&lt;/code&gt; styling by simply including the word &lt;code class=&quot;prettyprint&quot;&gt;span&lt;/code&gt; in our new classes. All that remains for us to do is define the new widths.&lt;/p&gt;
 &lt;p&gt;In my case I need to set up two new styles: &lt;code class=&quot;prettyprint&quot;&gt;.span-quarter&lt;/code&gt; and &lt;code class=&quot;prettyprint&quot;&gt;.span-half&lt;/code&gt;. Now here comes the tricky bit. Not only do I have to work out the correct percentage widths for each style, but I have to work them out for each break point. Rather than go into detail here on how to work out percentage widths for responsive design, you can &lt;a href=&quot;http://blog.teamtreehouse.com/beginners-guide-to-responsive-web-design&quot; title=&quot;Beginners Guide to Responsive Web Design&quot;&gt;check out this article on the TreeHouse blog&lt;/a&gt;. The numbers you’ll get will be pretty funky, but that’s normal.&lt;/p&gt;
-&lt;p&gt;Now I have my widths I need to set these up with the new classes and media queries. This is where using a &lt;strong&gt;CSS&lt;/strong&gt; preprocessor like &lt;a href=&quot;http://lesscss.org/&quot; title=&quot;LESS CSS&quot;&gt;LESS&lt;/a&gt; is a godsend. I’m a big fan of trying to keep things &lt;a href=&quot;http://en.wikipedia.org/wiki/Don't_repeat_yourself&quot;&gt;DRY&lt;/a&gt;, and this is a prime example. There’s going to be quite a bit of code, so the more I can put into variables and mixins the better.&lt;/p&gt;
+&lt;p&gt;Now I have my widths I need to set these up with the new classes and media queries. This is where using a &lt;strong&gt;CSS&lt;/strong&gt; preprocessor like &lt;a href=&quot;http://lesscss.org/&quot; title=&quot;LESS CSS&quot;&gt;LESS&lt;/a&gt; is a godsend. I’m a big fan of trying to keep things &lt;a href=&quot;http://en.wikipedia.org/wiki/Don&#39;t_repeat_yourself&quot;&gt;DRY&lt;/a&gt;, and this is a prime example. There’s going to be quite a bit of code, so the more I can put into variables and mixins the better.&lt;/p&gt;
 &lt;p&gt;Looking at the &lt;strong&gt;Bootstrap&lt;/strong&gt; &lt;strong&gt;LESS&lt;/strong&gt; files I can extract the relevant media query arguments and put them into variables for later use. As &lt;strong&gt;LESS&lt;/strong&gt; doesn’t recognise the arguments I can put them in escaped strings: &lt;code class=&quot;prettyprint&quot;&gt;~&quot;[string]&quot;&lt;/code&gt;.&lt;/p&gt;
 &lt;pre class=&quot;prettyprint&quot;&gt;/* Media query variables */
 
@@ -1032,7 +1032,7 @@ theme_advanced_buttons3 : &quot;formatselect&quot;,
  <entry>
    <title>Gettin' sassy with SASS</title>
    <link href="http://mattbailey.io/gettin-sassy-with-sass"/>
-   <updated>2013-04-10T00:00:00+00:00</updated>
+   <updated>2013-04-10T00:00:00+01:00</updated>
    <id>http://mattbailey.io/gettin-sassy-with-sass</id>
    <content type="html">&lt;p&gt;&lt;img alt=&quot;image&quot; src=&quot;/images/dist/tumblr_inline_ml1lk2CJkP1qz4rgp.gif&quot;/&gt;&lt;/p&gt;
 
@@ -1057,7 +1057,7 @@ theme_advanced_buttons3 : &quot;formatselect&quot;,
  <entry>
    <title>Film Podcasts You Should Be Listening To</title>
    <link href="http://mattbailey.io/film-podcasts-you-should-be-listening-to"/>
-   <updated>2013-04-03T00:00:00+00:00</updated>
+   <updated>2013-04-03T00:00:00+01:00</updated>
    <id>http://mattbailey.io/film-podcasts-you-should-be-listening-to</id>
    <content type="html">&lt;p&gt;&lt;img src=&quot;/images/dist/tumblr_inline_mkp20v2pKZ1qz4rgp.jpg&quot;/&gt;&lt;/p&gt;
 
@@ -1144,7 +1144,7 @@ theme_advanced_buttons3 : &quot;formatselect&quot;,
    <id>http://mattbailey.io/a-beginners-guide-to-grunt</id>
    <content type="html">&lt;p&gt;&lt;img alt=&quot;image&quot; src=&quot;/images/dist/tumblr_inline_mjrobcZQpo1qz4rgp.png&quot;/&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;strong&gt;UPDATE 22 November, 2014: I've just published a brand new article on how I now set up and use Grunt. &lt;a href=&quot;http://mattbailey.io/a-beginners-guide-to-grunt-redux/&quot; title=&quot;Matt Bailey: A Beginners Guide To Grunt&quot;&gt;Check it out&lt;/a&gt;.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;UPDATE 22 November, 2014: I&#39;ve just published a brand new article on how I now set up and use Grunt. &lt;a href=&quot;http://mattbailey.io/a-beginners-guide-to-grunt-redux/&quot; title=&quot;Matt Bailey: A Beginners Guide To Grunt&quot;&gt;Check it out&lt;/a&gt;.&lt;/strong&gt;&lt;/p&gt;
 
 &lt;p&gt;Having just read David Bushell&amp;#8217;s &lt;a href=&quot;http://dbushell.com/2013/03/12/automation/&quot; title=&quot;Automation&quot; target=&quot;_blank&quot;&gt;article&lt;/a&gt; on [frontend] automation I thought I&amp;#8217;d have a go at installing &lt;a href=&quot;http://gruntjs.com/&quot; title=&quot;Grunt - The JavaScript Task Runner&quot; target=&quot;_blank&quot;&gt;&lt;strong&gt;Grunt&lt;/strong&gt;&lt;/a&gt; myself and setting up a project. However, I found the process and documentation on the &lt;strong&gt;Grunt&lt;/strong&gt; website a bit &amp;#8216;meandering&amp;#8217;. In an effort to keep a record for myself, and to help others, I thought I&amp;#8217;d write a simple step by step guide.&lt;/p&gt;
 
@@ -1212,23 +1212,23 @@ theme_advanced_buttons3 : &quot;formatselect&quot;,
 
   // Project configuration.
   grunt.initConfig({
-    pkg: grunt.file.readJSON('package.json'),
+    pkg: grunt.file.readJSON(&#39;package.json&#39;),
     uglify: {
       options: {
-        banner: '/*! &amp;lt;%= pkg.name %&amp;gt; &amp;lt;%= grunt.template.today(&quot;yyyy-mm-dd&quot;) %&amp;gt; */\n'
+        banner: &#39;/*! &amp;lt;%= pkg.name %&amp;gt; &amp;lt;%= grunt.template.today(&quot;yyyy-mm-dd&quot;) %&amp;gt; */\n&#39;
       },
       build: {
-        src: 'src/&amp;lt;%= pkg.name %&amp;gt;.js',
-        dest: 'build/&amp;lt;%= pkg.name %&amp;gt;.min.js'
+        src: &#39;src/&amp;lt;%= pkg.name %&amp;gt;.js&#39;,
+        dest: &#39;build/&amp;lt;%= pkg.name %&amp;gt;.min.js&#39;
       }
     }
   });
 
   // Load the plugin that provides the &quot;uglify&quot; task.
-  grunt.loadNpmTasks('grunt-contrib-uglify');
+  grunt.loadNpmTasks(&#39;grunt-contrib-uglify&#39;);
 
   // Default task(s).
-  grunt.registerTask('default', ['uglify']);
+  grunt.registerTask(&#39;default&#39;, [&#39;uglify&#39;]);
 
 };&lt;/pre&gt;
 &lt;h2&gt;6. Run grunt&lt;/h2&gt;
