@@ -11,3 +11,13 @@
     background: -moz-linear-gradient(top,  $from, $to);
     filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#{$from}', endColorstr='#{$to}');
 }
+
+/* ==========================================================================
+   Opacity
+   ========================================================================== */
+
+@mixin opacity($opacity) {
+    opacity: $opacity;
+    $opacity-ie: $opacity * 100;
+    filter: alpha(opacity=$opacity-ie); //IE8
+}
