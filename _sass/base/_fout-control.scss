@@ -1,0 +1,33 @@
+/**
+ * FOUT control: http://help.typekit.com/customer/portal/articles/6852
+ */
+
+/* ==========================================================================
+   FOUT control
+   ========================================================================== */
+
+/* Loading
+   ========================================================================== */
+
+.wf-loading h1,
+.wf-loading h2,
+.wf-loading h3,
+.wf-loading h4,
+.wf-loading h5,
+.wf-loading h6,
+.wf-loading p,
+.wf-loading ul,
+.wf-loading blockquote { visibility: hidden; }
+
+/* Active
+   ========================================================================== */
+
+.wf-active h1,
+.wf-active h2,
+.wf-active h3,
+.wf-active h4,
+.wf-active h5,
+.wf-active h6,
+.wf-active p,
+.wf-active ul,
+.wf-active blockquote { visibility: visible; }
