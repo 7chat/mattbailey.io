@@ -1,0 +1,1 @@
+!function(a){var b=a.querySelector(".sidebar-toggle"),c=a.querySelector("#sidebar"),d=a.querySelector("#sidebar-checkbox");a.addEventListener("click",function(a){var e=a.target;d.checked&&!c.contains(e)&&e!==d&&e!==b&&(d.checked=!1)},!1)}(document);
