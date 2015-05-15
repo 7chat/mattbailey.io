@@ -4,13 +4,84 @@
  <title>Matt Bailey</title>
  <link href="http://mattbailey.io/atom.xml" rel="self"/>
  <link href="http://mattbailey.io/"/>
- <updated>2015-05-15T21:35:15+01:00</updated>
+ <updated>2015-05-15T23:37:23+01:00</updated>
  <id>http://mattbailey.io</id>
  <author>
    <name>Matt Bailey</name>
    <email></email>
  </author>
 
+ 
+ <entry>
+   <title>How I Achieved A Pretty Good* Google PageSpeed Insights Score</title>
+   <link href="http://mattbailey.io/how-I-achieved-a-good-google-pagespeed-insights-score"/>
+   <updated>2015-05-15T00:00:00+01:00</updated>
+   <id>http://mattbailey.io/how-I-achieved-a-good-google-pagespeed-insights-score</id>
+   <content type="html">&lt;p&gt;&lt;em&gt;* &lt;strong&gt;98/100&lt;/strong&gt; on both Mobile and Desktop (you can run the test yourself, &lt;a href=&quot;https://developers.google.com/speed/pagespeed/insights/?url=http%3A%2F%2Fmattbailey.io%2F&quot;&gt;here&lt;/a&gt;).&lt;/em&gt;&lt;/p&gt;
+
+&lt;h2&gt;First Of All, Why Bother?&lt;/h2&gt;
+
+&lt;p&gt;Yes, my site is a fairly simple &lt;a href=&quot;http://jekyllrb.com/&quot;&gt;Jekyll&lt;/a&gt; powered static site, so the perception is that it&amp;rsquo;s already pretty quick. Perceived load speed is certainly very important, but that didn&amp;rsquo;t stop &lt;a href=&quot;https://developers.google.com/speed/pagespeed/insights/&quot;&gt;Google PageSpeed Insights&lt;/a&gt; from highlighting quite a few issues and, subsequently, giving me a rather poor &lt;strong&gt;68/100&lt;/strong&gt; for Mobile and &lt;strong&gt;75/100&lt;/strong&gt; for Desktop.&lt;/p&gt;
+
+&lt;p&gt;It&amp;rsquo;s important to me how Google perceives my site, plus I have a certain amount of professional pride at stake - web performance is something very much on my mind at the moment. If I can&amp;rsquo;t optimise my own site then how can I advise our clients at &lt;a href=&quot;http://www.gpmd.co.uk&quot;&gt;GPMD&lt;/a&gt; where I work.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;So, I set out to see what could be done to improve things. Here is what I did&amp;hellip;&lt;/strong&gt;&lt;/p&gt;
+
+&lt;h2&gt;I Inlined Critical CSS In The Head&lt;/h2&gt;
+
+&lt;p&gt;Putting your critical CSS inline in the &lt;code&gt;&amp;lt;head&amp;gt;&lt;/code&gt; means the browser can quickly render the &amp;lsquo;above-the-fold&amp;rsquo; content of your page whilst deferring the loading of the main CSS (usually using an Async CSS loader, &lt;a href=&quot;https://github.com/filamentgroup/loadCSS&quot;&gt;like this one&lt;/a&gt;). In my case my CSS was under 10KB, so I inlined the whole lot!&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Jekyll Technique:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;I used the Jekyll technique by Kevin Sweet &lt;a href=&quot;http://www.kevinsweet.com/inline-scss-jekyll-github-pages/&quot;&gt;described here&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2&gt;I Used The Async Typekit Font Loading Script&lt;/h2&gt;
+
+&lt;p&gt;Ok, so this is kind of a no-brainer but I had rather lazily just used the bog-standard Typekit loading script, rather than their more advanced async script. The problem with the standard script is that it&amp;rsquo;s not async so it blocks the render, a big no no where performance is concerned.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://help.typekit.com/customer/portal/articles/649336-embed-code&quot;&gt;Click here&lt;/a&gt; for more info on using the Typekit async font loading script.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Script Placement:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;In terms of placement I put the script as the last element in my &lt;code&gt;&amp;lt;head&amp;gt;&lt;/code&gt; tag, the reason being that JavaScript needs to come after CSS or PageSpeed Insights will complain about the injected Typekit CSS being render blocking.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;FOUT:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;I decided to not hook into the &lt;code&gt;.wf-loading&lt;/code&gt; and &lt;code&gt;.wf-active&lt;/code&gt; classes to hide any &lt;a href=&quot;http://help.typekit.com/customer/portal/articles/6852-Controlling-the-Flash-of-Unstyled-Text-or-FOUT-using-Font-Events&quot;&gt;FOUT&lt;/a&gt; as it doesn&amp;rsquo;t really bother me - you only get it the first time you visit the site, after which the fonts are cached by your browser anyway.&lt;/p&gt;
+
+&lt;h2&gt;I Inlined Other Scripts At The Bottom Of The Page&lt;/h2&gt;
+
+&lt;p&gt;All the other scripts I placed as the last elements on the page, just inside the closing &lt;code&gt;&amp;lt;/body&amp;gt;&lt;/code&gt; tag.&lt;/p&gt;
+
+&lt;h2&gt;I Minified The HTML&lt;/h2&gt;
+
+&lt;p&gt;Minifying HTML can be tricky (and break stuff), especially on dynamic sites, but on simple flat file sites like mine it shouldn&amp;rsquo;t be a problem. The gains in having fewer bytes may be minimal, but it&amp;rsquo;s one less thing for PageSpeed Insights to complain about.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;minify-html Jekyll Ruby Gem:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;As luck would have it there is a Ruby gem for Jekyll called &lt;a href=&quot;https://github.com/octopress/minify-html&quot;&gt;minify-html&lt;/a&gt; that does just what I needed. I simply installed it and added it to my &lt;code&gt;_config.yml&lt;/code&gt; file.&lt;/p&gt;
+
+&lt;h2&gt;I Enabled GZip Compression On My Server&lt;/h2&gt;
+
+&lt;p&gt;Modern browsers can manage GZipped files on-the-fly. Fewer bytes means faster downloads - win win!&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Configure .htaccess:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Enabling GZip compression on my server was easier than I thought it was going to be - as easy as copying and pasting. I simply added the &amp;lsquo;Web Performance&amp;rsquo; section from the h5bp &lt;a href=&quot;https://github.com/h5bp/server-configs-apache/blob/master/dist/.htaccess&quot;&gt;.htaccess&lt;/a&gt; file to my own &lt;code&gt;.htaccess&lt;/code&gt; file and uploaded to my server.&lt;/p&gt;
+
+&lt;h2&gt;Summary&lt;/h2&gt;
+
+&lt;p&gt;So there you have it, a score of &lt;strong&gt;98/100&lt;/strong&gt; on both Mobile and Desktop. The only remaining PageSpeed Insights issue I have is the cache headers on the Typekit and Google Analytics JavaScript files. Unfortunately I have no control over this, but I can live with that. I suppose I could, if it really bothered me, download them and then host them myself. Maybe that&amp;rsquo;s a project for another day&amp;hellip;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/dist/google-pagespeed-insights-98-100-mobile.jpg&quot; alt=&quot;Google PageSpeed Insights 98/100 Mobile Score&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/dist/google-pagespeed-insights-98-100-desktop.jpg&quot; alt=&quot;Google PageSpeed Insights 98/100 Desktop Score&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;So was it worth it? None of these techinques on their own make a huge amount of difference, but combined they&amp;rsquo;ve gained me a great score, and quite a lot of satisfaction.&lt;/p&gt;
+
+&lt;p&gt;I hope the above helps others looking to optimise their sites. Please feel free to ask if you have questions about anything I&amp;rsquo;ve talked about.&lt;/p&gt;
+</content>
+ </entry>
  
  <entry>
    <title>A Beginner's Guide To Grunt: Redux</title>
