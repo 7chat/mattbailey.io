@@ -4,6 +4,11 @@ redcarpet:
   extensions: ['smart','strikethrough']
 highlighter: pygments
 
+# Plugins
+gems: [
+  'octopress-minify-html'
+]
+
 # Permalinks
 permalink: /:title
 
