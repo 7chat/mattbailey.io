@@ -13,8 +13,5 @@
     "test",
     "tests"
   ],
-  "devDependencies": {
-    "smooth-scroll": "https://github.com/cferdinandi/smooth-scroll.git",
-    "viewport-units-buggyfill": "~0.4.1"
-  }
+  "devDependencies": {}
 }
