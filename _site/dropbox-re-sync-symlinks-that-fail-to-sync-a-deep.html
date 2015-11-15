@@ -9,7 +9,7 @@
 
     <title>
     
-        404: Page not found &middot; Matt Bailey
+        Dropbox: re-sync symlinks that fail to sync a deep folder structure &middot; Matt Bailey
     
     </title>
 
@@ -48,7 +48,7 @@
     </script>
 </head>
 
-    <body class="404:-page-not-found layout-reverse">
+    <body class="dropbox:-re-sync-symlinks-that-fail-to-sync-a-deep-folder-structure layout-reverse">
         <!--[if lt IE 9]>
 <div class="outdated-browser message message--alert">You are using an outdated browser. Please <a href="http://outdatedbrowser.com/en">upgrade</a> to improve your experience.</div>
 <![endif]-->
@@ -101,10 +101,30 @@
 </div>
 
             <div id="content" class="container content">
-                <div class="page">
-    <h1 class="page-title">404: Page not found</h1>
-    <p class="lead">Sorry, we've misplaced that URL or it's pointing to something that doesn't exist. <a href="/">Head back home</a> to try finding it again.</p>
+                <div class="post">
+    <h1 class="post-title">Dropbox: re-sync symlinks that fail to sync a deep folder structure</h1>
+    <p class="post-date">18 March, 2013</p>
+    <p><img src="/images/dist/tumblr_inline_mjuozjDrvA1qz4rgp.png"/></p>
+
+<p></p>
+<p>I use dropbox for many things, including keeping sites I&#8217;m working on synced across various machines.</p>
+<p>If the root folder of the site actually resides in your Dropbox folder and you symlink out of it you generally won&#8217;t have any problems. But if the root folder of the site is outside of your Dropbox folder and you symlink in to it, you may notice that the contents of some of the &#8216;deeper&#8217; folders don&#8217;t get synced.</p>
+<p>I&#8217;m not sure why this is, but there is a manual workaround - <strong>you can change the modification date of the symlink, thereby causing a re-sync</strong>.</p>
+<p>Simply open your terminal, navigate to the location of you symlink(s) and run the following command (replacing <code class="prettyprint">symlink-name</code> with the actual name of your symlink):</p>
+<pre class="prettyprint">touch -h [symlink-name]</pre>
+<p>It&#8217;s not a perfect solution, but it goes some way to helping.</p>
+
 </div>
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+var disqus_shortname = 'mpkb';
+(function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();
+</script>
+
 
             </div>
         </div>

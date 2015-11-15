@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+    <head>
+    <link href="http://gmpg.org/xfn/11" rel="profile">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+    <title>
+    
+        A Beginner's Guide To Grunt: Redux &middot; Matt Bailey
+    
+    </title>
+
+    <style>
+    
+    *{-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box}html,body{margin:0;padding:0;overflow-x:hidden}html{font-family:"jubilat",Georgia,Times,"Times New Roman",serif;font-size:20px;font-weight:200;line-height:1.5}@media (min-width: 38em){html{font-size:24px}}body{color:#515151;background-color:#fff;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%}a{color:#59abe3;background-color:rgba(89,171,227,0);text-decoration:none}a strong{color:inherit}a:hover,a:focus{background-color:rgba(89,171,227,0.1)}h1,h2,h3,h4,h5,h6{margin-bottom:.5rem;font-family:"brandon-grotesque","Helvetica Neue",Helvetica,Arial,sans-serif;font-weight:900;line-height:1.25;text-transform:uppercase;color:#515151;text-rendering:optimizeLegibility}h1{font-size:1.5rem}h2{margin-top:2rem;font-size:1.25rem}h3{margin-top:1.75rem;font-size:1rem}h4,h5,h6{margin-top:1.5rem;font-size:0.75rem}@media (min-width: 38em){h1{font-size:2rem}h2{font-size:1.5rem}h3{font-size:1.25rem}h4,h5,h6{font-size:1rem}}h1 a,h2 a,h3 a,h4 a,h5 a,h6 a{color:#515151;background-color:rgba(81,81,81,0)}h1 a:hover,h1 a:focus,h2 a:hover,h2 a:focus,h3 a:hover,h3 a:focus,h4 a:hover,h4 a:focus,h5 a:hover,h5 a:focus,h6 a:hover,h6 a:focus{background-color:rgba(81,81,81,0.1)}p{margin-top:0;margin-bottom:1rem}strong{font-weight:500}ul,ol,dl{margin-top:0;margin-bottom:1rem}dt{font-weight:500}dd{margin-bottom:.5rem}hr{position:relative;margin:1.5rem 0;border:0;border-top:1px solid #eee;border-bottom:1px solid #fff}abbr{font-size:85%;font-weight:bold;color:#555;text-transform:uppercase}abbr[title]{cursor:help;border-bottom:1px dotted #e5e5e5}code,pre{font-family:Menlo, Monaco, "Courier New", monospace}code{padding:.25em .5em;font-size:85%;color:#bf616a;background-color:#f9f9f9;border-radius:3px}pre{display:block;margin-top:0;margin-bottom:1rem;padding:1rem;font-size:.8rem;line-height:1.4;white-space:pre;white-space:pre-wrap;word-break:break-all;word-wrap:break-word;background-color:#f9f9f9}pre code{padding:0;font-size:100%;color:inherit;background-color:transparent}.highlight{margin-bottom:1rem;border-radius:4px}.highlight pre{margin-bottom:0}.gist .gist-file{font-family:Menlo, Monaco, "Courier New", monospace !important}.gist .markdown-body{padding:15px}.gist pre{padding:0;background-color:transparent}.gist .gist-file .gist-data{font-size:.8rem !important;line-height:1.4}.gist code{padding:0;color:inherit;background-color:transparent;border-radius:0}blockquote{padding:.5rem 1rem;margin:.8rem 0;border-left:0.25rem solid #59abe3;font-style:italic}blockquote p:last-child{margin-bottom:0}@media (min-width: 30em){blockquote{padding-right:5rem;padding-left:1.25rem}}img{display:block;max-width:100%;margin:0 auto 2rem;border-radius:5px}table{margin-bottom:1rem;width:100%;border:1px solid #e5e5e5;border-collapse:collapse}td,th{padding:.25rem .5rem;border:1px solid #e5e5e5}tbody tr:nth-child(odd) td,tbody tr:nth-child(odd) th{background-color:#f9f9f9}/*! normalize-opentype v0.1.3 | MIT License | kennethormandy.com/journal/normalize-opentype-css */html,body{font-feature-settings:"kern" 1, "liga" 1, "pnum" 1, "tnum" 0, "onum" 1, "lnum" 0, "dlig" 0}h1,h2,h3{font-feature-settings:"kern" 1, "liga" 1, "pnum" 1, "tnum" 0, "onum" 1, "lnum" 0, "dlig" 1}abbr{text-transform:uppercase;font-feature-settings:"kern" 1, "liga" 1, "pnum" 1, "tnum" 0, "onum" 1, "lnum" 0, "smcp" 1, "c2sc" 1}time{font-feature-settings:"kern" 1, "liga" 1, "pnum" 1, "tnum" 0, "onum" 1, "lnum" 0}pre,kbd,samp,code{font-feature-settings:"kern" 0, "liga" 0, "dlig" 0, "pnum" 0, "tnum" 1, "onum" 0, "lnum" 1, "zero" 1}sup{font-feature-settings:"kern" 1, "liga" 1, "pnum" 1, "tnum" 0, "onum" 1, "lnum" 0, "dlig" 0, "sups" 1}sub{font-feature-settings:"kern" 1, "liga" 1, "pnum" 1, "tnum" 0, "onum" 1, "lnum" 0, "dlig" 0, "subs" 1}input[type="color"],input[type="date"],input[type="datetime"],input[type="datetime-local"],input[type="number"],input[type="range"],input[type="tel"],input[type="week"]{font-feature-settings:"kern" 0, "liga" 1, "pnum" 1, "tnum" 0, "onum" 0, "lnum" 1, "zero" 0}table{font-feature-settings:"kern" 0, "liga" 1, "pnum" 0, "tnum" 1, "onum" 0, "lnum" 1, "zero" 1}table thead,table tfoot{font-feature-settings:"kern" 1, "liga" 1, "pnum" 1, "tnum" 0, "onum" 1, "lnum" 0, "dlig" 0}a{-webkit-transition:background-color 0.25s ease-out, color 0.25s ease-out;-moz-transition:background-color 0.25s ease-out, color 0.25s ease-out;-o-transition:background-color 0.25s ease-out, color 0.25s ease-out;transition:background-color 0.25s ease-out, color 0.25s ease-out}.lead{font-size:1.25rem;font-weight:300}.text-align--center{text-align:center}.message{margin-bottom:1rem;padding:1rem;text-align:center;color:#9a9a9a;background-color:#eee}.message--alert{color:#fff;background-color:#f62459}.outdated-browser{padding:1rem 2rem;margin-bottom:0}.wrap{position:relative;width:100%}.container{padding-left:1rem;padding-right:1rem;margin-left:auto;margin-right:auto}@media (min-width: 38em){.container{max-width:32rem}}@media (min-width: 56em){.container{max-width:38rem}}.content{margin-bottom:2em}.masthead{position:relative;padding-top:1rem;padding-bottom:1rem;margin-bottom:3rem;background-color:#59abe3}.masthead-title{margin-top:0;margin-bottom:0;line-height:1;color:#fff}.masthead-title a{color:#fff}.masthead-title__tagline{font-family:"jubilat",Georgia,Times,"Times New Roman",serif;font-weight:100;font-style:italic;text-transform:none}.page,.post{margin-bottom:4em}.home .post{margin-bottom:2em}.home .post:last-child{margin-bottom:0}.page-title,.post-title,.post-title a{color:#303030}.page-title,.post-title{margin-top:0;margin-bottom:0}.home .post-title{font-size:1rem}@media (min-width: 38em){.home .post-title{font-size:1.5rem}}.post-date{margin-bottom:1rem;font-family:"jubilat",Georgia,Times,"Times New Roman",serif;font-weight:200;font-style:italic;text-transform:none;color:#515151}.related{padding-top:2rem;padding-bottom:2rem;border-top:1px solid #eee;text-align:center}.related-posts{padding-left:0;list-style:none}.related-posts h3{margin-top:0}.pagination{overflow:hidden;margin-left:-1rem;margin-right:-1rem;color:#ccc;text-align:center}.pagination-item{display:block;padding:1rem;border:1px solid #eee;font-family:"brandon-grotesque","Helvetica Neue",Helvetica,Arial,sans-serif;font-weight:500;text-transform:uppercase}.pagination-item:first-child{margin-bottom:-1px}a.pagination-item:hover{background-color:#f5f5f5}@media (min-width: 30em){.pagination{margin:3rem 0 0}.pagination-item{float:left;width:50%}.pagination-item:first-child{margin-bottom:0;border-top-left-radius:4px;border-bottom-left-radius:4px}.pagination-item:last-child{margin-left:-1px;border-top-right-radius:4px;border-bottom-right-radius:4px}}.highlight .hll{background-color:#ffc}.highlight .c{color:#999}.highlight .err{color:#a00;background-color:#faa}.highlight .k{color:#069}.highlight .o{color:#555}.highlight .cm{color:#09f;font-style:italic}.highlight .cp{color:#099}.highlight .c1{color:#999}.highlight .cs{color:#999}.highlight .gd{background-color:#fcc;border:1px solid #c00}.highlight .ge{font-style:italic}.highlight .gr{color:red}.highlight .gh{color:#030}.highlight .gi{background-color:#cfc;border:1px solid #0c0}.highlight .go{color:#aaa}.highlight .gp{color:#009}.highlight .gu{color:#030}.highlight .gt{color:#9c6}.highlight .kc{color:#069}.highlight .kd{color:#069}.highlight .kn{color:#069}.highlight .kp{color:#069}.highlight .kr{color:#069}.highlight .kt{color:#078}.highlight .m{color:#f60}.highlight .s{color:#d44950}.highlight .na{color:#4f9fcf}.highlight .nb{color:#366}.highlight .nc{color:#0a8}.highlight .no{color:#360}.highlight .nd{color:#99f}.highlight .ni{color:#999}.highlight .ne{color:#c00}.highlight .nf{color:#c0f}.highlight .nl{color:#99f}.highlight .nn{color:#0cf}.highlight .nt{color:#2f6f9f}.highlight .nv{color:#033}.highlight .ow{color:#000}.highlight .w{color:#bbb}.highlight .mf{color:#f60}.highlight .mh{color:#f60}.highlight .mi{color:#f60}.highlight .mo{color:#f60}.highlight .sb{color:#c30}.highlight .sc{color:#c30}.highlight .sd{color:#c30;font-style:italic}.highlight .s2{color:#c30}.highlight .se{color:#c30}.highlight .sh{color:#c30}.highlight .si{color:#a00}.highlight .sx{color:#c30}.highlight .sr{color:#3aa}.highlight .s1{color:#c30}.highlight .ss{color:#fc3}.highlight .bp{color:#366}.highlight .vc{color:#033}.highlight .vg{color:#033}.highlight .vi{color:#033}.highlight .il{color:#f60}.css .o,.css .o+.nt,.css .nt+.nt{color:#999}.sidebar{position:fixed;top:0;bottom:0;left:-14rem;width:14rem;visibility:hidden;overflow-y:auto;font-size:.875rem;color:rgba(255,255,255,0.6);background-color:#202020;-webkit-transition:all .3s ease-in-out;transition:all .3s ease-in-out}@media (min-width: 30em){.sidebar{font-size:.75rem}}.sidebar a{font-weight:500;color:#fff}.sidebar-item{padding:1rem}.sidebar-item p:last-child{margin-bottom:0}.sidebar-item--desc{font-size:1rem;font-weight:200;color:#fff}.sidebar-nav{border-bottom:1px solid rgba(255,255,255,0.1)}.sidebar-nav-item{display:block;padding:.5rem 1rem;border-top:1px solid rgba(255,255,255,0.1)}.sidebar-nav-item.active,a.sidebar-nav-item:hover,a.sidebar-nav-item:focus{text-decoration:none;background-color:rgba(255,255,255,0.1);border-color:transparent}@media (min-width: 48em){.sidebar-item{padding:1.5rem}.sidebar-nav-item{padding-left:1.5rem;padding-right:1.5rem}}.sidebar-checkbox{display:none}.sidebar-toggle{position:absolute;top:1rem;left:1rem;display:block;width:2.2rem;padding:.5rem .65rem;color:#515151;border-radius:4px;cursor:pointer}.sidebar-toggle:before{display:block;content:"";width:100%;padding-bottom:.125rem;border-top:.375rem double;border-bottom:.125rem solid;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box}.sidebar-toggle:hover{-webkit-transition:color 0.25s ease-out;-moz-transition:color 0.25s ease-out;-o-transition:color 0.25s ease-out;transition:color 0.25s ease-out;color:#000}.sidebar-toggle:active,#sidebar-checkbox:checked ~ .sidebar-toggle{color:#515151}@media (min-width: 30.1em){.sidebar-toggle{position:fixed;width:2.25rem}.sidebar-toggle:before{padding-bottom:.15rem;border-top-width:.45rem;border-bottom-width:.15rem}}.wrap,.sidebar,.sidebar-toggle{-webkit-backface-visibility:hidden;-ms-backface-visibility:hidden;backface-visibility:hidden}.wrap,.sidebar-toggle{-webkit-transition:-webkit-transform .3s ease-in-out;transition:transform .3s ease-in-out}#sidebar-checkbox:checked+.sidebar{z-index:10;visibility:visible}#sidebar-checkbox:checked ~ .sidebar,#sidebar-checkbox:checked ~ .wrap,#sidebar-checkbox:checked ~ .sidebar-toggle{-webkit-transform:translateX(14rem);-ms-transform:translateX(14rem);transform:translateX(14rem)}.layout-reverse .sidebar{left:auto;right:-14rem}.layout-reverse .sidebar-toggle{left:auto;right:1rem}.layout-reverse #sidebar-checkbox:checked ~ .sidebar,.layout-reverse #sidebar-checkbox:checked ~ .wrap,.layout-reverse #sidebar-checkbox:checked ~ .sidebar-toggle{-webkit-transform:translateX(-14rem);-ms-transform:translateX(-14rem);transform:translateX(-14rem)}
+
+    </style>
+
+    <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/apple-touch-icon-152x152.png">
+    <link rel="icon" type="image/png" href="/favicon-196x196.png" sizes="196x196">
+    <link rel="icon" type="image/png" href="/favicon-160x160.png" sizes="160x160">
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+    <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+    <meta name="msapplication-TileColor" content="#2b5797">
+    <meta name="msapplication-TileImage" content="/mstile-144x144.png">
+
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+
+    <script>
+    (function(d) {
+        var config = {
+            kitId: 'vbu2ffi',
+            scriptTimeout: 2000
+        },
+        h=d.documentElement,t=setTimeout(function(){h.className=h.className.replace(/\bwf-loading\b/g,"")+" wf-inactive";},config.scriptTimeout),tk=d.createElement("script"),f=false,s=d.getElementsByTagName("script")[0],a;h.className+=" wf-loading";tk.src='//use.typekit.net/'+config.kitId+'.js';tk.async=true;tk.onload=tk.onreadystatechange=function(){a=this.readyState;if(f||a&&a!="complete"&&a!="loaded")return;f=true;clearTimeout(t);try{Typekit.load(config)}catch(e){}};s.parentNode.insertBefore(tk,s)
+    })(document);
+    </script>
+</head>
+
+    <body class="a-beginner's-guide-to-grunt:-redux layout-reverse">
+        <!--[if lt IE 9]>
+<div class="outdated-browser message message--alert">You are using an outdated browser. Please <a href="http://outdatedbrowser.com/en">upgrade</a> to improve your experience.</div>
+<![endif]-->
+
+        <input type="checkbox" class="sidebar-checkbox" id="sidebar-checkbox">
+<div class="sidebar" id="sidebar">
+    <div class="sidebar-item sidebar-item--desc">
+        <p>Matt is a frontend designer &amp; developer, based in London.</p>
+    </div>
+    <nav class="sidebar-nav">
+        <a class="sidebar-nav-item" href="/">Home</a>
+        
+        
+        
+        
+        
+        
+        
+        
+        <a class="sidebar-nav-item" href="/about-me/">About Me</a>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+    </nav>
+    <div class="sidebar-item">
+        <p>You can also find Matt on <a href="https://twitter.com/_mattbailey">Twitter</a>, <a href="https://dribbble.com/mattbailey">Dribbble</a>, <a href="http://uk.linkedin.com/in/mattpbailey">LinkedIn</a> and <a href="https://plus.google.com/116498189973260879447?rel=author">Google+</a>.</p>
+        <p>&copy; 2015, Matt Bailey</p>
+    </div>
+</div>
+
+        <div class="wrap">
+            <div class="masthead">
+    <div class="container">
+        <h3 class="masthead-title"><a href="/" title="Home">Matt Bailey</a><br><span class="masthead-title__tagline">Designer &amp; Developer</span></h3>
+    </div>
+</div>
+
+            <div id="content" class="container content">
+                <div class="post">
+    <h1 class="post-title">A Beginner's Guide To Grunt: Redux</h1>
+    <p class="post-date">22 November, 2014</p>
+    <p><img alt="image" src="/images/dist/tumblr_inline_mjrobcZQpo1qz4rgp.png"/></p>
+
+<p class="lead">Back in March 2013 I wrote <a href="http://mattbailey.io/a-beginners-guide-to-grunt/" title="Matt Bailey: A Beginner's Guide To Grunt">A Beginner&rsquo;s Guide To Grunt</a>, and it&rsquo;s become the most visited article on my site. I wrote it at a time when I was just starting out with <a href="http://gruntjs.com/" title="Grunt">Grunt</a>, and it was as much a guide for myself as anyone else. Now, 18 months later, I felt it was time to revisit how I use Grunt because I&rsquo;ve learned a lot more in that time.</p>
+
+<p><strong>If you&rsquo;re itching to just get the code it&rsquo;s all <a href="https://github.com/matt-bailey/grunt-frontend-boilerplate">here on Github</a>.</strong></p>
+
+<p><strong>Update: 3 December, 2014 - I&rsquo;ve added <code>jshint</code> and <code>watch</code> tasks to the article and git repo.</strong></p>
+
+<h2>Install Node and Grunt globally</h2>
+
+<p>First of all you will need to make sure you have <a href="http://nodejs.org/download/">Node</a> and <a href="http://gruntjs.com/getting-started">Grunt CLI</a> (command line interface) installed.</p>
+
+<ul>
+<li>The Node site has various downloadable packages for different systems. <a href="http://nodejs.org/download/">Full details can be found here</a>.</li>
+<li>Once you&rsquo;ve installed Node simply run the following command in your terminal of choice (I use <a href="http://iterm2.com/">iTerm2</a>) to install <strong>grunt-cli</strong>:</li>
+</ul>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">npm install -g grunt-cli
+</code></pre></div>
+<h2>Install Ruby and Sass</h2>
+
+<p><strong>Update:</strong> I&rsquo;ve recently switched from using <code>grunt-contrib-sass</code> to <code>grunt-sass</code> which uses the faster, but experimental <a href="http://libsass.org/">libsass</a> C++ compiler. As such, it doesn&rsquo;t require Ruby or the Sass gem. However, if you experience issues when compiling with <code>grunt-sass</code> you should probably use <code>grunt-contrib-sass</code>, but in that case you will need to install Ruby and the Sass gem.</p>
+
+<p><del>I use Sass as my CSS preprocessor. In order to use the Sass Grunt task you will need to install Ruby (<a href="https://www.ruby-lang.org/en/installation/">full installation instructions can be found here</a>) and, once you&rsquo;ve done that, the <a href="http://sass-lang.com/download.html">Sass</a> gem:</del></p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">gem install sass
+</code></pre></div>
+<h2>Create the project directories</h2>
+
+<p>Our project requires a couple of directories to be set up. Mirror the structure below:</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">grunt/
+src/
+src/images/
+src/scripts/
+src/styles/
+</code></pre></div>
+<h2>Create a Gruntfile</h2>
+
+<p>First of all, I don&rsquo;t use &lsquo;scaffolding&rsquo; tools any more (such as <code>grunt init</code> or <a href="http://yeoman.io/">Yeoman</a>). I set up everything from scratch, which means I have a much greater understanding of what&rsquo;s going on now. It&rsquo;s really not that hard once you&rsquo;ve done it a few times.</p>
+
+<p>In the root of your project create a file called <code>Gruntfile.js</code>.</p>
+
+<p>In that file add the following code:</p>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">grunt</span><span class="p">)</span> <span class="p">{</span>
+
+    <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;time-grunt&#39;</span><span class="p">)(</span><span class="nx">grunt</span><span class="p">);</span>
+
+    <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;load-grunt-config&#39;</span><span class="p">)(</span><span class="nx">grunt</span><span class="p">,</span> <span class="p">{</span>
+        <span class="nx">jitGrunt</span><span class="o">:</span> <span class="kc">true</span>
+    <span class="p">});</span>
+<span class="p">};</span>
+</code></pre></div>
+<p>Believe it or not, that&rsquo;s it as far as our Gruntfile is concerned!</p>
+
+<p><code>time-grunt</code> tells you how much time each task and the total build has taken, and <code>jitGrunt: true</code> tells <code>load-grunt-config</code> to use the faster <a href="https://github.com/shootaroo/jit-grunt">jit-grunt</a> (Just In Time) task loader (this is optional, but speed is good right?).</p>
+
+<h2>Create a package file</h2>
+
+<p>Let&rsquo;s move on and also create our basic <code>package.json</code> file. This file will shortly contain our project&rsquo;s dependencies. Add the following (obviously change references to &#39;my project&rsquo; to the actual name of your project):</p>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="p">{</span>
+  <span class="s2">&quot;name&quot;</span><span class="o">:</span> <span class="s2">&quot;my-project&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;version&quot;</span><span class="o">:</span> <span class="s2">&quot;0.0.1&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;description&quot;</span><span class="o">:</span> <span class="s2">&quot;My project&quot;</span>
+<span class="p">}</span>
+</code></pre></div>
+<h2>Add some dependencies</h2>
+
+<p>Now we have all we need to be able to start adding some modules. Run each of the lines of code below, one after the other:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">npm install grunt --save-dev
+npm install <span class="nb">time</span>-grunt --save
+npm install load-grunt-config --save-dev
+npm install grunt-concurrent --save-dev
+npm install grunt-contrib-clean --save-dev
+npm install grunt-contrib-imagemin --save-dev
+npm install grunt-sass --save-dev
+npm install grunt-contrib-uglify --save-dev
+npm install grunt-contrib-jshint --save-dev
+npm install jshint-stylish --save
+npm install grunt-contrib-watch --save-dev
+</code></pre></div>
+<p>If you look in <code>package.json</code> you should now see something like this:</p>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="p">{</span>
+  <span class="s2">&quot;name&quot;</span><span class="o">:</span> <span class="s2">&quot;my-project&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;version&quot;</span><span class="o">:</span> <span class="s2">&quot;0.0.1&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;description&quot;</span><span class="o">:</span> <span class="s2">&quot;My Project&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;devDependencies&quot;</span><span class="o">:</span> <span class="p">{</span>
+    <span class="s2">&quot;grunt&quot;</span><span class="o">:</span> <span class="s2">&quot;^0.4.5&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;grunt-concurrent&quot;</span><span class="o">:</span> <span class="s2">&quot;^1.0.0&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;grunt-contrib-clean&quot;</span><span class="o">:</span> <span class="s2">&quot;^0.6.0&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;grunt-contrib-imagemin&quot;</span><span class="o">:</span> <span class="s2">&quot;^0.8.1&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;grunt-contrib-jshint&quot;</span><span class="o">:</span> <span class="s2">&quot;^0.10.0&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;grunt-contrib-uglify&quot;</span><span class="o">:</span> <span class="s2">&quot;^0.6.0&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;grunt-contrib-watch&quot;</span><span class="o">:</span> <span class="s2">&quot;^0.6.1&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;grunt-sass&quot;</span><span class="o">:</span> <span class="s2">&quot;^0.16.1&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;load-grunt-config&quot;</span><span class="o">:</span> <span class="s2">&quot;^0.13.1&quot;</span>
+  <span class="p">},</span>
+  <span class="s2">&quot;dependencies&quot;</span><span class="o">:</span> <span class="p">{</span>
+    <span class="s2">&quot;jshint-stylish&quot;</span><span class="o">:</span> <span class="s2">&quot;^1.0.0&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;time-grunt&quot;</span><span class="o">:</span> <span class="s2">&quot;^1.0.0&quot;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Here is a summary of what we&rsquo;ve just installed:</p>
+
+<ol>
+<li><code>grunt</code>: The task runner itself.</li>
+<li><code>time-grunt</code>: This isn&rsquo;t required, but it&rsquo;s a neat addition - it tells you how much time each task and the total build has taken.</li>
+<li><code>load-grunt-config</code>: Allows you to keep our main Gruntfile short and succinct. More on that in a bit.</li>
+<li><code>grunt-concurrent</code>: Run tasks concurrently - Out-of-the-box Grunt will run each task one after the other, which can take a while depending on the amount and type of tasks you need to run. However, there are often tasks that are not dependent on other tasks which can be run at the same time.</li>
+<li><code>grunt-contrib-clean</code>: Quite simply, this task deletes &#39;stuff&rsquo; - use with caution!</li>
+<li><code>grunt-contrib-imagemin</code>: Indispensible for all your image optimisation needs.</li>
+<li><code>grunt-sass</code>: Compiles your SASS/SCSS files into CSS. <strong>Please note:</strong> This Sass task uses the faster, but more experimental <a href="http://libsass.org/">libsass</a> compiler. If you experience problems you should probably use the more stable, but slower <a href="https://github.com/gruntjs/grunt-contrib-sass">grunt-contrib-sass</a> task instead.</li>
+<li><code>grunt-contrib-uglify</code>: Makes your Javascript nice and ugly.</li>
+<li><code>grunt-contrig-jshint</code>: Validates your Javascript files.</li>
+<li><code>jshint-stylish</code>: Totally optional, but it makes the <code>grunt-contrig-jshint</code> output look pretty.</li>
+<li><code>grunt-contrib-watch</code>: Run tasks whenever watched files are changed.</li>
+</ol>
+
+<h2>Configure the tasks</h2>
+
+<p>One of the best modules I&rsquo;ve discovered is <code>load-grunt-config</code>. It allows us to put the config for each of our tasks in separate files, which is far more manageable than having everything in one long Gruntfile.</p>
+
+<p>In the <code>grunt</code> directory create the following files:</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">grunt/aliases.yaml
+grunt/concurrent.js
+grunt/clean.js
+grunt/imagemin.js
+grunt/jshint.js
+grunt/sass.js
+grunt/uglify.js
+grunt/watch.js
+</code></pre></div>
+<p><strong>Note: The names of these files must match the names of the tasks.</strong></p>
+
+<p>Copy and paste the config for each task below into the relelvant file.</p>
+
+<h3>aliases.yaml</h3>
+<div class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="l-Scalar-Plain">default</span><span class="p-Indicator">:</span>
+  <span class="l-Scalar-Plain">description</span><span class="p-Indicator">:</span> <span class="s">&#39;Default</span><span class="nv"> </span><span class="s">(production)</span><span class="nv"> </span><span class="s">build&#39;</span>
+  <span class="l-Scalar-Plain">tasks</span><span class="p-Indicator">:</span>
+    <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">prod</span>
+<span class="l-Scalar-Plain">dev</span><span class="p-Indicator">:</span>
+  <span class="l-Scalar-Plain">description</span><span class="p-Indicator">:</span> <span class="s">&#39;Development</span><span class="nv"> </span><span class="s">build&#39;</span>
+  <span class="l-Scalar-Plain">tasks</span><span class="p-Indicator">:</span>
+    <span class="p-Indicator">-</span> <span class="s">&#39;concurrent:devFirst&#39;</span>
+    <span class="p-Indicator">-</span> <span class="s">&#39;concurrent:devSecond&#39;</span>
+<span class="l-Scalar-Plain">img</span><span class="p-Indicator">:</span>
+  <span class="l-Scalar-Plain">description</span><span class="p-Indicator">:</span> <span class="s">&#39;Image</span><span class="nv"> </span><span class="s">tasks&#39;</span>
+  <span class="l-Scalar-Plain">tasks</span><span class="p-Indicator">:</span>
+    <span class="p-Indicator">-</span> <span class="s">&#39;concurrent:imgFirst&#39;</span>
+<span class="l-Scalar-Plain">devimg</span><span class="p-Indicator">:</span>
+  <span class="l-Scalar-Plain">description</span><span class="p-Indicator">:</span> <span class="s">&#39;Development</span><span class="nv"> </span><span class="s">build</span><span class="nv"> </span><span class="s">and</span><span class="nv"> </span><span class="s">image</span><span class="nv"> </span><span class="s">tasks&#39;</span>
+  <span class="l-Scalar-Plain">tasks</span><span class="p-Indicator">:</span>
+    <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">dev</span>
+    <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">img</span>
+<span class="l-Scalar-Plain">prod</span><span class="p-Indicator">:</span>
+  <span class="l-Scalar-Plain">description</span><span class="p-Indicator">:</span> <span class="s">&#39;Production</span><span class="nv"> </span><span class="s">build&#39;</span>
+  <span class="l-Scalar-Plain">tasks</span><span class="p-Indicator">:</span>
+    <span class="p-Indicator">-</span> <span class="s">&#39;concurrent:prodFirst&#39;</span>
+    <span class="p-Indicator">-</span> <span class="s">&#39;concurrent:prodSecond&#39;</span>
+    <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">img</span>
+</code></pre></div>
+<p>What we&rsquo;re doing here is defining various aliases for our tasks:</p>
+
+<ul>
+<li><code>default</code> - Runs the <code>prod</code> tasks when you run <code>grunt</code> on the command line.</li>
+<li><code>dev</code> - Runs the development tasks (but not image tasks)</li>
+<li><code>img</code> - Runs the image tasks</li>
+<li><code>devimg</code> - Runs the development and image tasks</li>
+<li><code>prod</code> - Runs the production and image tasks</li>
+</ul>
+
+<p><strong><a href="https://github.com/firstandthird/load-grunt-config#aliases">Click here</a> for more information on configuring task aliases for <code>load-grunt-config</code>.</strong></p>
+
+<h3>concurrent.js</h3>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="p">{</span>
+
+    <span class="c1">// Task options</span>
+    <span class="nx">options</span><span class="o">:</span> <span class="p">{</span>
+        <span class="nx">limit</span><span class="o">:</span> <span class="mi">3</span>
+    <span class="p">},</span>
+
+    <span class="c1">// Dev tasks</span>
+    <span class="nx">devFirst</span><span class="o">:</span> <span class="p">[</span>
+        <span class="s1">&#39;clean&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;jshint&#39;</span>
+    <span class="p">],</span>
+    <span class="nx">devSecond</span><span class="o">:</span> <span class="p">[</span>
+        <span class="s1">&#39;sass:dev&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;uglify&#39;</span>
+    <span class="p">],</span>
+
+    <span class="c1">// Production tasks</span>
+    <span class="nx">prodFirst</span><span class="o">:</span> <span class="p">[</span>
+        <span class="s1">&#39;clean&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;jshint&#39;</span>
+    <span class="p">],</span>
+    <span class="nx">prodSecond</span><span class="o">:</span> <span class="p">[</span>
+        <span class="s1">&#39;sass:prod&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;uglify&#39;</span>
+    <span class="p">],</span>
+
+    <span class="c1">// Image tasks</span>
+    <span class="nx">imgFirst</span><span class="o">:</span> <span class="p">[</span>
+        <span class="s1">&#39;imagemin&#39;</span>
+    <span class="p">]</span>
+<span class="p">};</span>
+</code></pre></div>
+<p>Taking the dev tasks as an example, you can see that they are set up to run <code>clean</code> first, and then <code>sass:dev</code> and <code>uglify</code> concurrently to regenerate the css and javascript.</p>
+
+<p><strong><a href="https://github.com/sindresorhus/grunt-concurrent">Click here</a> for more information on configuring <code>grunt-concurrent</code>.</strong></p>
+
+<h3>clean.js</h3>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="nx">all</span><span class="o">:</span> <span class="p">[</span>
+        <span class="s2">&quot;dist/&quot;</span>
+    <span class="p">]</span>
+<span class="p">};</span>
+</code></pre></div>
+<p>Configuring <code>grunt-contrib-clean</code> is quite simple. Here I&rsquo;m just removing all the contents of the <code>dist/</code> directory. Use this task with caution - it will indiscriminately delete whatever you tell it to without any warnings, so make sure you configure it correctly.</p>
+
+<p><strong><a href="https://github.com/gruntjs/grunt-contrib-clean">Click here</a> for more information on configuring <code>grunt-contrib-clean</code>.</strong></p>
+
+<h3>imagemin.js</h3>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="nx">all</span><span class="o">:</span> <span class="p">{</span>
+        <span class="nx">files</span><span class="o">:</span> <span class="p">[{</span>
+            <span class="nx">expand</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+            <span class="nx">cwd</span><span class="o">:</span> <span class="s1">&#39;src/&#39;</span><span class="p">,</span>
+            <span class="nx">src</span><span class="o">:</span> <span class="p">[</span><span class="s1">&#39;images/*.{png,jpg,gif}&#39;</span><span class="p">],</span>
+            <span class="nx">dest</span><span class="o">:</span> <span class="s1">&#39;dist/&#39;</span>
+        <span class="p">}]</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+</code></pre></div>
+<p>The config above simply optimises all images in <code>src/images/</code> and saves them to <code>dist/images/</code>.</p>
+
+<p><strong><a href="https://github.com/gruntjs/grunt-contrib-imagemin">Click here</a> for more information on configuring <code>grunt-contrib-imagemin</code>.</strong></p>
+
+<h3>sass.js</h3>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="c1">// Development settings</span>
+    <span class="nx">dev</span><span class="o">:</span> <span class="p">{</span>
+        <span class="nx">options</span><span class="o">:</span> <span class="p">{</span>
+            <span class="nx">outputStyle</span><span class="o">:</span> <span class="s1">&#39;nested&#39;</span><span class="p">,</span>
+            <span class="nx">sourceMap</span><span class="o">:</span> <span class="kc">true</span>
+        <span class="p">},</span>
+        <span class="nx">files</span><span class="o">:</span> <span class="p">[{</span>
+            <span class="nx">expand</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+            <span class="nx">cwd</span><span class="o">:</span> <span class="s1">&#39;src/styles&#39;</span><span class="p">,</span>
+            <span class="nx">src</span><span class="o">:</span> <span class="p">[</span><span class="s1">&#39;*.scss&#39;</span><span class="p">],</span>
+            <span class="nx">dest</span><span class="o">:</span> <span class="s1">&#39;dist/styles&#39;</span><span class="p">,</span>
+            <span class="nx">ext</span><span class="o">:</span> <span class="s1">&#39;.css&#39;</span>
+        <span class="p">}]</span>
+    <span class="p">},</span>
+    <span class="c1">// Production settings</span>
+    <span class="nx">prod</span><span class="o">:</span> <span class="p">{</span>
+        <span class="nx">options</span><span class="o">:</span> <span class="p">{</span>
+            <span class="nx">outputStyle</span><span class="o">:</span> <span class="s1">&#39;compressed&#39;</span><span class="p">,</span>
+            <span class="nx">sourceMap</span><span class="o">:</span> <span class="kc">false</span>
+        <span class="p">},</span>
+        <span class="nx">files</span><span class="o">:</span> <span class="p">[{</span>
+            <span class="nx">expand</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+            <span class="nx">cwd</span><span class="o">:</span> <span class="s1">&#39;src/styles&#39;</span><span class="p">,</span>
+            <span class="nx">src</span><span class="o">:</span> <span class="p">[</span><span class="s1">&#39;*.scss&#39;</span><span class="p">],</span>
+            <span class="nx">dest</span><span class="o">:</span> <span class="s1">&#39;dist/styles&#39;</span><span class="p">,</span>
+            <span class="nx">ext</span><span class="o">:</span> <span class="s1">&#39;.css&#39;</span>
+        <span class="p">}]</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+</code></pre></div>
+<p>I&rsquo;ve split the Sass task into development and production workflows. The config is very similar, but for development purposes I&rsquo;ve set the output style to <code>nested</code> and activated source maps.</p>
+
+<p><strong><a href="https://github.com/sindresorhus/grunt-sass">Click here</a> for more information on configuring <code>grunt-sass</code>.</strong></p>
+
+<h3>jshint.js</h3>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="p">{</span>
+
+    <span class="nx">options</span><span class="o">:</span> <span class="p">{</span>
+        <span class="nx">reporter</span><span class="o">:</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;jshint-stylish&#39;</span><span class="p">)</span>
+    <span class="p">},</span>
+
+    <span class="nx">main</span><span class="o">:</span> <span class="p">[</span>
+        <span class="s1">&#39;src/scripts/*.js&#39;</span>
+    <span class="p">]</span>
+<span class="p">};</span>
+</code></pre></div>
+<p>The jshint task validates your Javascript and makes sure everything is hunky-dory.</p>
+
+<p><strong><a href="https://github.com/gruntjs/grunt-contrib-jshint">Click here</a> for more information on configuring <code>grunt-contrib-jshint</code>.</strong></p>
+
+<h3>uglify.js</h3>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="nx">all</span><span class="o">:</span> <span class="p">{</span>
+        <span class="nx">files</span><span class="o">:</span> <span class="p">[{</span>
+            <span class="nx">expand</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+            <span class="nx">cwd</span><span class="o">:</span> <span class="s1">&#39;src/scripts&#39;</span><span class="p">,</span>
+            <span class="nx">src</span><span class="o">:</span> <span class="s1">&#39;**/*.js&#39;</span><span class="p">,</span>
+            <span class="nx">dest</span><span class="o">:</span> <span class="s1">&#39;dist/scripts&#39;</span><span class="p">,</span>
+            <span class="nx">ext</span><span class="o">:</span> <span class="s1">&#39;.min.js&#39;</span>
+        <span class="p">}]</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+</code></pre></div>
+<p>The uglify task simply takes Javascript files and minifies them - simples!</p>
+
+<p><strong><a href="https://github.com/gruntjs/grunt-contrib-uglify">Click here</a> for more information on configuring <code>grunt-contrib-uglify</code>.</strong></p>
+
+<h3>watch.js</h3>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="p">{</span>
+
+    <span class="nx">options</span><span class="o">:</span> <span class="p">{</span>
+        <span class="nx">spawn</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span>
+        <span class="nx">livereload</span><span class="o">:</span> <span class="kc">true</span>
+    <span class="p">},</span>
+
+    <span class="nx">scripts</span><span class="o">:</span> <span class="p">{</span>
+        <span class="nx">files</span><span class="o">:</span> <span class="p">[</span>
+            <span class="s1">&#39;src/scripts/*.js&#39;</span>
+        <span class="p">],</span>
+        <span class="nx">tasks</span><span class="o">:</span> <span class="p">[</span>
+            <span class="s1">&#39;jshint&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;uglify&#39;</span>
+        <span class="p">]</span>
+    <span class="p">},</span>
+
+    <span class="nx">styles</span><span class="o">:</span> <span class="p">{</span>
+        <span class="nx">files</span><span class="o">:</span> <span class="p">[</span>
+            <span class="s1">&#39;src/styles/*.scss&#39;</span>
+        <span class="p">],</span>
+        <span class="nx">tasks</span><span class="o">:</span> <span class="p">[</span>
+            <span class="s1">&#39;sass:dev&#39;</span>
+        <span class="p">]</span>
+    <span class="p">},</span>
+<span class="p">};</span>
+</code></pre></div>
+<p>Watch runs specified tasks whenever your watched files are changed in any way - added, edited, deleted.</p>
+
+<p><strong>Note: The easiest way to get Livereload working is to install the <a href="http://feedback.livereload.com/knowledgebase/articles/86242">browser extension</a>.</strong></p>
+
+<p><strong><a href="https://github.com/gruntjs/grunt-contrib-watch">Click here</a> for more information on configuring <code>grunt-contrib-watch</code> and Livereload.</strong></p>
+
+<h2>Run the tasks</h2>
+
+<p>If you&rsquo;ve finished setting up your project as outlined above then you can now run the tasks. As discussed earlier there are various task aliases you can run. For now just run <code>grunt</code> on the command line from the root of your project.</p>
+
+<p>All being well you should see a load of text scroll up the screen and then finish with a message that looks something like this.</p>
+
+<p><img src="/images/dist/grunt-frontend-boilerplate-1.png" alt="Grunt Production Build Output"></p>
+
+<p>I love the little summary that <code>time-grunt</code> provides. I can see how long each concurrent task-set took to run, plus how long the whole build process took - neat!</p>
+
+<p>Depending on your requirements you could also choose to run <code>grunt dev</code>, <code>grunt devimg</code>, or <code>grunt img</code>.</p>
+
+<p>You can also run <code>grunt watch</code> if you&rsquo;d like grunt to watch for changes to your <code>.scss</code> and <code>.js</code> files and automatically run the <code>sass</code>, or <code>jshint</code> and <code>uglify</code> tasks.</p>
+
+<h2>Summary</h2>
+
+<p>And that&rsquo;s about all there is to it really. If you experiment with the above you&rsquo;ll soon gain confidence, start adding new tasks and modifying the workflow to better suit your own requirements.</p>
+
+<p><strong>Once again, the code accompanying this article can also be found <a href="https://github.com/matt-bailey/grunt-frontend-boilerplate">on Github</a>.</strong></p>
+
+<p>Leave any questions you have in the comments below, or post issues on <a href="https://github.com/matt-bailey/grunt-frontend-boilerplate/issues">github</a>.</p>
+
+</div>
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+var disqus_shortname = 'mpkb';
+(function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();
+</script>
+
+
+            </div>
+        </div>
+        <label for="sidebar-checkbox" class="sidebar-toggle"></label>
+        <script>
+var _gaq = _gaq || [];
+_gaq.push(['_setAccount', 'UA-9445744-34']);
+_gaq.push(['_trackPageview']);
+(function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+})();
+</script>
+<script>!function(a){var b=a.querySelector(".sidebar-toggle"),c=a.querySelector("#sidebar"),d=a.querySelector("#sidebar-checkbox");a.addEventListener("click",function(a){var e=a.target;d.checked&&!c.contains(e)&&e!==d&&e!==b&&(d.checked=!1)},!1)}(document);</script>
+
+    </body>
+</html>

@@ -9,7 +9,7 @@
 
     <title>
     
-        404: Page not found &middot; Matt Bailey
+        Extending the Boostrap grid system &middot; Matt Bailey
     
     </title>
 
@@ -48,7 +48,7 @@
     </script>
 </head>
 
-    <body class="404:-page-not-found layout-reverse">
+    <body class="extending-the-boostrap-grid-system layout-reverse">
         <!--[if lt IE 9]>
 <div class="outdated-browser message message--alert">You are using an outdated browser. Please <a href="http://outdatedbrowser.com/en">upgrade</a> to improve your experience.</div>
 <![endif]-->
@@ -101,10 +101,138 @@
 </div>
 
             <div id="content" class="container content">
-                <div class="page">
-    <h1 class="page-title">404: Page not found</h1>
-    <p class="lead">Sorry, we've misplaced that URL or it's pointing to something that doesn't exist. <a href="/">Head back home</a> to try finding it again.</p>
+                <div class="post">
+    <h1 class="post-title">Extending the Boostrap grid system</h1>
+    <p class="post-date">13 April, 2013</p>
+    <p><img alt="image" src="/images/dist/tumblr_inline_ml7do2Wwbr1qz4rgp.jpg"/></p>
+
+<p><a title="Bootstrap">Bootstrap</a> has a great grid system which is really easy to use. However, I recently encountered an interesting challenge that required me to extend the funstionality a bit.</p>
+
+<p><img alt="image" src="/images/dist/tumblr_inline_ml7doyVTKr1qz4rgp.png"/></p>
+<p>Imagine you have a fairly standard layout comprising of a 9 column main content area and a 3 column side bar. What if you then want to split your main content column by nesting 2, or 4 columns - If you remember any of your Maths from your school days you’ll know that 2 and 4 don’t divide equally into 9, so you can’t use any of the built in <strong>Bootstrap</strong> <code class="prettyprint">.span</code> classes to set the desired widths.</p>
+<blockquote>
+<div>9 columns ÷ 2 = 4.5 columns ☹<br/>9 columns ÷ 4 = 2.25 columns ☹</div>
+</blockquote>
+<p>To do this we can fortunately inherit all the existing <strong>Bootstrap</strong> <code class="prettyprint">span</code> styling by simply including the word <code class="prettyprint">span</code> in our new classes. All that remains for us to do is define the new widths.</p>
+<p>In my case I need to set up two new styles: <code class="prettyprint">.span-quarter</code> and <code class="prettyprint">.span-half</code>. Now here comes the tricky bit. Not only do I have to work out the correct percentage widths for each style, but I have to work them out for each break point. Rather than go into detail here on how to work out percentage widths for responsive design, you can <a href="http://blog.teamtreehouse.com/beginners-guide-to-responsive-web-design" title="Beginners Guide to Responsive Web Design">check out this article on the TreeHouse blog</a>. The numbers you’ll get will be pretty funky, but that’s normal.</p>
+<p>Now I have my widths I need to set these up with the new classes and media queries. This is where using a <strong>CSS</strong> preprocessor like <a href="http://lesscss.org/" title="LESS CSS">LESS</a> is a godsend. I’m a big fan of trying to keep things <a href="http://en.wikipedia.org/wiki/Don't_repeat_yourself">DRY</a>, and this is a prime example. There’s going to be quite a bit of code, so the more I can put into variables and mixins the better.</p>
+<p>Looking at the <strong>Bootstrap</strong> <strong>LESS</strong> files I can extract the relevant media query arguments and put them into variables for later use. As <strong>LESS</strong> doesn’t recognise the arguments I can put them in escaped strings: <code class="prettyprint">~"[string]"</code>.</p>
+<pre class="prettyprint">/* Media query variables */
+
+// Large desktop and up
+@large-desktop-and-up: ~"(min-width: 1200px)";
+
+// Tablet to desktop
+@tablet-to-desktop: ~"(min-width: 768px) and (max-width: 979px)";
+
+// Landscape phone to desktop/tablet
+@landscape-phone-to-tablet: ~"(max-width: 767px)";
+</pre>
+<p>Next I create the width mixins. I’m doing them as mixins because I need to repeat the width code in each media query.</p>
+<pre class="prettyprint">/* Width mixins */
+
+.span-quarter (@value) {
+    .span-quarter { width: @value; }
+}
+.span-half (@value) {
+    .span-half { width: @value; }
+}
+</pre>
+<p>Finally, I can now use my variables and mixins to scaffold out my new column widths. The first width is the default desktop width, followed by the various break points. Notice the crazy percentages! Trust me, they work.</p>
+<pre class="prettyprint">/* .span-quarter */
+
+// Default (desktop)
+.span-quarter (22.22222222222222%);
+
+// Large desktop and up
+@media @large-desktop-and-up {
+    .span-quarter (21.66666666666667%);
+}
+
+// Tablet to desktop
+@media @tablet-to-desktop {
+    .span-quarter (46.415770609319%);
+}
+
+// Landscape phone to desktop/tablet
+@media @landscape-phone-to-tablet {
+    .span-quarter (100%);
+}
+
+/* .span-half */
+
+// Default (desktop)
+.span-half (47.22222222222222%);
+
+// Large desktop and up
+@media @large-desktop-and-up {
+    .span-half (46.66666666666667%);
+}
+
+// Tablet to desktop
+@media @tablet-to-desktop {
+    .span-half (96.415770609319%);
+}
+
+// Landscape phone to desktop/tablet
+@media @landscape-phone-to-tablet {
+    .span-half (100%);
+}
+</pre>
+<p>The resulting CSS output is below. <em>“But that’s less code than what you have above”</em> I hear you say. Well true, but should I wish to create more media query blocks in the future I’ve now got my mixins set up.</p>
+<pre class="prettyprint">/* .span-quarter */
+.span-quarter {
+    width: 22.22222222222222%;
+}
+@media (min-width: 1200px) {
+    .span-quarter {
+        width: 21.66666666666667%;
+    }
+}
+@media (min-width: 768px) and (max-width: 979px) {
+    .span-quarter {
+        width: 46.415770609319%;
+    }
+}
+@media (max-width: 767px) {
+    .span-quarter {
+        width: 100%;
+    }
+}
+/* .span-half */
+.span-half {
+    width: 47.22222222222222%;
+}
+@media (min-width: 1200px) {
+    .span-half {
+        width: 46.66666666666667%;
+    }
+}
+@media (min-width: 768px) and (max-width: 979px) {
+    .span-half {
+        width: 96.415770609319%;
+    }
+}
+@media (max-width: 767px) {
+    .span-half {
+        width: 100%;
+    }
+}
+</pre>
+<p>So that’s it, <strong>Bootstrap</strong> extended. Responsive widths defined, enabling 2 or 4 column nesting in a 9 column main content area.</p>
+<p><img alt="image" src="/images/dist/tumblr_inline_ml7dvrPJ8m1qz4rgp.png"/></p>
+
 </div>
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+var disqus_shortname = 'mpkb';
+(function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();
+</script>
+
 
             </div>
         </div>

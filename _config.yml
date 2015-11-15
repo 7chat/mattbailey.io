@@ -6,7 +6,8 @@ highlighter: pygments
 
 # Plugins
 gems: [
-  'octopress-minify-html'
+  'octopress-minify-html',
+  'jekyll-paginate'
 ]
 
 # Permalinks

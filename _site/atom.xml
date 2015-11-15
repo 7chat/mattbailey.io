@@ -4,7 +4,7 @@
  <title>Matt Bailey</title>
  <link href="http://mattbailey.io/atom.xml" rel="self"/>
  <link href="http://mattbailey.io/"/>
- <updated>2015-05-15T23:37:23+01:00</updated>
+ <updated>2015-11-15T16:44:45+00:00</updated>
  <id>http://mattbailey.io</id>
  <author>
    <name>Matt Bailey</name>
@@ -13,11 +13,32 @@
 
  
  <entry>
+   <title>Front End Workflow</title>
+   <link href="http://mattbailey.io/front-end-workflow"/>
+   <updated>2015-11-15T00:00:00+00:00</updated>
+   <id>http://mattbailey.io/front-end-workflow</id>
+   <content type="html">&lt;p&gt;Back in October I did a presentation on front end workflow at &lt;a href=&quot;https://stripecon.eu/&quot;&gt;StripeCon&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;I started out by looking at my own history with web design and development. It&amp;rsquo;s amazing how far we&amp;rsquo;ve come since the early pre-CSS days, tables, Fireworks, Flash etc.&lt;/p&gt;
+
+&lt;p&gt;The main part of the talk covered how my design and development tools and techniques have changed dramatically over the past few years - Sketch, Invision, Git, virtual machines, dependency management, CSS pre-processors, BEM and so on. I also talked about how I structure projects and my Grunt workflow.&lt;/p&gt;
+
+&lt;p&gt;&amp;nbsp;&lt;/p&gt;
+
+&lt;p&gt;&lt;script async class=&quot;speakerdeck-embed&quot; data-id=&quot;35109ecced764836a9f25d06cc7159a7&quot; data-ratio=&quot;1.33333333333333&quot; src=&quot;//speakerdeck.com/assets/embed.js&quot;&gt;&lt;/script&gt;&lt;/p&gt;
+
+&lt;p&gt;If you can&amp;rsquo;t see the slides above you can &lt;a href=&quot;https://speakerdeck.com/mattbailey/front-end-workflow&quot;&gt;view them on SpeakerDeck&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;If you have any questions pop them in the comments below.&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
    <title>How I Achieved A Pretty Good* Google PageSpeed Insights Score</title>
-   <link href="http://mattbailey.io/how-I-achieved-a-good-google-pagespeed-insights-score"/>
+   <link href="http://mattbailey.io/how-i-achieved-a-good-google-pagespeed-insights-score"/>
    <updated>2015-05-15T00:00:00+01:00</updated>
    <id>http://mattbailey.io/how-I-achieved-a-good-google-pagespeed-insights-score</id>
-   <content type="html">&lt;p&gt;&lt;em&gt;* &lt;strong&gt;98/100&lt;/strong&gt; on both Mobile and Desktop (you can run the test yourself, &lt;a href=&quot;https://developers.google.com/speed/pagespeed/insights/?url=http%3A%2F%2Fmattbailey.io%2F&quot;&gt;here&lt;/a&gt;).&lt;/em&gt;&lt;/p&gt;
+   <content type="html">&lt;p&gt;&lt;em&gt;* &lt;strong&gt;98/100&lt;/strong&gt; on both Mobile and Desktop (you can see the test yourself, &lt;a href=&quot;https://developers.google.com/speed/pagespeed/insights/?url=http%3A%2F%2Fmattbailey.io%2F&quot;&gt;here&lt;/a&gt;).&lt;/em&gt;&lt;/p&gt;
 
 &lt;h2&gt;First Of All, Why Bother?&lt;/h2&gt;
 
@@ -67,7 +88,7 @@
 
 &lt;p&gt;&lt;strong&gt;Configure .htaccess:&lt;/strong&gt;&lt;/p&gt;
 
-&lt;p&gt;Enabling GZip compression on my server was easier than I thought it was going to be - as easy as copying and pasting. I simply added the &amp;lsquo;Web Performance&amp;rsquo; section from the h5bp &lt;a href=&quot;https://github.com/h5bp/server-configs-apache/blob/master/dist/.htaccess&quot;&gt;.htaccess&lt;/a&gt; file to my own &lt;code&gt;.htaccess&lt;/code&gt; file and uploaded to my server.&lt;/p&gt;
+&lt;p&gt;Enabling GZip compression on my server was easier than I thought it was going to be - as easy as copying and pasting. I simply added the &amp;#39;Web Performance&amp;rsquo; section from the h5bp &lt;a href=&quot;https://github.com/h5bp/server-configs-apache/blob/master/dist/.htaccess&quot;&gt;.htaccess&lt;/a&gt; file to my own &lt;code&gt;.htaccess&lt;/code&gt; file and uploaded to my server.&lt;/p&gt;
 
 &lt;h2&gt;Summary&lt;/h2&gt;
 
@@ -144,7 +165,7 @@ src/styles/
 
 &lt;h2&gt;Create a package file&lt;/h2&gt;
 
-&lt;p&gt;Let&amp;rsquo;s move on and also create our basic &lt;code&gt;package.json&lt;/code&gt; file. This file will shortly contain our project&amp;rsquo;s dependencies. Add the following (obviously change references to &amp;lsquo;my project&amp;rsquo; to the actual name of your project):&lt;/p&gt;
+&lt;p&gt;Let&amp;rsquo;s move on and also create our basic &lt;code&gt;package.json&lt;/code&gt; file. This file will shortly contain our project&amp;rsquo;s dependencies. Add the following (obviously change references to &amp;#39;my project&amp;rsquo; to the actual name of your project):&lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
   &lt;span class=&quot;s2&quot;&gt;&amp;quot;name&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;my-project&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
   &lt;span class=&quot;s2&quot;&gt;&amp;quot;version&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;0.0.1&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
@@ -195,7 +216,7 @@ npm install grunt-contrib-watch --save-dev
 &lt;li&gt;&lt;code&gt;time-grunt&lt;/code&gt;: This isn&amp;rsquo;t required, but it&amp;rsquo;s a neat addition - it tells you how much time each task and the total build has taken.&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;load-grunt-config&lt;/code&gt;: Allows you to keep our main Gruntfile short and succinct. More on that in a bit.&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;grunt-concurrent&lt;/code&gt;: Run tasks concurrently - Out-of-the-box Grunt will run each task one after the other, which can take a while depending on the amount and type of tasks you need to run. However, there are often tasks that are not dependent on other tasks which can be run at the same time.&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;grunt-contrib-clean&lt;/code&gt;: Quite simply, this task deletes &amp;lsquo;stuff&amp;rsquo; - use with caution!&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;grunt-contrib-clean&lt;/code&gt;: Quite simply, this task deletes &amp;#39;stuff&amp;rsquo; - use with caution!&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;grunt-contrib-imagemin&lt;/code&gt;: Indispensible for all your image optimisation needs.&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;grunt-sass&lt;/code&gt;: Compiles your SASS/SCSS files into CSS. &lt;strong&gt;Please note:&lt;/strong&gt; This Sass task uses the faster, but more experimental &lt;a href=&quot;http://libsass.org/&quot;&gt;libsass&lt;/a&gt; compiler. If you experience problems you should probably use the more stable, but slower &lt;a href=&quot;https://github.com/gruntjs/grunt-contrib-sass&quot;&gt;grunt-contrib-sass&lt;/a&gt; task instead.&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;grunt-contrib-uglify&lt;/code&gt;: Makes your Javascript nice and ugly.&lt;/li&gt;

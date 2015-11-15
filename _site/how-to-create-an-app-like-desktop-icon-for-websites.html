@@ -9,7 +9,7 @@
 
     <title>
     
-        404: Page not found &middot; Matt Bailey
+        How To Create An App-Like Desktop Icon For Websites (Single-Window Chrome Instances) On OSX &middot; Matt Bailey
     
     </title>
 
@@ -48,7 +48,7 @@
     </script>
 </head>
 
-    <body class="404:-page-not-found layout-reverse">
+    <body class="how-to-create-an-app-like-desktop-icon-for-websites-(single-window-chrome-instances)-on-osx layout-reverse">
         <!--[if lt IE 9]>
 <div class="outdated-browser message message--alert">You are using an outdated browser. Please <a href="http://outdatedbrowser.com/en">upgrade</a> to improve your experience.</div>
 <![endif]-->
@@ -101,10 +101,55 @@
 </div>
 
             <div id="content" class="container content">
-                <div class="page">
-    <h1 class="page-title">404: Page not found</h1>
-    <p class="lead">Sorry, we've misplaced that URL or it's pointing to something that doesn't exist. <a href="/">Head back home</a> to try finding it again.</p>
+                <div class="post">
+    <h1 class="post-title">How To Create An App-Like Desktop Icon For Websites (Single-Window Chrome Instances) On OSX</h1>
+    <p class="post-date">29 June, 2013</p>
+    <p><span><img alt="image" src="/images/dist/tumblr_inline_mp5f2iNHda1qz4rgp.jpg"/></span></p>
+
+<p><span>Since Google announced the demise of </span><a href="http://googlereader.blogspot.co.uk/2013/03/powering-down-google-reader.html" title="Google Reader" target="_blank">Reader</a><span> I&#8217;ve been looking for an alternative, and I&#8217;ve settled on </span><a href="http://cloud.feedly.com/#welcome" title="Feedly" target="_blank">Feedly</a><span> which is rather good. It&#8217;s sad that Reader has been shut down, but I still need my daily dose of front-end news - if you haven&#8217;t done it already, you should check out Paul Irish&#8217;s curated selection of </span><a href="http://www.paulirish.com/2011/web-browser-frontend-and-standards-feeds-to-follow/" title="Front-end Feeds" target="_blank">front-end feeds</a><span>.</span></p>
+<p>One thing Feedly doesn&#8217;t have though is a desktop app, you have to use your browser, or a smart phone app. Whilst this isn&#8217;t a big deal I like having some things running in separate windows that won&#8217;t be affected if, for example, I accidentally close my browser by mistake.</p>
+<p>Fortunately this is possible to do using a brilliant little <a href="https://gist.github.com/demonbane/1065791" title="makeapp.sh" target="_blank">shell script</a>. Read on, to find out how.</p>
+
+<ol><li><a href="https://gist.github.com/demonbane/1065791/download" title="makeapp.sh" target="_blank">Download the shell script from here</a> and put it in a folder somewhere, such as <code class="prettyprint">~/Documents/Scripts</code></li>
+<li>From the command line navigate into the Scripts folder: <code class="prettyprint">cd ~/Documents/Scripts</code></li>
+<li>Next you need to make the shell script executable from the command line: <code class="prettyprint">chmod +x makeapp.sh</code></li>
+<li>Then you can run the shell script like this: <code class="prettyprint">./makeapp.sh</code></li>
+</ol><p>When you run the shell script you will be asked three fairly self-explanatory things:</p>
+<ol><li>"What should the Application be called (no spaces allowed e.g. GCal)?"</li>
+<li>"What is the url (e.g. <a href="https://www.google.com/calendar/render">https://www.google.com/calendar/render</a>)?&#8221;</li>
+<li>"What is the full path to the icon (e.g. /Users/username/Desktop/icon.png)?"</li>
+</ol><p>Type your response to each question and hit Enter. I found that the last step, where you choose your icon, was a little unpredictable and didn&#8217;t always work. But don&#8217;t worry, I found a way round it - more on that later.</p>
+<p>Once you&#8217;re done you should find a new app icon in your Applications folder. If you double click on this icon the URL you entered should open as a single-window Chrome instance (without the browser bar or any of the other browser chrome), meaning that it will act like a separate app, so if you happen to close your main Chrome windows your new &#8216;app&#8217; won&#8217;t close as well.</p>
+<p><img alt="image" src="/images/dist/tumblr_inline_mp5fgyLI5Y1qz4rgp.jpg"/></p>
+
+<h2>A Note On Icons</h2>
+<p>It took me a little bit of experimenting to get the app icon working as I wanted. I ended up adding it manually and I&#8217;ll outline my experience here in case it&#8217;s helpful for others, using Feedly as my example.</p>
+<p>My process does require spending a little money on an app called <a href="http://www.kodlian.com/apps/icon-slate" title="IconSlate" target="_blank">IconSlate</a> (£2.99 to be precise, or $4.99 if you&#8217;re in the US), but it&#8217;s a fantastic app and well worth the tiny amount of money. It creates proper .icns or .ico files, with your icon at six different sizes, from 512px down to 16px. You don&#8217;t have to use this app, but you may find your icons are less predictable as a result.</p>
+<p>First of all you need to find an image to use as an icon. A quick google images search came up with this large PNG with a transparent background - perfect:</p>
+<p><img alt="image" src="/images/dist/tumblr_inline_mp5cr4kN0R1qz4rgp.png"/></p>
+
+<p></p>
+<p>Before I can use it though I need to do a little tweaking.</p>
+<p>Opening it in Photoshop shows that it&#8217;s really too big, and it&#8217;s not square either. First I set it to a resolution of 72 DPI and a width of 512 pixels. Then I increased the canvas height so that it was also 512 pixels, and resaved the file.</p>
+<p>Next, open IconSlate, go to &#8216;File &gt; Open&#8217;, browse to your saved PNG file and open it. You should now see an IconSlate window that looks like this:</p>
+<p><img alt="image" src="/images/dist/tumblr_inline_mp5d80dUkO1qz4rgp.png"/></p>
+<p><span>All that remains to do now is to click &#8216;Build&#8217; and to save your generated icons to a folder somewhere such as </span><code class="prettyprint">~/Pictures/App Icons</code><span>.</span></p>
+<p>Once you&#8217;ve done that, open a Finder window and browse to the <code class="prettyprint">Applications</code> folder. Find the app (which will probably have a generic app icon), click on it once and hit &#8216;cmd + I&#8217; (or go to &#8216;File &gt; Get Info&#8217;).</p>
+<p>Finally, find your &#8216;.icns&#8217; file and simply &#8216;drag and drop&#8217; it onto the generic app icon at the top left of the Get Info window, which should now look like this:</p>
+<p><img alt="image" src="/images/dist/tumblr_inline_mp5e5eXImP1qz4rgp.png"/></p>
+<p>And there you have it, a beautiful icon for your app which, if you add it to your dock, will look great!</p>
+
 </div>
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+var disqus_shortname = 'mpkb';
+(function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();
+</script>
+
 
             </div>
         </div>

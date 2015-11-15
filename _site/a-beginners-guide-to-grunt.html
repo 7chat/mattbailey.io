@@ -9,7 +9,7 @@
 
     <title>
     
-        404: Page not found &middot; Matt Bailey
+        A beginner's guide to Grunt &middot; Matt Bailey
     
     </title>
 
@@ -48,7 +48,7 @@
     </script>
 </head>
 
-    <body class="404:-page-not-found layout-reverse">
+    <body class="a-beginner's-guide-to-grunt layout-reverse">
         <!--[if lt IE 9]>
 <div class="outdated-browser message message--alert">You are using an outdated browser. Please <a href="http://outdatedbrowser.com/en">upgrade</a> to improve your experience.</div>
 <![endif]-->
@@ -101,10 +101,127 @@
 </div>
 
             <div id="content" class="container content">
-                <div class="page">
-    <h1 class="page-title">404: Page not found</h1>
-    <p class="lead">Sorry, we've misplaced that URL or it's pointing to something that doesn't exist. <a href="/">Head back home</a> to try finding it again.</p>
+                <div class="post">
+    <h1 class="post-title">A beginner's guide to Grunt</h1>
+    <p class="post-date">16 March, 2013</p>
+    <p><img alt="image" src="/images/dist/tumblr_inline_mjrobcZQpo1qz4rgp.png"/></p>
+
+<p><strong>UPDATE 22 November, 2014: I've just published a brand new article on how I now set up and use Grunt. <a href="http://mattbailey.io/a-beginners-guide-to-grunt-redux/" title="Matt Bailey: A Beginners Guide To Grunt">Check it out</a>.</strong></p>
+
+<p>Having just read David Bushell&#8217;s <a href="http://dbushell.com/2013/03/12/automation/" title="Automation" target="_blank">article</a> on [frontend] automation I thought I&#8217;d have a go at installing <a href="http://gruntjs.com/" title="Grunt - The JavaScript Task Runner" target="_blank"><strong>Grunt</strong></a> myself and setting up a project. However, I found the process and documentation on the <strong>Grunt</strong> website a bit &#8216;meandering&#8217;. In an effort to keep a record for myself, and to help others, I thought I&#8217;d write a simple step by step guide.</p>
+
+<p>All the <strong>Grunt</strong> documentation can be found here: <a href="http://gruntjs.com/getting-started" title="Grunt - Getting Started" target="_blank">http://gruntjs.com/getting-started</a></p>
+<p>At the time of writing the <strong>node.js</strong> and <strong>Grunt</strong> versions are as follows:</p>
+<p><code class="prettyprint">node.js</code> - v0.10.0<br/><code class="prettyprint">grunt-cli</code> - v0.1.6<br/><code class="prettyprint">grunt</code> - v0.4.1</p>
+<h2>1. Install node.js</h2>
+<p>Download and follow the install instructions for <strong>node.js</strong> here: <a href="http://nodejs.org/" title="node.js" target="_blank">http://nodejs.org/</a></p>
+<h2>2. Install grunt-cli</h2>
+<p><strong>grunt-cli</strong> docs: <a href="http://gruntjs.com/getting-started" title="Grunt - Getting Started" target="_blank">http://gruntjs.com/getting-started</a></p>
+<p>Install <code class="prettyprint">grunt-cli</code> (the Grunt command line interface):</p>
+<pre class="prettyprint">npm install -g grunt-cli</pre>
+<p>This puts the <code class="prettyprint">grunt</code> command in your system path, allowing it to be run from anywhere.</p>
+<h2>3. Install grunt-init</h2>
+<p><code class="prettyprint">grunt-init</code> docs: <a href="http://gruntjs.com/project-scaffolding" title="Grunt - Project Scaffolding" target="_blank">http://gruntjs.com/project-scaffolding</a></p>
+<p><code class="prettyprint">grunt-init</code> is a scaffolding tool used to automate project creation.</p>
+<p>Install <code class="prettyprint">grunt-init</code>:</p>
+<pre class="prettyprint">npm install -g grunt-init</pre>
+<h2>4. Install some grunt-init templates</h2>
+<p>Install some <code class="prettyprint">grunt-init</code> templates to help get you started. For example:</p>
+<pre class="prettyprint">git clone git@github.com:gruntjs/grunt-init-commonjs.git ~/.grunt-init/commonjs</pre>
+<pre class="prettyprint">git clone git@github.com:gruntjs/grunt-init-gruntfile.git ~/.grunt-init/gruntfile</pre>
+<pre class="prettyprint">git clone git@github.com:gruntjs/grunt-init-gruntplugin.git ~/.grunt-init/gruntplugin</pre>
+<pre class="prettyprint">git clone git@github.com:gruntjs/grunt-init-jquery.git ~/.grunt-init/jquery</pre>
+<pre class="prettyprint">git clone git@github.com:gruntjs/grunt-init-node.git ~/.grunt-init/node</pre>
+<h2>5. Initialise your project</h2>
+<p>You can use <code class="prettyprint">grunt-init</code> to scaffold a project from one of the templates you just installed, or create your own project from scratch. Full templating instructions can be found here: <a href="http://gruntjs.com/project-scaffolding" title="Grunt - Project Scaffolding" target="_blank">http://gruntjs.com/project-scaffolding</a></p>
+<h2>5a. Using grunt-init to scaffold a project</h2>
+<p>Create a project based on one of the templates you just installed.</p>
+<p><strong>Example</strong> - Run the following command in the root directory of your project:</p>
+<pre class="prettyprint">grunt-init jquery</pre>
+<p>This will scaffold a <strong>jQuery</strong> plugin project, including <strong>QUnit</strong> unit tests (at the time of writing trying to install the QUnit Grunt plugin as outlined in section <strong>5b1.</strong> below will throw up an error - this is a <a href="https://github.com/gruntjs/grunt-contrib-qunit/issues/23" target="_blank">known issue</a>).</p>
+<p>In your project directory you should now see a number of folders, including <strong>node_modules</strong>, plus <strong>package.json</strong> and <strong>Gruntfile.js</strong> files.</p>
+<h2>5b. Or create your own project template</h2>
+<p>Create a folder for a project. For the purposes of this tutorial let&#8217;s call it <strong>myproject</strong>.</p>
+<p>Inside <strong>myproject</strong> create a folder called <strong>src</strong>, a folder called <strong>build</strong>, and a <strong>README.md</strong> file (or you will get warning messages when you install some of the grunt plugins).</p>
+<p>Inside the <strong>src</strong> folder create a file called <strong>myproject.js</strong>.</p>
+<p>Below are basic examples of <strong>package.json</strong> and <strong>Grunfile.js</strong> files.</p>
+<h2>5b1. package.json</h2>
+<p>Create a <strong>package.json</strong> file in the root of your project:</p>
+<pre class="prettyprint">{
+    "name": "myproject",
+    "version": "0.0.1"
+}</pre>
+<p><strong>Grunt</strong> and any grunt plugins you want to use will need to be installed.</p>
+<p>You can either install each plugin individually from the command line&#8230; For example:</p>
+<pre class="prettyprint">npm install grunt --save-dev</pre>
+<pre class="prettyprint">npm install grunt-contrib-nodeunit --save-dev</pre>
+<pre class="prettyprint">npm install grunt-contrib-uglify --save-dev</pre>
+<p>The modules will automatically be added to the <strong>package.json</strong> file, which should now look something like this:</p>
+<pre class="prettyprint">{
+    "name": "myproject",
+    "version": "0.0.1",
+    "devDependencies": {
+        "grunt": "~0.4.1",
+        "grunt-contrib-nodeunit": "~0.1.2",
+        "grunt-contrib-uglify": "~0.1.2"
+    }
+}</pre>
+<p>Or, if you already know the versions of the plugins you want (you can find this out on the github repo of each plugin) you can create the <strong>package.json</strong> file with the devDependencies pre-filled, and then from the command line simply run:</p>
+<pre class="prettyprint">npm install</pre>
+<h2>5b2. Gruntfile.js</h2>
+<p>Create a <strong>Gruntfile.js</strong> file in the root of your project:</p>
+<pre class="prettyprint">module.exports = function(grunt) {
+
+  // Project configuration.
+  grunt.initConfig({
+    pkg: grunt.file.readJSON('package.json'),
+    uglify: {
+      options: {
+        banner: '/*! &lt;%= pkg.name %&gt; &lt;%= grunt.template.today("yyyy-mm-dd") %&gt; */\n'
+      },
+      build: {
+        src: 'src/&lt;%= pkg.name %&gt;.js',
+        dest: 'build/&lt;%= pkg.name %&gt;.min.js'
+      }
+    }
+  });
+
+  // Load the plugin that provides the "uglify" task.
+  grunt.loadNpmTasks('grunt-contrib-uglify');
+
+  // Default task(s).
+  grunt.registerTask('default', ['uglify']);
+
+};</pre>
+<h2>6. Run grunt</h2>
+<p>Finally, from the command line and in the root directory of your project run <code class="prettyprint">grunt</code>:</p>
+<pre class="prettyprint">grunt</pre>
+<p>All being well you should see the following output:</p>
+<pre class="prettyprint">Running "uglify:build" (uglify) task<br/>
+File "build/myproject.min.js" created.<br/>
+Uncompressed size: 10 bytes.<br/>
+Compressed size: 0 bytes gzipped (0 bytes minified).<br/><br/>
+Done, without errors.</pre>
+<p>If you now look in the <strong>build</strong> folder you should find a minified version of your <strong>myproject.js</strong> file, called <strong>myproject.min.js</strong>.</p>
+<p><strong>Congratulations, you&#8217;ve set up and run Grunt successfully for the first time!</strong></p>
+<h2>Taking things further</h2>
+<p>Naturally this introduction only covers the very basics of a <strong>Grunt</strong> install and project set-up.</p>
+<p>Using the methods above and, by following some of the other examples on the <a href="http://gruntjs.com/" title="Grunt - The Javascript Task Runner" target="_blank"><strong>Grunt</strong></a> website, you should be able to introduce new automation features, such as &#8216;linting&#8217; your javascript code, or compiling your .less into minified .css, or setting up a &#8216;watch&#8217; script to automatically run a new build when changes are detected, and so on.</p>
+<p>To learn more I would highly recommend reading through the <strong>Grunt</strong> documentation. Hopefully if you&#8217;ve followed the steps above things should make a bit more sense: <a href="http://gruntjs.com/getting-started" title="Grunt - Getting Started" target="_blank">http://gruntjs.com/getting-started</a></p>
+
+<p>If you have any questions or comments about this article, or if you found it useful, please let me know :)</p>
+
 </div>
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+var disqus_shortname = 'mpkb';
+(function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();
+</script>
+
 
             </div>
         </div>

@@ -9,7 +9,7 @@
 
     <title>
     
-        404: Page not found &middot; Matt Bailey
+        Using Sitespeed.io in a Vagrant Virtual Machine &middot; Matt Bailey
     
     </title>
 
@@ -48,7 +48,7 @@
     </script>
 </head>
 
-    <body class="404:-page-not-found layout-reverse">
+    <body class="using-sitespeed.io-in-a-vagrant-virtual-machine layout-reverse">
         <!--[if lt IE 9]>
 <div class="outdated-browser message message--alert">You are using an outdated browser. Please <a href="http://outdatedbrowser.com/en">upgrade</a> to improve your experience.</div>
 <![endif]-->
@@ -101,10 +101,132 @@
 </div>
 
             <div id="content" class="container content">
-                <div class="page">
-    <h1 class="page-title">404: Page not found</h1>
-    <p class="lead">Sorry, we've misplaced that URL or it's pointing to something that doesn't exist. <a href="/">Head back home</a> to try finding it again.</p>
+                <div class="post">
+    <h1 class="post-title">Using Sitespeed.io in a Vagrant Virtual Machine</h1>
+    <p class="post-date">18 July, 2014</p>
+    <p><img src="https://dl.dropboxusercontent.com/u/35123605/Assets/sitespeed-logo.png" alt="sitespeed.io"/></p>
+
+<p>Not so long ago I came across a fantastic command line tool called <a href="http://www.sitespeed.io/">sitespeed.io</a>. It enables you to generate a nicely formatted report about the speed and performance of a site. Performance is something I&#8217;m really interested in, and this is a perfect tool to add to the arsenal.</p>
+
+<p>Now, being a glutton for punishment I decided against the easy install option (using <a href="http://brew.sh/">Homebrew</a> on a Mac) and instead decided to try and get it working in a <a href="http://www.vagrantup.com/">Vagrant</a> virtual machine.</p>
+
+<p>I had already set up a <a href="https://github.com/gpmd/vagrant-puppet-boilerplate">Vagrant boilerplate</a>, so it was a question of modifying this to install the various dependencies required by sitespeed.io.</p>
+
+<p>It actually took quite a bit of research, reading, and trial and error to finally get it up-and-running. Please bear in mind that I&#8217;m not a backend developer or sys-admin, just a lowly frontend designer trying to refine his workflow, and increase his experience and skill base, so I may not have done things in the most efficient way - Let me know if anything I mention could be done better.</p>
+
+<p>Anyway, if you&#8217;re still interested here are my experiences.</p>
+
+<h2>Dependencies Installation on Linux</h2>
+
+<p>My Vagrant boilerplate creates an Ubuntu Precise box. There are <a href="http://www.sitespeed.io/documentation/#install-linux">Linux installation instructions on sitespeed.io</a>, but they&#8217;re (understandably) a bit vague when it comes to installing the requirements so I&#8217;ll take you through each one in turn.</p>
+
+<p><strong>Note:</strong> In my examples I&#8217;m just giving you the raw code you can run on the command line in your VM. However, I actually run all this from a shell script that gets called each time I provision the VM. You can see <a href="https://gist.github.com/matt-bailey/c2db6dbf5385ab1d87a9#file-frontend-tools-sh">the install script here</a> if you&#8217;re interested.</p>
+
+<h3>PhantomJS</h3>
+
+<p>Initially I went for the easy option to install <a href="http://phantomjs.org/download.html">PhantomJS</a>:</p>
+
+<p><code>$ sudo apt-get install phantomjs</code></p>
+
+<p>"That was straightforward" I thought&#8230; However, it turns out that the apt-get package list for Ubuntu Precise only includes PhantomJS version 1.4, and sitespeed.io requires a newer version (you&#8217;ll get a load of errors when you finally try to run sitespeed.io). In the end I came across <a href="https://gist.github.com/wbotelhos/6643188#file-phantomjs_intaller-sh">this gist</a> and was able to install PhantomJS version 1.9 as a result (obviously you need to <code>sudo apt-get remove phantomjs</code> first if you already have it installed like I did).</p>
+
+<p><code>$ cd /usr/local/share</code>
+<br/><br/><code>$ sudo wget -q <a href="https://phantomjs.googlecode.com/files/phantomjs-1.9.0-linux-x86_64.tar.bz2">https://phantomjs.googlecode.com/files/phantomjs-1.9.0-linux-x86_64.tar.bz2</a></code>
+<br/><br/><code>$ tar xjf phantomjs-1.9.0-linux-x86_64.tar.bz2</code>
+<br/><br/><code>$ sudo ln -s /usr/local/share/phantomjs-1.9.0-linux-x86_64/bin/phantomjs /usr/local/share/phantomjs</code>
+<br/><br/><code>$ sudo ln -s /usr/local/share/phantomjs-1.9.0-linux-x86_64/bin/phantomjs /usr/local/bin/phantomjs</code>
+<br/><br/><code>$ sudo ln -s /usr/local/share/phantomjs-1.9.0-linux-x86_64/bin/phantomjs /usr/bin/phantomjs</code>
+<br/></p>
+
+<h3>Java</h3>
+
+<p>Installing <a href="http://www.oracle.com/technetwork/java/javase/downloads/jdk7-downloads-1880260.html">Java</a> was a bit more straightforward, although it took me a while to figure out that the package name was <code>default-jre</code> and not simply <code>java</code>. Go figure?&#8230;</p>
+
+<p><code>$ sudo apt-get update</code>
+<br/><code>$ sudo apt-get install default-jre</code></p>
+
+<p><strong>Note:</strong> The reason you run <code>sudo apt-get update</code> is to make sure your local package list is up-to-date.</p>
+
+<h3>curl</h3>
+
+<p>I used a tool called <a href="https://puphpet.com/">PuPHPet</a> to initially create my Vagrant boilerplate, and it generates a <code>config.yaml</code> file that is very easy to modify and add new features to. As luck would have it I&#8217;d already added <code>curl</code> for an earlier project. In the <code>config.yaml</code> file the relevant bit looks like this:</p>
+
+<p><img src="https://dl.dropboxusercontent.com/u/35123605/Assets/puphpet-config-curl.png" alt="PuPHPet config.yaml - curl"/></p>
+
+<p>If you haven&#8217;t used PuPHPet then you could install <code>curl</code> using apt-get.</p>
+
+<p><code>$ sudo apt-get update</code>
+<br/><code>$ sudo apt-get install php5-curl</code></p>
+
+<h3>xsltproc</h3>
+
+<p><code>xsltproc</code> was also pretty straightforward.</p>
+
+<p><code>$ sudo apt-get update</code>
+<br/><code>$ sudo apt-get install xsltproc</code></p>
+
+<p>If you&#8217;ve already just run <code>sudo apt-get update</code> you probably don&#8217;t need to run it again here (Linux gurus, is that correct?).</p>
+
+<h2>sitespeed.io installation and Set-up</h2>
+
+<h3>Installation</h3>
+
+<p>Again, the instructions are pretty vague, at least to a frontend designer. It tells you to clone the project from Github, or download and unpack the zip. Well my first question was clone it to &#8220;where&#8221;? After picking the brains of a couple of my dev colleagues I was basically told &#8220;wherever you want to&#8221;. So helpful. I like things neat and tidy and in their proper place, so I did a bit more research it seems like a common place to store tools/scripts is in the <code>/usr/local/share</code> directory, so that&#8217;s what I settled on.</p>
+
+<p><code>$ cd /usr/local/share</code>
+<br/><code>$ git clone <a href="https://github.com/sitespeedio/sitespeed.io.git">https://github.com/sitespeedio/sitespeed.io.git</a></code></p>
+
+<h3>Set-up</h3>
+
+<p>I then symlinked the binary so that I could call it on the command line without having to use the whole path.</p>
+
+<p><code>$ sudo ln -s /usr/local/share/sitespeed.io/bin/sitespeed.io /usr/local/bin/sitespeed.io</code>
+<br/><br/><code>$ sudo ln -s /usr/local/share/sitespeed.io/bin/sitespeed.io /usr/bin/sitespeed.io</code></p>
+
+<p>To test that sitespeed.io is now available run the following command.</p>
+
+<p><code>$ sitespeed.io -h</code></p>
+
+<p>You should get some output telling you how to use sitespeed.io.</p>
+
+<h2>Using sitespeed.io</h2>
+
+<p>To generate a report run the following command from somewhere in your web project, for example <code>/var/www/[my-project]/site</code>. You need to run sitespeed.io from a directory that will be accessible through the browser.</p>
+
+<p><code>$ sitespeed.io -u <a href="http://my-project.dev/">http://my-project.dev/</a></code></p>
+
+<p>Obviously the site you want to run the report on can be anything, but in my case I&#8217;m using Vagrant for local development so I want to test the site I&#8217;m developing locally.</p>
+
+<p>Let sitespeed.io do it&#8217;s thing, it may take a minute or so. Once it has finished you&#8217;ll be able to access the report in your browser (the URL will obviously depend on your own particular directory structure and the datetime stamp of the particular report).</p>
+
+<p><code>http://[vm-private-ip-address]/[my-project]/site/sitespeed-result/2014-07-16-15-57-55/</code></p>
+
+<p><strong>Note:</strong> You will need to put in the private IP address of your VM in order to access it through the browser. In my case my VM is set up to use <code>192.168.56.101</code>.</p>
+
+<h2>Summary</h2>
+
+<p>And there you have it, a VM with the awesome sitespeed.io set up and ready to go. If you use a Vagrant boilerplate <em><a href="https://github.com/gpmd/vagrant-puppet-boilerplate">(example)</a></em> with setup scripts <em><a href="https://gist.github.com/matt-bailey/c2db6dbf5385ab1d87a9#file-frontend-tools-sh">(example)</a></em> then you can configure this once and not have to worry about it again. It also means that if other members of your team use Vagrant (which is the whole point right?) then only one of you has to do it.</p>
+
+<p><strong>Go forth and optimise!</strong></p>
+
+<h2>Dealing with Errors and Problems</h2>
+
+<p>sitespeed.io has pretty good <a href="http://www.sitespeed.io/documentation/">documentation</a> and <a href="http://www.sitespeed.io/faq/">FAQs</a>. I encountered a couple of specific issues that I&#8217;ve highlighted below.
+If you find you&#8217;re getting <code>java.net.SocketTimeoutException: Read timed out</code> errors <a href="http://www.sitespeed.io/faq/#readtimeout">read this</a>.</p>
+
+<p>Also kind of related, if it seems to take an age to analyse the site <a href="http://www.sitespeed.io/faq/#slowness">read this</a> (increase the number of allowed processes) and <a href="http://www.sitespeed.io/faq/#onepage">this</a> (how to test one page only).</p>
+
 </div>
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+var disqus_shortname = 'mpkb';
+(function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();
+</script>
+
 
             </div>
         </div>

@@ -9,7 +9,7 @@
 
     <title>
     
-        404: Page not found &middot; Matt Bailey
+        Responsive Images With The picture Element and Picturefill 2 &middot; Matt Bailey
     
     </title>
 
@@ -48,7 +48,7 @@
     </script>
 </head>
 
-    <body class="404:-page-not-found layout-reverse">
+    <body class="responsive-images-with-the-picture-element-and-picturefill-2 layout-reverse">
         <!--[if lt IE 9]>
 <div class="outdated-browser message message--alert">You are using an outdated browser. Please <a href="http://outdatedbrowser.com/en">upgrade</a> to improve your experience.</div>
 <![endif]-->
@@ -101,10 +101,35 @@
 </div>
 
             <div id="content" class="container content">
-                <div class="page">
-    <h1 class="page-title">404: Page not found</h1>
-    <p class="lead">Sorry, we've misplaced that URL or it's pointing to something that doesn't exist. <a href="/">Head back home</a> to try finding it again.</p>
+                <div class="post">
+    <h1 class="post-title">Responsive Images With The picture Element and Picturefill 2</h1>
+    <p class="post-date">24 April, 2014</p>
+    <p><strong>Just want the good stuff? <a href="http://scottjehl.github.io/picturefill/" title="Picturefill 2 polyfill">Get straight to the Picturefill 2 polyfill →</a></strong></p>
+<p>Back in February of this year, at An Event Apart in Atlanta, Mat Marqis confirmed that browser vendors have finally agreed to support the <code class="prettyprint">picture</code> element. You can read <a href="http://www.lukew.com/ff/entry.asp?1851" title="An Event Apart: The Future of Responsive Images">Luke Wroblewski&#8217;s notes on the talk here</a>.</p>
+<p>This is fantastic news as we can finally stop asking what we&#8217;re going to do about the problem of &#8216;responsive images&#8217; and start implementing them!</p>
+
+<h2>What are my options?</h2>
+<ol><li><span>The <code class="prettyprint">img</code> tag with <code class="prettyprint">sizes</code> and <code class="prettyprint">srcset</code> attributes</span></li>
+<li><span>The <code class="prettyprint">picture</code> element</span></li>
+</ol><p>These two options finally give us a huge amount of control over how we can work with images across resolutions, pixel densities and so on.</p>
+<h2>What about browser support?</h2>
+<p>Browser vendors are only just starting to implement the new spec, but this shouldn&#8217;t stop you using it. In a <a href="http://filamentgroup.com/lab/picturefill_2_a/" title="Picturefill 2.0: Use the picture element today">recent blog post</a> Filament Group released an updated version of their <a href="http://scottjehl.github.io/picturefill/" title="Picturefill polyfill">Picturefill</a> polyfill.</p>
+<h2>So how do I use the new spec and polyfill?</h2>
+<p>Details on using the polyfill and the <code class="prettyprint">picture</code> element can be found on Scott Jehl&#8217;s Filament Group <a href="http://scottjehl.github.io/picturefill/" title="Picturefill 2 polyfill">Github page</a>.</p>
+<p>For more information on using the <code class="prettyprint">sizes</code> and <code class="prettyprint">srcset</code> attributes on <code class="prettyprint">img</code> tags checkout this <a href="http://ericportis.com/posts/2014/srcset-sizes/" title="Srcset and sizes">excellent article by Eric Portis</a>.</p>
+<p><strong><a href="http://scottjehl.github.io/picturefill/" title="Picturefill 2 polyfill">Get the Picturefill 2 polyfill and start using responsive images now →</a></strong></p>
+
 </div>
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+var disqus_shortname = 'mpkb';
+(function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();
+</script>
+
 
             </div>
         </div>

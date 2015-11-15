@@ -9,7 +9,7 @@
 
     <title>
     
-        404: Page not found &middot; Matt Bailey
+        How I Achieved A Pretty Good* Google PageSpeed Insights Score &middot; Matt Bailey
     
     </title>
 
@@ -48,7 +48,7 @@
     </script>
 </head>
 
-    <body class="404:-page-not-found layout-reverse">
+    <body class="how-i-achieved-a-pretty-good*-google-pagespeed-insights-score layout-reverse">
         <!--[if lt IE 9]>
 <div class="outdated-browser message message--alert">You are using an outdated browser. Please <a href="http://outdatedbrowser.com/en">upgrade</a> to improve your experience.</div>
 <![endif]-->
@@ -101,10 +101,84 @@
 </div>
 
             <div id="content" class="container content">
-                <div class="page">
-    <h1 class="page-title">404: Page not found</h1>
-    <p class="lead">Sorry, we've misplaced that URL or it's pointing to something that doesn't exist. <a href="/">Head back home</a> to try finding it again.</p>
+                <div class="post">
+    <h1 class="post-title">How I Achieved A Pretty Good* Google PageSpeed Insights Score</h1>
+    <p class="post-date">15 May, 2015</p>
+    <p><em>* <strong>98/100</strong> on both Mobile and Desktop (you can see the test yourself, <a href="https://developers.google.com/speed/pagespeed/insights/?url=http%3A%2F%2Fmattbailey.io%2F">here</a>).</em></p>
+
+<h2>First Of All, Why Bother?</h2>
+
+<p>Yes, my site is a fairly simple <a href="http://jekyllrb.com/">Jekyll</a> powered static site, so the perception is that it&rsquo;s already pretty quick. Perceived load speed is certainly very important, but that didn&rsquo;t stop <a href="https://developers.google.com/speed/pagespeed/insights/">Google PageSpeed Insights</a> from highlighting quite a few issues and, subsequently, giving me a rather poor <strong>68/100</strong> for Mobile and <strong>75/100</strong> for Desktop.</p>
+
+<p>It&rsquo;s important to me how Google perceives my site, plus I have a certain amount of professional pride at stake - web performance is something very much on my mind at the moment. If I can&rsquo;t optimise my own site then how can I advise our clients at <a href="http://www.gpmd.co.uk">GPMD</a> where I work.</p>
+
+<p><strong>So, I set out to see what could be done to improve things. Here is what I did&hellip;</strong></p>
+
+<h2>I Inlined Critical CSS In The Head</h2>
+
+<p>Putting your critical CSS inline in the <code>&lt;head&gt;</code> means the browser can quickly render the &lsquo;above-the-fold&rsquo; content of your page whilst deferring the loading of the main CSS (usually using an Async CSS loader, <a href="https://github.com/filamentgroup/loadCSS">like this one</a>). In my case my CSS was under 10KB, so I inlined the whole lot!</p>
+
+<p><strong>Jekyll Technique:</strong></p>
+
+<p>I used the Jekyll technique by Kevin Sweet <a href="http://www.kevinsweet.com/inline-scss-jekyll-github-pages/">described here</a>.</p>
+
+<h2>I Used The Async Typekit Font Loading Script</h2>
+
+<p>Ok, so this is kind of a no-brainer but I had rather lazily just used the bog-standard Typekit loading script, rather than their more advanced async script. The problem with the standard script is that it&rsquo;s not async so it blocks the render, a big no no where performance is concerned.</p>
+
+<p><a href="http://help.typekit.com/customer/portal/articles/649336-embed-code">Click here</a> for more info on using the Typekit async font loading script.</p>
+
+<p><strong>Script Placement:</strong></p>
+
+<p>In terms of placement I put the script as the last element in my <code>&lt;head&gt;</code> tag, the reason being that JavaScript needs to come after CSS or PageSpeed Insights will complain about the injected Typekit CSS being render blocking.</p>
+
+<p><strong>FOUT:</strong></p>
+
+<p>I decided to not hook into the <code>.wf-loading</code> and <code>.wf-active</code> classes to hide any <a href="http://help.typekit.com/customer/portal/articles/6852-Controlling-the-Flash-of-Unstyled-Text-or-FOUT-using-Font-Events">FOUT</a> as it doesn&rsquo;t really bother me - you only get it the first time you visit the site, after which the fonts are cached by your browser anyway.</p>
+
+<h2>I Inlined Other Scripts At The Bottom Of The Page</h2>
+
+<p>All the other scripts I placed as the last elements on the page, just inside the closing <code>&lt;/body&gt;</code> tag.</p>
+
+<h2>I Minified The HTML</h2>
+
+<p>Minifying HTML can be tricky (and break stuff), especially on dynamic sites, but on simple flat file sites like mine it shouldn&rsquo;t be a problem. The gains in having fewer bytes may be minimal, but it&rsquo;s one less thing for PageSpeed Insights to complain about.</p>
+
+<p><strong>minify-html Jekyll Ruby Gem:</strong></p>
+
+<p>As luck would have it there is a Ruby gem for Jekyll called <a href="https://github.com/octopress/minify-html">minify-html</a> that does just what I needed. I simply installed it and added it to my <code>_config.yml</code> file.</p>
+
+<h2>I Enabled GZip Compression On My Server</h2>
+
+<p>Modern browsers can manage GZipped files on-the-fly. Fewer bytes means faster downloads - win win!</p>
+
+<p><strong>Configure .htaccess:</strong></p>
+
+<p>Enabling GZip compression on my server was easier than I thought it was going to be - as easy as copying and pasting. I simply added the &#39;Web Performance&rsquo; section from the h5bp <a href="https://github.com/h5bp/server-configs-apache/blob/master/dist/.htaccess">.htaccess</a> file to my own <code>.htaccess</code> file and uploaded to my server.</p>
+
+<h2>Summary</h2>
+
+<p>So there you have it, a score of <strong>98/100</strong> on both Mobile and Desktop. The only remaining PageSpeed Insights issue I have is the cache headers on the Typekit and Google Analytics JavaScript files. Unfortunately I have no control over this, but I can live with that. I suppose I could, if it really bothered me, download them and then host them myself. Maybe that&rsquo;s a project for another day&hellip;</p>
+
+<p><img src="/images/dist/google-pagespeed-insights-98-100-mobile.jpg" alt="Google PageSpeed Insights 98/100 Mobile Score"></p>
+
+<p><img src="/images/dist/google-pagespeed-insights-98-100-desktop.jpg" alt="Google PageSpeed Insights 98/100 Desktop Score"></p>
+
+<p>So was it worth it? None of these techinques on their own make a huge amount of difference, but combined they&rsquo;ve gained me a great score, and quite a lot of satisfaction.</p>
+
+<p>I hope the above helps others looking to optimise their sites. Please feel free to ask if you have questions about anything I&rsquo;ve talked about.</p>
+
 </div>
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+var disqus_shortname = 'mpkb';
+(function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();
+</script>
+
 
             </div>
         </div>
