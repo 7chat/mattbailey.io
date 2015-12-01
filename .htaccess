@@ -1,5 +1,6 @@
 # Redirects
 
+# Old article url rewrites
 RedirectMatch 301 /post/45519082789/a-beginners-guide-to-grunt /a-beginners-guide-to-grunt
 RedirectMatch 301 /post/45664310283/dropbox-re-sync-symlinks-that-fail-to-sync-a-deep /dropbox-re-sync-symlinks-that-fail-to-sync-a-deep
 RedirectMatch 301 /post/45749584009/css-speed-test-flat-vs-gradients-vs-sprites /css-speed-test-flat-vs-gradients-vs-sprites
@@ -20,6 +21,11 @@ RedirectMatch 301 /post/83703215775/responsive-images-with-the-picture-element-a
 RedirectMatch 301 /post/87009640552/contribution-to-report-on-mobile-web-design-and /contribution-to-report-on-mobile-web-design-and
 RedirectMatch 301 /post/89356239237/optimising-the-critical-rendering-path-and-loading-css /optimising-the-critical-rendering-path-and-loading-css
 RedirectMatch 301 /post/92148423607/using-sitespeed-io-in-a-vagrant-virtual-machine /using-sitespeed-io-in-a-vagrant-virtual-machine
+
+# Redirect all trailing slash to non-trailing slash
+RewriteEngine on
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)/$ /$1 [L,R=301]
 
 # Sections below taken from h5bp: https://github.com/h5bp/server-configs-apache/blob/master/dist/.htaccess
 
