@@ -17,7 +17,11 @@
 .wf-loading h6,
 .wf-loading p,
 .wf-loading ul,
-.wf-loading blockquote { visibility: hidden; }
+.wf-loading blockquote {
+    @include opacity(0);
+    -webkit-transition: opacity 150ms ease-in-out;
+    transition: opacity 150ms ease-in-out;
+}
 
 /* Active
    ========================================================================== */
@@ -30,4 +34,8 @@
 .wf-active h6,
 .wf-active p,
 .wf-active ul,
-.wf-active blockquote { visibility: visible; }
+.wf-active blockquote {
+    @include opacity(1);
+    -webkit-transition: opacity 150ms ease-in-out;
+    transition: opacity 150ms ease-in-out;
+}
